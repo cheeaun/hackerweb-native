@@ -71,10 +71,12 @@ var CommentsThread = React.createClass({
           };
           dive(comment.comments);
 
+          var subCommentsButton = hasComments ? <Button onPress={self._toggleComments.bind(self, comment.id)} buttonStyles={styles.repliesButton}>{commentsCount} {commentsCount == 1 ? 'reply' : 'replies'}</Button> : null;
+
           return (
             <View key={comment.id}>
               <Comment data={comment} op={op}/>
-              <Button onPress={self._toggleComments.bind(self, comment.id)} buttonStyles={styles.repliesButton}>{commentsCount} {commentsCount == 1 ? 'reply' : 'replies'}</Button>
+              {subCommentsButton}
               {expanded ? subComments : null}
               <View style={styles.commentsSeparator}></View>
             </View>
