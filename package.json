@@ -1,0 +1,14 @@
+{
+  "name": "HackerWeb",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "alt": "~0.17.3",
+    "react-native": "~0.10.1",
+    "react-native-app-info": "0.0.6",
+    "react-native-safari-view": "~0.1.0"
+  }
+}
