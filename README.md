@@ -12,11 +12,11 @@ On October 2011, I [was playing around with some code](https://twitter.com/cheea
 
 On Feb 2012, I [released HackerWeb](https://twitter.com/cheeaun/status/170127822818516993) (known as "HNmobile" at that time). I tried to coin the phrase "**Looks *and* feels like a native iOS app**" for the web app. I believe that HackerWeb is the first ever web app that tries to **seriously** cross the boundaries of native mobile apps.
 
-![](media/hnmobile-site-screenshot.png)
+<img alt="HNmobile landing web site" src="media/hnmobile-site-screenshot.png" width="320">
 
 On March 2012, I [wrote](https://twitter.com/cheeaun/status/176294093259948033) an [article on how I built it](http://cheeaun.com/blog/2012/03/how-i-built-hacker-news-mobile-web-app). It [got submitted](https://twitter.com/cheeaun/status/176301483866865664) to [Hacker News](https://news.ycombinator.com/item?id=3662709) and [appeared on the front page](https://twitter.com/cheeaun/status/176308046493003776).
 
-![Very meta](media/hnmobile-frontpage-screenshot.png)
+<img alt="Very meta" src="media/hnmobile-frontpage-screenshot.png" width="320">
 
 Feedback has been amazing.
 
