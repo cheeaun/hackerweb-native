@@ -121,6 +121,7 @@ Development
 
 - [Alt](http://alt.js.org/) - the Flux thing
 - [react-native-safari-view](https://github.com/naoufal/react-native-safari-view) - the reason why iOS 9 is the minimum requirement
+- [react-native-activity-view](https://github.com/naoufal/react-native-activity-view) - for sharing links after long pressing
 - [react-native-app-info](https://github.com/Iragne/react-native-app-info) - for displaying app version
 - [htmlparser2](https://github.com/fb55/htmlparser2) - for parsing the comments HTML
 - [url-parse](https://github.com/unshiftio/url-parse) - for extracting domains out of story URLs

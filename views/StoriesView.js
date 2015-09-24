@@ -11,6 +11,7 @@ var {
 } = React;
 
 var SafariView = require('react-native-safari-view');
+var ActivityView = require('react-native-activity-view');
 var StoryStore = require('../stores/StoryStore');
 var StoryActions = require('../actions/StoryActions');
 var LoadingIndicator = require('../components/LoadingIndicator');
@@ -138,12 +139,21 @@ var StoriesView = React.createClass({
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
     var externalLink = !/^item/i.test(url);
+
     var linkPress = externalLink ? function(){
       SafariView.show({
         url: url
       });
     } : this._navigateToComments.bind(this, row);
+    var linkLongPress = function(){
+      ActivityView.show({
+        text: row.title,
+        url: url,
+      });
+    };
+
     var domainText = externalLink ? <Text numberOfLines={1} style={styles.storyDomain}>{domainify(url)}</Text> : null;
+
     if (row.type == 'job'){
       return (
         <ListItemIOS onHighlight={() => highlightRow(sectionID, rowID)} onUnhighlight={() => highlightRow(null, null)} onPress={linkPress}>
@@ -158,6 +168,7 @@ var StoriesView = React.createClass({
         </ListItemIOS>
       );
     }
+
     var commentsText = <Text>&middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>;
     var disclosureButton = externalLink ? <TouchableOpacity onPress={this._navigateToComments.bind(this, row)}>
       <View style={styles.storyComments}>
@@ -166,8 +177,9 @@ var StoriesView = React.createClass({
     </TouchableOpacity> : <View style={styles.storyDisclosure}>
       <Image style={styles.disclosureIcon} source={require('image!disclosure-indicator')}/>
     </View>;
+
     return (
-      <ListItemIOS onHighlight={() => highlightRow(sectionID, rowID)} onUnhighlight={() => highlightRow(null, null)} onPress={linkPress}>
+      <ListItemIOS onHighlight={() => highlightRow(sectionID, rowID)} onUnhighlight={() => highlightRow(null, null)} onPress={linkPress} onLongPress={linkLongPress}>
         <View style={styles.storyPosition}>
           <Text style={styles.storyPositionNumber}>{position}</Text>
         </View>

@@ -13,6 +13,7 @@ var {
 } = React;
 
 var SafariView = require('react-native-safari-view');
+var ActivityView = require('react-native-activity-view');
 var StoryStore = require('../stores/StoryStore');
 var StoryActions = require('../actions/StoryActions');
 var LoadingIndicator = require('../components/LoadingIndicator');
@@ -137,15 +138,26 @@ var CommentsView = React.createClass({
     var externalLink = !/^item/i.test(url);
     var domainText = null;
     var storyHeader = <View><Text style={styles.storyTitle}>{data.title}</Text></View>;
+
     var linkPress = function(u){
+      if (!u) return;
       SafariView.show({
-        url: u || url
+        url: u
       });
     };
+
+    var linkLongPress = function(u, t){
+      if (!u) return;
+      ActivityView.show({
+        text: t || '',
+        url: u,
+      });
+    };
+
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
       storyHeader = (
-        <TouchableHighlight onPress={linkPress}>
+        <TouchableHighlight onPress={linkPress.bind(null, url)} onLongPress={linkLongPress.bind(null, url, data.title)}>
           <View style={{backgroundColor: colors.viewBackgroundColor}}>
             <Text style={styles.storyTitle}>{data.title}</Text>
             {domainText}
@@ -153,16 +165,14 @@ var CommentsView = React.createClass({
         </TouchableHighlight>
       );
     }
+
     var hnShortURL = 'news.ycombinator.com/item?id=' + data.id;
     var hnURL = 'https://' + hnShortURL;
 
     var contentSection;
     if (data.content){
-      var onLinkPress = this.props.onLinkPress;
       var contentElements;
-      HTMLView.processDOM(data.content, {
-        linkHandler: linkPress
-      }, function(elements){
+      HTMLView.processDOM(data.content, function(elements){
         contentElements = elements;
       });
 
@@ -224,7 +234,7 @@ var CommentsView = React.createClass({
           {storyHeader}
           <Text style={styles.storyMetadata}>{data.points} points by {data.user}</Text>
           <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count ? commentsText : null}</Text>
-          <TouchableHighlight onPress={linkPress.bind(null, hnURL)}>
+          <TouchableHighlight onPress={linkPress.bind(null, hnURL)} onLongPress={linkLongPress.bind(null, hnURL, data.title)}>
             <View style={styles.externalLink}>
               <Image style={styles.externalArrowIcon} source={require('image!external-arrow')}/>
               <Text style={styles.storyMetadata}>{hnShortURL}</Text>

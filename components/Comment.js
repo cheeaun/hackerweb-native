@@ -62,11 +62,7 @@ var Comment = React.createClass({
     var op = this.props.op;
     var level = data.level;
     var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('image!comment-arrow')}/> : null;
-    var linkPress = function(url){
-      SafariView.show({
-        url: url
-      });
-    };
+
     var innerComment = data.deleted ? (
       <View style={styles.commentMetadata}>
         <Text style={styles.commentDeleted}>[deleted]</Text>
@@ -78,9 +74,10 @@ var Comment = React.createClass({
           <Text style={styles.commentUser}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
           <Text style={styles.commentTime}>{data.time_ago}</Text>
         </View>
-        <HTMLView html={data.content} onLinkPress={linkPress}/>
+        <HTMLView html={data.content}/>
       </View>
     );
+
     return (
       <View style={[styles.comment, level > 0 && styles.subComment]}>
         {commentArrow}

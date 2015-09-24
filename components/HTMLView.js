@@ -10,6 +10,7 @@ var {
 } = React;
 
 var colors = require('../colors');
+var SafariView = require('react-native-safari-view');
 
 var nodeStyles = StyleSheet.create({
   p: {
@@ -31,6 +32,12 @@ var nodeStyles = StyleSheet.create({
     fontStyle: 'italic',
   }
 });
+
+var onLinkPress = function(url){
+  SafariView.show({
+    url: url
+  });
+};
 
 var dom2elements = function(nodes, opts){
   if (!nodes || !nodes.length) return;
@@ -60,7 +67,8 @@ var dom2elements = function(nodes, opts){
         return <Text style={style}>{elements}</Text>;
       }
       if (nodeName == 'a'){
-        return <Text style={style} onPress={linkHandler.bind(null, node.attribs.href)}>{elements}</Text>
+        var href = node.attribs.href;
+        return <Text style={style} onPress={onLinkPress.bind(null, href)}>{elements}</Text>;
       }
       return <Text style={style}>{elements}</Text>;
     } else if (node.type == 'text'){
@@ -70,6 +78,10 @@ var dom2elements = function(nodes, opts){
 };
 
 var processDOM = function(html, opts, callback){
+  if (typeof opts == 'function'){
+    callback = opts;
+    opts = {};
+  }
   var handler = new htmlparser.DomHandler(function(err, dom){
     var elements = dom2elements(dom, opts);
     callback(elements);
@@ -97,10 +109,9 @@ var HTMLView = React.createClass({
   componentDidMount: function(){
     var html = this.props.html;
     if (!html) return null;
-    var onLinkPress = this.props.onLinkPress;
     var self = this;
     processDOM(html, {
-      linkHandler: onLinkPress
+      onLinkPress: this.props.onLinkPress || onLinkPress,
     }, function(elements){
       self.setState({
         elements: elements

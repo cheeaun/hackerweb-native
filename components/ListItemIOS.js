@@ -22,7 +22,7 @@ var styles = StyleSheet.create({
 var ListItemIOS = React.createClass({
   render: function(){
     return (
-      <TouchableHighlight onPress={this.props.onPress} onShowUnderlay={this.props.onHighlight} onHideUnderlay={this.props.onUnhighlight}>
+      <TouchableHighlight onPress={this.props.onPress} onLongPress={this.props.onLongPress} onShowUnderlay={this.props.onHighlight} onHideUnderlay={this.props.onUnhighlight}>
         <View style={styles.itemContainer}>
           <View style={styles.item}>
             {this.props.children}

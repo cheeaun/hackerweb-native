@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9B182C161BA5CA4D001CEAE7 /* libRNAppInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B182C131BA5C913001CEAE7 /* libRNAppInfo.a */; };
+		9B72A3451BAD44E300756F36 /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B72A3371BAD44D100756F36 /* libActivityView.a */; };
 		9BDD3F4A1B5BF9AC001D5335 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BDD3F491B5BF97D001D5335 /* libSafariViewManager.a */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,13 @@
 			remoteGlobalIDString = CDD7BF831B2D5126006FDA75;
 			remoteInfo = RNAppInfoTests;
 		};
+		9B72A3361BAD44D100756F36 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9B72A3321BAD44D100756F36 /* ActivityView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = ActivityView;
+		};
 		9BDD3F481B5BF97D001D5335 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9BDD3F3A1B5BF97D001D5335 /* SafariViewManager.xcodeproj */;
@@ -151,6 +159,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9B182C0D1BA5C913001CEAE7 /* RNAppInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAppInfo.xcodeproj; path = "node_modules/react-native-app-info/RNAppInfo.xcodeproj"; sourceTree = "<group>"; };
+		9B72A3321BAD44D100756F36 /* ActivityView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ActivityView.xcodeproj; path = "node_modules/react-native-activity-view/ActivityView.xcodeproj"; sourceTree = "<group>"; };
 		9BDD3F3A1B5BF97D001D5335 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B72A3451BAD44E300756F36 /* libActivityView.a in Frameworks */,
 				9B182C161BA5CA4D001CEAE7 /* libRNAppInfo.a in Frameworks */,
 				9BDD3F4A1B5BF9AC001D5335 /* libSafariViewManager.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -290,6 +300,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9B72A3321BAD44D100756F36 /* ActivityView.xcodeproj */,
 				9B182C0D1BA5C913001CEAE7 /* RNAppInfo.xcodeproj */,
 				9BDD3F3A1B5BF97D001D5335 /* SafariViewManager.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -340,6 +351,14 @@
 			children = (
 				9B182C131BA5C913001CEAE7 /* libRNAppInfo.a */,
 				9B182C151BA5C913001CEAE7 /* RNAppInfoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9B72A3331BAD44D100756F36 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9B72A3371BAD44D100756F36 /* libActivityView.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -420,6 +439,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 9B72A3331BAD44D100756F36 /* Products */;
+					ProjectRef = 9B72A3321BAD44D100756F36 /* ActivityView.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -560,6 +583,13 @@
 			fileType = wrapper.cfbundle;
 			path = RNAppInfoTests.xctest;
 			remoteRef = 9B182C141BA5C913001CEAE7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9B72A3371BAD44D100756F36 /* libActivityView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libActivityView.a;
+			remoteRef = 9B72A3361BAD44D100756F36 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9BDD3F491B5BF97D001D5335 /* libSafariViewManager.a */ = {
