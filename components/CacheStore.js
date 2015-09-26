@@ -47,6 +47,14 @@ var CacheStore = {
     return AsyncStorage.multiRemove([CACHE_EXPIRATION_PREFIX + key, CACHE_PREFIX + key]);
   },
 
+  isExpired: function(key){
+    var exprKey = CACHE_EXPIRATION_PREFIX + key;
+    return AsyncStorage.getItem(exprKey).then(function(expiry){
+      var expired = expiry && currentTime() >= parseInt(expiry, 10);
+      return expired ? Promise.resolve() : new Promise.reject(null);
+    });
+  },
+
   flush: function(){
     return AsyncStorage.getAllKeys().then(function(keys){
       var theKeys = keys.filter(function(key){

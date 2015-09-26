@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var {
+  AppStateIOS,
   AppRegistry,
   StyleSheet,
   Modal,
@@ -27,9 +28,24 @@ var styles = StyleSheet.create({
 var App = new React.createClass({
   getInitialState: function(){
     return {
+      currentAppState: AppStateIOS.currentState,
       isAboutVisible: false,
       showNav: false,
     };
+  },
+  componentDidMount: function(){
+    AppStateIOS.addEventListener('change', this._handleAppStateChange);
+  },
+  componentWillUnmount: function(){
+    AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+  },
+  _handleAppStateChange: function(currentAppState){
+    if (currentAppState == 'active' && this.state.currentAppState != currentAppState){
+      StoryActions.fetchStoriesIfExpired();
+    }
+    this.setState({
+      currentAppState: currentAppState,
+    });
   },
   _showAbout: function(){
     this.setState({

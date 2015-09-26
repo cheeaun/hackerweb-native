@@ -44,6 +44,10 @@ class StoryActions {
     }).catch(request);
   }
 
+  fetchStoriesIfExpired(){
+    CacheStore.isExpired('stories').then(this.actions.fetchStories);
+  }
+
   storiesFailed(error){
     this.dispatch(error);
   }
