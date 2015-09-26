@@ -39,6 +39,9 @@ var styles = StyleSheet.create({
     borderBottomWidth: devicePx,
     marginBottom: 30,
   },
+  errorContainer: {
+    alignItems: 'center',
+  },
   errorText: {
     opacity: .6,
     textAlign: 'center',
@@ -206,7 +209,7 @@ var CommentsView = React.createClass({
     } else if (this.state.error){
       commentsSection = (
         <View style={styles.viewCommentsBlank}>
-          <View>
+          <View style={styles.errorContainer}>
             <Text style={styles.errorText}>Couldn't load comments.</Text>
             <TouchableOpacity onPress={this._fetchStory}>
               <Text style={styles.retryText}>Try again</Text>
