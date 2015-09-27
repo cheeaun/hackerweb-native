@@ -12,8 +12,12 @@ var {
 
 var SafariView = require('react-native-safari-view');
 var ActivityView = require('react-native-activity-view');
+
 var StoryStore = require('../stores/StoryStore');
 var StoryActions = require('../actions/StoryActions');
+var LinkStore = require('../stores/LinkStore');
+var LinkActions = require('../actions/LinkActions');
+
 var LoadingIndicator = require('../components/LoadingIndicator');
 var ListItemIOS = require('../components/ListItemIOS');
 var HTMLView = require('../components/HTMLView');
@@ -73,6 +77,9 @@ var styles = StyleSheet.create({
   storyTitle: {
     fontSize: 17
   },
+  storyTitleVisited: {
+    color: colors.insignificantColor,
+  },
   storyDomain: {
     fontSize: 13,
     color: colors.domainColor,
@@ -102,19 +109,24 @@ var styles = StyleSheet.create({
 var StoriesView = React.createClass({
   getInitialState: function(){
     var { stories, storiesLoading, storiesError } = StoryStore.getState();
+    var { links } = LinkStore.getState();
     return {
       stories: stories,
       loading: storiesLoading,
       error: storiesError,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      links: links,
     };
   },
   componentDidMount: function(){
     StoryStore.listen(this._onChange);
     StoryActions.fetchStories();
+    LinkStore.listen(this._onLinkChange);
+    LinkActions.getLinks();
   },
   componentWillUnmount: function(){
     StoryStore.unlisten(this._onChange);
+    LinkStore.unlisten(this._onLinkChange);
   },
   _onChange: function(state){
     this.setState({
@@ -123,6 +135,11 @@ var StoriesView = React.createClass({
       stories: state.stories,
       loading: state.storiesLoading,
       error: state.storiesError,
+    });
+  },
+  _onLinkChange: function(state){
+    this.setState({
+      links: state.links,
     });
   },
   _navigateToComments: function(data){
@@ -138,12 +155,17 @@ var StoriesView = React.createClass({
   renderRow: function(row, sectionID, rowID, highlightRow){
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
+    var visited = this.state.links.includes(url);
     var externalLink = !/^item/i.test(url);
 
+    var self = this;
     var linkPress = externalLink ? function(){
       SafariView.show({
         url: url
       });
+      setTimeout(function(){
+        LinkActions.addLink(url);
+      }, 1000); // Set the link inactive after 1 second
     } : this._navigateToComments.bind(this, row);
     var linkLongPress = function(){
       ActivityView.show({
@@ -161,7 +183,7 @@ var StoriesView = React.createClass({
             <Text style={styles.storyPositionNumber}>{position}</Text>
           </View>
           <View style={styles.storyInfo}>
-            <Text style={styles.storyTitle}>{row.title}</Text>
+            <Text style={[styles.storyTitle, visited && styles.storyTitleVisited]}>{row.title}</Text>
             {domainText}
             <Text style={styles.storyMetadata}>{row.time_ago}</Text>
           </View>
@@ -184,7 +206,7 @@ var StoriesView = React.createClass({
           <Text style={styles.storyPositionNumber}>{position}</Text>
         </View>
         <View style={styles.storyInfo}>
-          <Text style={styles.storyTitle}>{row.title}</Text>
+          <Text style={[styles.storyTitle, visited && styles.storyTitleVisited]}>{row.title}</Text>
           {domainText}
           <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
           <Text style={styles.storyMetadata}>{row.time_ago} {row.comments_count ? commentsText : null}</Text>

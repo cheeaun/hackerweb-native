@@ -14,8 +14,11 @@ var {
 
 var SafariView = require('react-native-safari-view');
 var ActivityView = require('react-native-activity-view');
+
 var StoryStore = require('../stores/StoryStore');
 var StoryActions = require('../actions/StoryActions');
+var LinkActions = require('../actions/LinkActions');
+
 var LoadingIndicator = require('../components/LoadingIndicator');
 var HTMLView = require('../components/HTMLView');
 var CommentsThread = require('../components/CommentsThread');
@@ -147,6 +150,9 @@ var CommentsView = React.createClass({
       SafariView.show({
         url: u
       });
+      setTimeout(function(){
+        LinkActions.addLink(url);
+      }, 1000); // Set the link inactive after 1 second
     };
 
     var linkLongPress = function(u, t){
