@@ -13,8 +13,8 @@ class StoryStore {
     this.storyError = false;
 
     this.bindListeners({
-      handleUpdateStories: StoryActions.UPDATE_STORIES,
       handleFetchStories: StoryActions.FETCH_STORIES,
+      handleUpdateStories: StoryActions.UPDATE_STORIES,
       handleStoriesFailed: StoryActions.STORIES_FAILED,
       handleFetchStory: StoryActions.FETCH_STORY,
       handleUpdateStory: StoryActions.UPDATE_STORY,
