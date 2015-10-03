@@ -55,6 +55,13 @@ var styles = StyleSheet.create({
   },
 });
 
+var linkPress = function(u){
+  if (!u) return;
+  SafariView.show({
+    url: u
+  });
+};
+
 var Comment = React.createClass({
   mixins: [ React.addons.PureRenderMixin ],
   render: function(){
@@ -71,8 +78,8 @@ var Comment = React.createClass({
     ) : (
       <View>
         <View style={styles.commentMetadata}>
-          <Text style={styles.commentUser}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
-          <Text style={styles.commentTime}>{data.time_ago}</Text>
+          <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
+          <Text style={styles.commentTime} onPress={linkPress.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
         </View>
         <HTMLView html={data.content}/>
       </View>
