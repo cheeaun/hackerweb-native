@@ -235,7 +235,7 @@ var StoriesView = React.createClass({
     }
     return (
       <ListView
-        initialListSize={30}
+        initialListSize={10}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
