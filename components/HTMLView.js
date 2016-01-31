@@ -94,6 +94,8 @@ var processDOM = function(html, opts, callback){
     lowerCaseTags: true,
     decodeEntities: true,
   });
+  // Clean up HTML first
+  if (!html.match(/^<p>/i)) html = '<p>' + html;
   parser.write(html);
   parser.end();
 }
