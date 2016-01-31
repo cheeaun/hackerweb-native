@@ -87,7 +87,7 @@ var App = new React.createClass({
               component: StoriesView,
               leftButtonTitle: 'About',
               onLeftButtonPress: this._showAbout,
-              rightButtonIcon: require('image!refresh-icon'),
+              rightButtonIcon: require('./images/refresh-icon.png'),
               onRightButtonPress: StoryActions.fetchStories,
             }}/>
         </View>

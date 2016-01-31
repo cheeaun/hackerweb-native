@@ -245,7 +245,7 @@ var CommentsView = React.createClass({
           <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count ? commentsText : null}</Text>
           <TouchableHighlight onPress={linkPress.bind(null, hnURL)} onLongPress={linkLongPress.bind(null, hnURL, data.title)}>
             <View style={styles.externalLink}>
-              <Image style={styles.externalArrowIcon} source={require('image!external-arrow')}/>
+              <Image style={styles.externalArrowIcon} source={require('../images/external-arrow.png')}/>
               <Text style={styles.storyMetadata}>{hnShortURL}</Text>
             </View>
           </TouchableHighlight>

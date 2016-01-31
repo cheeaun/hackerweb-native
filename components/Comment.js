@@ -68,7 +68,7 @@ var Comment = React.createClass({
     var data = this.props.data;
     var op = this.props.op;
     var level = data.level;
-    var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('image!comment-arrow')}/> : null;
+    var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/> : null;
 
     var innerComment = data.deleted ? (
       <View style={styles.commentMetadata}>

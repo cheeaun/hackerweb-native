@@ -194,10 +194,10 @@ var StoriesView = React.createClass({
     var commentsText = <Text>&middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>;
     var disclosureButton = externalLink ? <TouchableOpacity onPress={this._navigateToComments.bind(this, row)}>
       <View style={styles.storyComments}>
-        <Image style={styles.commentIcon} source={require('image!comments-icon')}/>
+        <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
       </View>
     </TouchableOpacity> : <View style={styles.storyDisclosure}>
-      <Image style={styles.disclosureIcon} source={require('image!disclosure-indicator')}/>
+      <Image style={styles.disclosureIcon} source={require('../images/disclosure-indicator.png')}/>
     </View>;
 
     return (

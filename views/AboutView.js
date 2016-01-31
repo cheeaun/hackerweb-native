@@ -116,7 +116,7 @@ var AboutView = React.createClass({
       <ScrollView>
         <View style={styles.aboutContainer}>
           <View>
-            <Image style={styles.appIcon} source={require('image!app-icon')}/>
+            <Image style={styles.appIcon} source={require('../images/app-icon.png')}/>
           </View>
           <View style={styles.aboutTextContainer}>
             <Text style={styles.aboutHeading}>HackerWeb</Text>
