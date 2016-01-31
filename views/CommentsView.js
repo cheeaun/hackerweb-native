@@ -111,6 +111,24 @@ var styles = StyleSheet.create({
   },
 });
 
+var linkPress = function(u){
+  if (!u) return;
+  SafariView.show({
+    url: u
+  });
+  setTimeout(function(){
+    LinkActions.addLink(u);
+  }, 1000); // Set the link inactive after 1 second
+};
+
+var linkLongPress = function(u, t){
+  if (!u) return;
+  ActivityView.show({
+    text: t || '',
+    url: u,
+  });
+};
+
 var CommentsView = React.createClass({
   getInitialState: function(){
     var { story, storyLoading, storyError } = StoryStore.getState();
@@ -144,24 +162,6 @@ var CommentsView = React.createClass({
     var externalLink = !/^item/i.test(url);
     var domainText = null;
     var storyHeader = <View><Text style={styles.storyTitle}>{data.title}</Text></View>;
-
-    var linkPress = function(u){
-      if (!u) return;
-      SafariView.show({
-        url: u
-      });
-      setTimeout(function(){
-        LinkActions.addLink(url);
-      }, 1000); // Set the link inactive after 1 second
-    };
-
-    var linkLongPress = function(u, t){
-      if (!u) return;
-      ActivityView.show({
-        text: t || '',
-        url: u,
-      });
-    };
 
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
