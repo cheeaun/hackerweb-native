@@ -105,7 +105,7 @@ var AboutView = React.createClass({
     ];
     var items = links.map(function(link, i){
       return (
-        <View style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
+        <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
           <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
             <Text style={styles.link}>{link.text}</Text>
           </TouchableOpacity>

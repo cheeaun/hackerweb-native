@@ -92,7 +92,7 @@ var App = new React.createClass({
             }}/>
         </View>
         <Modal animated={true} visible={isAboutVisible}>
-          {{nav}}
+          {nav}
         </Modal>
       </View>
     );
