@@ -134,7 +134,7 @@ Some `npm` modules don't work with React Native so I have to compile them into a
 2. `git clone https://github.com/fb55/htmlparser2`
 3. `cd htmlparser2`
 4. `npm install`
-5. `browserify lib/index.js --standalone htmlparser2 > htmlparser2.js`
+5. `browserify lib/index.js --standalone htmlparser2 | derequire > htmlparser2.js`
 6. Move the generated `htmlparser2.js` file to the `vendor` folder in this repo
 
 ### Running on device (iOS)

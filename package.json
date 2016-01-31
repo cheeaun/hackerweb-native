@@ -6,10 +6,12 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "alt": "~0.17.3",
-    "react-native": "~0.11.4",
-    "react-native-activity-view": "~0.2.6",
-    "react-native-app-info": "0.0.6",
-    "react-native-safari-view": "~0.1.2"
+    "alt": "~0.18.2",
+    "firebase": "~2.4.0",
+    "react-native": "~0.19.0",
+    "react-native-activity-view": "~0.2.8",
+    "react-native-app-info": "~0.0.6",
+    "react-native-safari-view": "~0.3.0",
+    "reactfire": "~0.5.1"
   }
 }

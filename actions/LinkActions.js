@@ -4,24 +4,28 @@ var alt = require('../alt');
 var CacheStore = require('../components/CacheStore');
 
 class LinkActions {
-  getLinks(){
-    var self = this;
-    CacheStore.get('links').then(function(links){
-      links = links || [];
-      self.dispatch(links);
-    });
+  getLinks() {
+    return function(dispatch) {
+      var self = this;
+      CacheStore.get('links').then(function(links){
+        links = links || [];
+        dispatch(links);
+      });
+    };
   }
 
-  addLink(link){
-    var self = this;
-    CacheStore.get('links').then(function(links){
-      links = links || [];
-      if (!links.includes(link)){
-        self.dispatch(link);
-        links.push(link);
-        CacheStore.set('links', links.slice(0, 100));
-      }
-    });
+  addLink(link) {
+    return function(dispatch) {
+      var self = this;
+      CacheStore.get('links').then(function(links){
+        links = links || [];
+        if (!links.includes(link)){
+          dispatch(link);
+          links.push(link);
+          CacheStore.set('links', links.slice(0, 100));
+        }
+      });
+    };
   }
 }
 
