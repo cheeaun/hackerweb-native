@@ -216,7 +216,7 @@ var StoriesView = React.createClass({
     );
   },
   renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){
-    return <View style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
+    return <View key={rowID} style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
   },
   render: function(){
     if (this.state.loading){

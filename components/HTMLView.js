@@ -44,6 +44,7 @@ var dom2elements = function(nodes, opts){
   var linkHandler = opts.linkHandler;
   return nodes.map(function(node){
     var nodeName = node.name;
+    var key = nodeName + '-' + Math.random();
     var style = nodeStyles[nodeName];
     if (node.type == 'tag'){
       var elements = dom2elements(node.children, opts);
@@ -51,6 +52,7 @@ var dom2elements = function(nodes, opts){
       if (nodeName == 'pre'){
         return (
           <ScrollView
+            key={key}
             horizontal={true}
             automaticallyAdjustContentInsets={false}
             scrollsToTop={false}
@@ -62,17 +64,17 @@ var dom2elements = function(nodes, opts){
       if (nodeName == 'p'){
         // Weird that <pre> is inside <p>
         if (node.children.some(function(c){ return c.name == 'pre'; })){
-          return {elements};
+          return elements;
         }
-        return <Text style={style}>{elements}</Text>;
+        return <Text key={key} style={style}>{elements}</Text>;
       }
       if (nodeName == 'a'){
         var href = node.attribs.href;
-        return <Text style={style} onPress={onLinkPress.bind(null, href)}>{elements}</Text>;
+        return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)}>{elements}</Text>;
       }
-      return <Text style={style}>{elements}</Text>;
+      return <Text key={key} style={style}>{elements}</Text>;
     } else if (node.type == 'text'){
-      return <Text style={style}>{node.data}</Text>;
+      return <Text key={key} style={style}>{node.data}</Text>;
     }
   });
 };
