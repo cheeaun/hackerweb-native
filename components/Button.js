@@ -8,8 +8,6 @@ var {
   TouchableWithoutFeedback,
 } = React;
 
-var devicePx = require('../utils/devicePx');
-
 var colors = require('../colors');
 
 var styles = StyleSheet.create({
@@ -17,7 +15,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 6,
     borderColor: colors.defaultButtonThemeColor,
-    borderWidth: devicePx,
+    borderWidth: StyleSheet.hairlineWidth,
     paddingVertical: 5,
     paddingHorizontal: 10,
   },

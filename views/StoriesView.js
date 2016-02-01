@@ -23,7 +23,6 @@ var ListItemIOS = require('../components/ListItemIOS');
 var HTMLView = require('../components/HTMLView');
 var CommentsView = require('./CommentsView');
 var domainify = require('../utils/domainify');
-var devicePx = require('../utils/devicePx');
 
 var colors = require('../colors');
 
@@ -47,10 +46,10 @@ var styles = StyleSheet.create({
     opacity: .6,
   },
   itemSeparator: {
-    height: devicePx,
+    height: StyleSheet.hairlineWidth,
     backgroundColor: colors.separatorColor,
     marginLeft: 15,
-    marginTop: -devicePx,
+    marginTop: -StyleSheet.hairlineWidth,
   },
   itemHighligtedSeparator: {
     opacity: 0,

@@ -9,7 +9,6 @@ var {
 
 var Comment = require('./Comment');
 var Button = require('./Button');
-var devicePx = require('../utils/devicePx');
 
 var colors = require('../colors');
 
@@ -18,7 +17,7 @@ var styles = StyleSheet.create({
     marginLeft: 14,
   },
   commentsSeparator: {
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.separatorColor,
     height: 0,
   },

@@ -24,7 +24,6 @@ var HTMLView = require('../components/HTMLView');
 var CommentsThread = require('../components/CommentsThread');
 var ProgressBar = require('../components/ProgressBar');
 var domainify = require('../utils/domainify');
-var devicePx = require('../utils/devicePx');
 
 var colors = require('../colors');
 
@@ -37,9 +36,9 @@ var styles = StyleSheet.create({
     padding: 50,
     backgroundColor: colors.sectionBackgroundColor,
     borderTopColor: colors.separatorColor,
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
-    borderBottomWidth: devicePx,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 30,
   },
   errorContainer: {
@@ -79,15 +78,15 @@ var styles = StyleSheet.create({
     backgroundColor: colors.sectionBackgroundColor,
     padding: 15,
     borderTopColor: colors.separatorColor,
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
-    borderBottomWidth: devicePx,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 30,
   },
   commentsThread: {
     backgroundColor: colors.sectionBackgroundColor,
     borderTopColor: colors.separatorColor,
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     marginBottom: 30,
   },
   externalLink: {

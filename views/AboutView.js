@@ -13,7 +13,6 @@ var {
 
 var SafariView = require('react-native-safari-view');
 var AppInfo = require('react-native-app-info');
-var devicePx = require('../utils/devicePx');
 
 var colors = require('../colors');
 
@@ -22,9 +21,9 @@ var styles = StyleSheet.create({
     marginTop: 34,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.separatorColor,
-    borderBottomWidth: devicePx,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
     backgroundColor: colors.sectionBackgroundColor,
     flexDirection: 'row',
@@ -34,7 +33,7 @@ var styles = StyleSheet.create({
     height: 60,
     marginRight: 10,
     borderColor: colors.separatorColor,
-    borderWidth: devicePx,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 14,
   },
   aboutTextContainer: {
@@ -50,9 +49,9 @@ var styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 34,
-    borderTopWidth: devicePx,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.separatorColor,
-    borderBottomWidth: devicePx,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
     paddingLeft: 15,
     backgroundColor: colors.sectionBackgroundColor,
@@ -60,7 +59,7 @@ var styles = StyleSheet.create({
   listItem: {
     paddingVertical: 13,
     paddingRight: 15,
-    borderBottomWidth: devicePx,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
   },
   lastListItem: {
