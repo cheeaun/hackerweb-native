@@ -28,8 +28,8 @@ var devicePx = require('../utils/devicePx');
 var colors = require('../colors');
 
 var styles = StyleSheet.create({
-  navbarPadding: {
-    paddingTop: 64,
+  navbarSpacing: {
+    marginTop: 64,
   },
   viewLoading: {
     flex: 1,
@@ -238,7 +238,7 @@ var StoriesView = React.createClass({
     }
     return (
       <ListView
-        style={styles.navbarPadding}
+        style={styles.navbarSpacing}
         initialListSize={10}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
