@@ -109,8 +109,8 @@ Development
 ### Requirements
 
 - [React Native](https://facebook.github.io/react-native/)
-- [Node.js](https://nodejs.org/) 4.0
-- [Xcode](https://developer.apple.com/xcode/) 7
+- [Node.js](https://nodejs.org/)
+- [Xcode](https://developer.apple.com/xcode/)
 - [iOS](https://www.apple.com/ios/) **9**
 
 ### Getting started
