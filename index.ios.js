@@ -15,9 +15,14 @@ import StoryActions from './actions/StoryActions';
 import StoriesView from './views/StoriesView';
 import AboutView from './views/AboutView';
 
+import colors from './colors';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  wrapper: {
+    backgroundColor: colors.viewBackgroundColor,
   },
 });
 
