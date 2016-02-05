@@ -11,7 +11,6 @@
     "react-native": "~0.19.0",
     "react-native-activity-view": "~0.2.8",
     "react-native-app-info": "~0.0.6",
-    "react-native-safari-view": "~0.3.0",
-    "reactfire": "~0.5.1"
+    "react-native-safari-view": "git@github.com:jasonmerino/react-native-safari-view.git#patch-1"
   }
 }
