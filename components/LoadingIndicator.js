@@ -1,14 +1,15 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   StyleSheet,
   Text,
   View,
   ActivityIndicatorIOS,
 } = React;
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -22,24 +23,25 @@ var styles = StyleSheet.create({
   },
 });
 
-var LoadingIndicator = React.createClass({
-  getInitialState: function(){
-    return {
+export default class LoadingIndicator extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
       opacity: 0,
     };
-  },
-  componentDidMount: function(){
+  }
+  componentDidMount(){
     var self = this;
     this._timer = setTimeout(function(){
       self.setState({
         opacity: 1
       });
     }, 900); // less than 1 second
-  },
-  componentWillUnmount: function(){
+  }
+  componentWillUnmount(){
     clearTimeout(this._timer);
-  },
-  render: function(){
+  }
+  render(){
     return (
       <View style={[styles.container, {opacity: this.state.opacity}]}>
         <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
@@ -47,6 +49,4 @@ var LoadingIndicator = React.createClass({
       </View>
     );
   }
-});
-
-module.exports = LoadingIndicator;
+}

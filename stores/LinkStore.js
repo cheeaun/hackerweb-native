@@ -1,7 +1,7 @@
 'use strict';
 
-var alt = require('../alt');
-var LinkActions = require('../actions/LinkActions');
+import alt from '../alt';
+import LinkActions from '../actions/LinkActions';
 
 class LinkStore {
   constructor(){
@@ -22,4 +22,4 @@ class LinkStore {
   }
 }
 
-module.exports = alt.createStore(LinkStore, 'LinkStore');
+export default alt.createStore(LinkStore, 'LinkStore');

@@ -1,24 +1,24 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
   AsyncStorage,
 } = React;
 
 // Inspired by lscache https://github.com/pamelafox/lscache
 
-var CACHE_PREFIX = 'cachestore-';
-var CACHE_EXPIRATION_PREFIX = 'cacheexpiration-';
-var EXPIRY_UNITS = 60 * 1000; // Time resolution in minutes
+const CACHE_PREFIX = 'cachestore-';
+const CACHE_EXPIRATION_PREFIX = 'cacheexpiration-';
+const EXPIRY_UNITS = 60 * 1000; // Time resolution in minutes
 
 function currentTime(){
   return Math.floor((new Date().getTime())/EXPIRY_UNITS);
-}
+};
 
 var CacheStore = {
-  get: function(key){
-    var theKey = CACHE_PREFIX + key;
-    var exprKey = CACHE_EXPIRATION_PREFIX + key;
+  get(key){
+    const theKey = CACHE_PREFIX + key;
+    const exprKey = CACHE_EXPIRATION_PREFIX + key;
     return AsyncStorage.getItem(exprKey).then(function(expiry){
       if (expiry && currentTime() >= parseInt(expiry, 10)){
         AsyncStorage.multiRemove([exprKey, theKey]);
@@ -30,9 +30,9 @@ var CacheStore = {
     });
   },
 
-  set: function(key, value, time){
-    var theKey = CACHE_PREFIX + key;
-    var exprKey = CACHE_EXPIRATION_PREFIX + key;
+  set(key, value, time){
+    const theKey = CACHE_PREFIX + key;
+    const exprKey = CACHE_EXPIRATION_PREFIX + key;
     if (time){
       return AsyncStorage.setItem(exprKey, (currentTime() + time).toString()).then(function(){
         return AsyncStorage.setItem(theKey, JSON.stringify(value));
@@ -43,19 +43,19 @@ var CacheStore = {
     }
   },
 
-  remove: function(key){
+  remove(key){
     return AsyncStorage.multiRemove([CACHE_EXPIRATION_PREFIX + key, CACHE_PREFIX + key]);
   },
 
-  isExpired: function(key){
-    var exprKey = CACHE_EXPIRATION_PREFIX + key;
+  isExpired(key){
+    const exprKey = CACHE_EXPIRATION_PREFIX + key;
     return AsyncStorage.getItem(exprKey).then(function(expiry){
       var expired = expiry && currentTime() >= parseInt(expiry, 10);
       return expired ? Promise.resolve() : new Promise.reject(null);
     });
   },
 
-  flush: function(){
+  flush(){
     return AsyncStorage.getAllKeys().then(function(keys){
       var theKeys = keys.filter(function(key){
         return key.indexOf(CACHE_PREFIX) == 0 || key.indexOf(CACHE_EXPIRATION_PREFIX) == 0;
@@ -86,4 +86,4 @@ var CacheStore = {
 // Always flush expired items on start time
 CacheStore.flushExpired();
 
-module.exports = CacheStore;
+export default CacheStore;

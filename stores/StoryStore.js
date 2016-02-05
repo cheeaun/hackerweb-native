@@ -1,7 +1,7 @@
 'use strict';
 
-var alt = require('../alt');
-var StoryActions = require('../actions/StoryActions');
+import alt from '../alt';
+import StoryActions from '../actions/StoryActions';
 
 class StoryStore {
   constructor(){
@@ -66,4 +66,4 @@ class StoryStore {
   }
 }
 
-module.exports = alt.createStore(StoryStore, 'StoryStore');
+export default alt.createStore(StoryStore, 'StoryStore');

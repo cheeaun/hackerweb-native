@@ -1,15 +1,16 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   StyleSheet,
   View,
   Animated,
 } = React;
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   bar: {
     backgroundColor: colors.progressBarBackgroundColor,
     height: 3,
@@ -22,27 +23,26 @@ var styles = StyleSheet.create({
   }
 });
 
-var ProgressBar = React.createClass({
-  mixins: [ React.addons.PureRenderMixin ],
-  getInitialState: function(){
-    return {
+export default class ProgressBar extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
       progressWidth: new Animated.Value(0),
     };
-  },
-  _onBarLayout: function(e){
+    this._onBarLayout = this._onBarLayout.bind(this);
+  }
+  _onBarLayout(e){
     var width = e.nativeEvent.layout.width;
     Animated.spring(this.state.progressWidth, {
       toValue: this.props.value/this.props.max*100,
       duration: 300,
     }).start();
-  },
-  render: function(){
+  }
+  render(){
     return (
       <View style={styles.bar} onLayout={this._onBarLayout}>
         <Animated.View style={[styles.progress, {width: this.state.progressWidth}]}></Animated.View>
       </View>
     );
   }
-});
-
-module.exports = ProgressBar;
+}

@@ -1,10 +1,10 @@
 'use strict';
 
-var alt = require('../alt');
-var CacheStore = require('../components/CacheStore');
+import alt from '../alt';
+import CacheStore from '../components/CacheStore';
 
-var API_HOST = 'https://node-hnapi.herokuapp.com/';
-var fetchTimeout = function(){
+const API_HOST = 'https://node-hnapi.herokuapp.com/';
+var fetchTimeout = () => {
   return new Promise(function(resolve, reject){
     setTimeout(function(){
       reject(new Error('Response timeout.'));
@@ -17,9 +17,9 @@ class StoryActions {
     return stories;
   }
 
-  fetchStories() {
+  fetchStories(){
     var self = this;
-    return function(dispatch) {
+    return function(dispatch){
       dispatch();
       var request = function(){
         Promise.race([
@@ -92,4 +92,4 @@ class StoryActions {
   }
 }
 
-module.exports = alt.createActions(StoryActions);
+export default alt.createActions(StoryActions);

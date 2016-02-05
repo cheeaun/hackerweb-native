@@ -1,36 +1,30 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
   StyleSheet,
   TouchableHighlight,
   View
 } = React;
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   itemContainer: {
     backgroundColor: colors.sectionBackgroundColor,
-    paddingLeft: 15
+    paddingLeft: 15,
   },
   item: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   }
 });
 
-var ListItemIOS = React.createClass({
-  render: function(){
-    return (
-      <TouchableHighlight onPress={this.props.onPress} onLongPress={this.props.onLongPress} onShowUnderlay={this.props.onHighlight} onHideUnderlay={this.props.onUnhighlight}>
-        <View style={styles.itemContainer}>
-          <View style={styles.item}>
-            {this.props.children}
-          </View>
-        </View>
-      </TouchableHighlight>
-    );
-  }
-});
-
-module.exports = ListItemIOS;
+export default (props) => {
+  return <TouchableHighlight onPress={props.onPress} onLongPress={props.onLongPress} onShowUnderlay={props.onHighlight} onHideUnderlay={props.onUnhighlight}>
+    <View style={styles.itemContainer}>
+      <View style={styles.item}>
+        {props.children}
+      </View>
+    </View>
+  </TouchableHighlight>
+}

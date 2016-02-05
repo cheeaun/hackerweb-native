@@ -1,7 +1,8 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   StyleSheet,
   View,
   Text,
@@ -10,23 +11,23 @@ var {
   Image,
 } = React;
 
-var SafariView = require('react-native-safari-view');
-var ActivityView = require('react-native-activity-view');
+import SafariView from 'react-native-safari-view';
+import ActivityView from 'react-native-activity-view';
 
-var StoryStore = require('../stores/StoryStore');
-var StoryActions = require('../actions/StoryActions');
-var LinkStore = require('../stores/LinkStore');
-var LinkActions = require('../actions/LinkActions');
+import StoryStore from '../stores/StoryStore';
+import StoryActions from '../actions/StoryActions';
+import LinkStore from '../stores/LinkStore';
+import LinkActions from '../actions/LinkActions';
 
-var LoadingIndicator = require('../components/LoadingIndicator');
-var ListItemIOS = require('../components/ListItemIOS');
-var HTMLView = require('../components/HTMLView');
-var CommentsView = require('./CommentsView');
-var domainify = require('../utils/domainify');
+import LoadingIndicator from '../components/LoadingIndicator';
+import ListItemIOS from '../components/ListItemIOS';
+import HTMLView from '../components/HTMLView';
+import CommentsView from './CommentsView';
+import domainify from '../utils/domainify';
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   navbarSpacing: {
     marginTop: 64,
   },
@@ -108,29 +109,32 @@ var styles = StyleSheet.create({
   },
 });
 
-var StoriesView = React.createClass({
-  getInitialState: function(){
+export default class StoriesView extends Component {
+  constructor(props){
+    super(props);
     var { stories, storiesLoading, storiesError } = StoryStore.getState();
     var { links } = LinkStore.getState();
-    return {
-      stories: stories,
+    this.state = {
+      stories,
       loading: storiesLoading,
       error: storiesError,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
-      links: links,
+      links,
     };
-  },
-  componentDidMount: function(){
+    this._onChange = this._onChange.bind(this);
+    this._onLinkChange = this._onLinkChange.bind(this);
+  }
+  componentDidMount(){
     StoryStore.listen(this._onChange);
     StoryActions.fetchStories();
     LinkStore.listen(this._onLinkChange);
     LinkActions.getLinks();
-  },
-  componentWillUnmount: function(){
+  }
+  componentWillUnmount(){
     StoryStore.unlisten(this._onChange);
     LinkStore.unlisten(this._onLinkChange);
-  },
-  _onChange: function(state){
+  }
+  _onChange(state){
     this.setState({
       // Have to "clone" state.stories because `cloneWithRows` is confused with the reference
       dataSource: this.state.dataSource.cloneWithRows([].concat(state.stories)),
@@ -138,13 +142,13 @@ var StoriesView = React.createClass({
       loading: state.storiesLoading,
       error: state.storiesError,
     });
-  },
-  _onLinkChange: function(state){
+  }
+  _onLinkChange(state){
     this.setState({
       links: state.links,
     });
-  },
-  _navigateToComments: function(data){
+  }
+  _navigateToComments(data){
     this.props.navigator.push({
       title: data.title,
       component: CommentsView,
@@ -153,8 +157,8 @@ var StoriesView = React.createClass({
         data: data
       }
     });
-  },
-  renderRow: function(row, sectionID, rowID, highlightRow){
+  }
+  renderRow(row, sectionID, rowID, highlightRow){
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
     var visited = this.state.links.includes(url);
@@ -216,11 +220,11 @@ var StoriesView = React.createClass({
         {disclosureButton}
       </ListItemIOS>
     );
-  },
-  renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){
+  }
+  renderSeparator(sectionID, rowID, adjacentRowHighlighted){
     return <View key={rowID} style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
-  },
-  render: function(){
+  }
+  render(){
     if (this.state.loading){
       return (
         <View style={styles.viewLoading}>
@@ -240,11 +244,9 @@ var StoriesView = React.createClass({
         style={styles.navbarSpacing}
         initialListSize={10}
         dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        renderSeparator={this.renderSeparator}
+        renderRow={this.renderRow.bind(this)}
+        renderSeparator={this.renderSeparator.bind(this)}
       />
     );
   }
-});
-
-module.exports = StoriesView;
+}

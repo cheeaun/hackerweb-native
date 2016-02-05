@@ -1,18 +1,19 @@
 'use strict';
 
-var React = require('react-native');
-var htmlparser = require('../vendor/htmlparser2');
+import React from 'react-native';
+import htmlparser from '../vendor/htmlparser2';
 var {
+  Component,
   StyleSheet,
   Text,
   View,
   ScrollView,
 } = React;
 
-var colors = require('../colors');
-var SafariView = require('react-native-safari-view');
+import colors from '../colors';
+import SafariView from 'react-native-safari-view';
 
-var nodeStyles = StyleSheet.create({
+const nodeStyles = StyleSheet.create({
   p: {
     marginBottom: 8,
   },
@@ -42,7 +43,7 @@ var onLinkPress = function(url){
 var dom2elements = function(nodes, opts){
   if (!nodes || !nodes.length) return;
   var linkHandler = opts.linkHandler;
-  return nodes.map(function(node){
+  return nodes.map((node) => {
     var nodeName = node.name;
     var key = nodeName + '-' + Math.random();
     var style = nodeStyles[nodeName];
@@ -63,7 +64,7 @@ var dom2elements = function(nodes, opts){
       }
       if (nodeName == 'p'){
         // Weird that <pre> is inside <p>
-        if (node.children.some(function(c){ return c.name == 'pre'; })){
+        if (node.children.some((c) => c.name == 'pre')){
           return elements;
         }
         return <Text key={key} style={style}>{elements}</Text>;
@@ -84,7 +85,7 @@ var processDOM = function(html, opts, callback){
     callback = opts;
     opts = {};
   }
-  var handler = new htmlparser.DomHandler(function(err, dom){
+  var handler = new htmlparser.DomHandler((err, dom) => {
     var elements = dom2elements(dom, opts);
     callback(elements);
   });
@@ -100,17 +101,15 @@ var processDOM = function(html, opts, callback){
   parser.end();
 }
 
-var HTMLView = React.createClass({
-  mixins: [ React.addons.PureRenderMixin ],
-  getInitialState: function(){
-    return {
+export default class HTMLView extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
       elements: null
     };
-  },
-  statics: {
-    processDOM: processDOM
-  },
-  componentDidMount: function(){
+  }
+  static processDOM = processDOM;
+  componentDidMount(){
     var html = this.props.html;
     if (!html) return null;
     var self = this;
@@ -121,12 +120,10 @@ var HTMLView = React.createClass({
         elements: elements
       });
     });
-  },
-  render: function(){
+  }
+  render(){
     return (
       <View>{this.state.elements}</View>
     );
   }
-});
-
-module.exports = HTMLView;
+}

@@ -1,7 +1,8 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   StyleSheet,
   ActivityIndicatorIOS,
   View,
@@ -12,22 +13,22 @@ var {
   Image,
 } = React;
 
-var SafariView = require('react-native-safari-view');
-var ActivityView = require('react-native-activity-view');
+import SafariView from 'react-native-safari-view';
+import ActivityView from 'react-native-activity-view';
 
-var StoryStore = require('../stores/StoryStore');
-var StoryActions = require('../actions/StoryActions');
-var LinkActions = require('../actions/LinkActions');
+import StoryStore from '../stores/StoryStore';
+import StoryActions from '../actions/StoryActions';
+import LinkActions from '../actions/LinkActions';
 
-var LoadingIndicator = require('../components/LoadingIndicator');
-var HTMLView = require('../components/HTMLView');
-var CommentsThread = require('../components/CommentsThread');
-var ProgressBar = require('../components/ProgressBar');
-var domainify = require('../utils/domainify');
+import LoadingIndicator from '../components/LoadingIndicator';
+import HTMLView from '../components/HTMLView';
+import CommentsThread from '../components/CommentsThread';
+import ProgressBar from '../components/ProgressBar';
+import domainify from '../utils/domainify';
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   viewCommentsBlank: {
     flex: 1,
     flexDirection: 'row',
@@ -128,33 +129,35 @@ var linkLongPress = function(u, t){
   });
 };
 
-var CommentsView = React.createClass({
-  getInitialState: function(){
+export default class CommentsView extends Component {
+  constructor(props){
+    super(props);
     var { story, storyLoading, storyError } = StoryStore.getState();
-    return {
+    this.state = {
       data: story,
       loading: storyLoading,
       error: storyError,
     };
-  },
-  componentDidMount: function(){
+    this._onChange = this._onChange.bind(this);
+  }
+  componentDidMount(){
     StoryStore.listen(this._onChange);
-    this._fetchStory();
-  },
-  componentWillUnmount: function(){
+    this._fetchStory.call(this);
+  }
+  componentWillUnmount(){
     StoryStore.unlisten(this._onChange);
-  },
-  _fetchStory: function(){
+  }
+  _fetchStory(){
     StoryActions.fetchStory(this.props.data.id);
-  },
-  _onChange: function(state){
+  }
+  _onChange(state){
     this.setState({
       data: state.story,
       loading: state.storyLoading,
       error: state.storyError,
     });
-  },
-  render: function(){
+  }
+  render(){
     var data = this.state.data || this.props.data;
     var commentsText = <Text>&middot; {data.comments_count} comment{data.comments_count != 1 && 's'}</Text>;
     var url = data.url;
@@ -180,14 +183,14 @@ var CommentsView = React.createClass({
     var contentSection;
     if (data.content){
       var contentElements;
-      HTMLView.processDOM(data.content, function(elements){
+      HTMLView.processDOM(data.content, (elements) => {
         contentElements = elements;
       });
 
       var pollElements;
       if (data.poll && data.poll.length){
-        var maxPoints = Math.max.apply(null, data.poll.map(function(p){ return p.points }));
-        pollElements = data.poll.map(function(p){
+        var maxPoints = Math.max.apply(null, data.poll.map((p) => p.points ));
+        pollElements = data.poll.map((p) => {
           var points = p.points;
           return (
             <View>
@@ -254,6 +257,4 @@ var CommentsView = React.createClass({
       </ScrollView>
     );
   }
-});
-
-module.exports = CommentsView;
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
   StyleSheet,
   View,
@@ -11,12 +11,12 @@ var {
   LinkingIOS,
 } = React;
 
-var SafariView = require('react-native-safari-view');
-var AppInfo = require('react-native-app-info');
+import SafariView from 'react-native-safari-view';
+import AppInfo from 'react-native-app-info';
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   aboutContainer: {
     marginTop: 34,
     paddingVertical: 10,
@@ -79,60 +79,56 @@ var styles = StyleSheet.create({
   }
 });
 
-var AboutView = React.createClass({
-  render: function(){
-    var linkPress = function(url){
+export default (props) => {
+  var linkPress = function(url){
+    LinkingIOS.openURL(url);
+    /* BUG: Once <Modal> is open, SafariView can't work anymore.
+    if (/^mailto:/.test(url)){
+      // Note: won't work in Simulator because there's no Mail there
       LinkingIOS.openURL(url);
-      /* BUG: Once <Modal> is open, SafariView can't work anymore.
-      if (/^mailto:/.test(url)){
-        // Note: won't work in Simulator because there's no Mail there
-        LinkingIOS.openURL(url);
-      } else {
-        SafariView.show({
-          url: url
-        });
-      }
-      */
-    };
-    var links = [
-      { text: 'HackerWeb homepage', url: 'http://hackerwebapp.com/' },
-      { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
-      { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
-      { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
-      { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
-      { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
-    ];
-    var items = links.map(function(link, i){
-      return (
-        <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
-          <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
-            <Text style={styles.link}>{link.text}</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    });
+    } else {
+      SafariView.show({
+        url: url
+      });
+    }
+    */
+  };
+  var links = [
+    { text: 'HackerWeb homepage', url: 'http://hackerwebapp.com/' },
+    { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
+    { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
+    { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
+    { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
+    { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
+  ];
+  var items = links.map(function(link, i){
     return (
-      <ScrollView>
-        <View style={styles.aboutContainer}>
-          <View>
-            <Image style={styles.appIcon} source={require('../images/app-icon.png')}/>
-          </View>
-          <View style={styles.aboutTextContainer}>
-            <Text style={styles.aboutHeading}>HackerWeb</Text>
-            <Text style={styles.aboutDescription}>A simply readable Hacker News app.</Text>
-            <Text style={styles.aboutDescription}>{AppInfo.getInfoShortVersion()}</Text>
-          </View>
-        </View>
-        <View style={styles.listContainer}>
-          {items}
-        </View>
-        <View style={styles.disclaimer}>
-          <Text style={styles.disclaimerText}>Built by Lim Chee Aun.</Text>
-          <Text style={styles.disclaimerText}>Not affiliated with Hacker News or YCombinator.</Text>
-        </View>
-      </ScrollView>
+      <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
+        <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
+          <Text style={styles.link}>{link.text}</Text>
+        </TouchableOpacity>
+      </View>
     );
-  }
-});
-
-module.exports = AboutView;
+  });
+  return (
+    <ScrollView>
+      <View style={styles.aboutContainer}>
+        <View>
+          <Image style={styles.appIcon} source={require('../images/app-icon.png')}/>
+        </View>
+        <View style={styles.aboutTextContainer}>
+          <Text style={styles.aboutHeading}>HackerWeb</Text>
+          <Text style={styles.aboutDescription}>A simply readable Hacker News app.</Text>
+          <Text style={styles.aboutDescription}>{AppInfo.getInfoShortVersion()}</Text>
+        </View>
+      </View>
+      <View style={styles.listContainer}>
+        {items}
+      </View>
+      <View style={styles.disclaimer}>
+        <Text style={styles.disclaimerText}>Built by Lim Chee Aun.</Text>
+        <Text style={styles.disclaimerText}>Not affiliated with Hacker News or YCombinator.</Text>
+      </View>
+    </ScrollView>
+  );
+}

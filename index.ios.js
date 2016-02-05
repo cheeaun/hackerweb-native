@@ -1,7 +1,8 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   AppStateIOS,
   AppRegistry,
   StyleSheet,
@@ -10,44 +11,41 @@ var {
   View,
 } = React;
 
-var StoryActions = require('./actions/StoryActions');
-var StoriesView = require('./views/StoriesView');
-var AboutView = require('./views/AboutView');
+import StoryActions from './actions/StoryActions';
+import StoriesView from './views/StoriesView';
+import AboutView from './views/AboutView';
 
-var colors = require('./colors');
-
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  wrapper: {
-    backgroundColor: colors.viewBackgroundColor,
-  },
 });
 
-var App = new React.createClass({
-  getInitialState: function(){
-    return {
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
       currentAppState: AppStateIOS.currentState,
       isAboutVisible: false,
       showNav: false,
     };
-  },
-  componentDidMount: function(){
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
+  }
+  componentDidMount(){
     AppStateIOS.addEventListener('change', this._handleAppStateChange);
-  },
-  componentWillUnmount: function(){
+  }
+  componentWillUnmount(){
     AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-  },
-  _handleAppStateChange: function(currentAppState){
+  }
+  _handleAppStateChange(currentAppState){
     if (currentAppState == 'active' && this.state.currentAppState != currentAppState){
       StoryActions.fetchStoriesIfExpired();
     }
     this.setState({
       currentAppState: currentAppState,
     });
-  },
-  _showAbout: function(){
+  }
+  _showAbout(){
     this.setState({
       isAboutVisible: true,
     });
@@ -57,14 +55,14 @@ var App = new React.createClass({
         showNav: true,
       });
     }, 1);
-  },
-  _hideAbout: function(){
+  }
+  _hideAbout(){
     this.setState({
       isAboutVisible: false,
       showNav: false,
     });
-  },
-  render: function(){
+  }
+  render(){
     var isAboutVisible = this.state.isAboutVisible;
     var pointerEvents = isAboutVisible ? 'none' : 'auto';
     var nav = this.state.showNav ? <NavigatorIOS
@@ -74,7 +72,7 @@ var App = new React.createClass({
         component: AboutView,
         wrapperStyle: styles.wrapper,
         leftButtonTitle: 'Close',
-        onLeftButtonPress: this._hideAbout,
+        onLeftButtonPress: this._hideAbout.bind(this),
       }}/> : null;
     return (
       <View style={styles.container}>
@@ -86,7 +84,7 @@ var App = new React.createClass({
               backButtonTitle: 'News',
               component: StoriesView,
               leftButtonTitle: 'About',
-              onLeftButtonPress: this._showAbout,
+              onLeftButtonPress: this._showAbout.bind(this),
               rightButtonIcon: require('./images/refresh-icon.png'),
               onRightButtonPress: StoryActions.fetchStories,
             }}/>
@@ -97,6 +95,6 @@ var App = new React.createClass({
       </View>
     );
   }
-});
+}
 
 AppRegistry.registerComponent('HackerWeb', () => App);

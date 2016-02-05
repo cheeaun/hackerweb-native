@@ -1,18 +1,19 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
+  Component,
   StyleSheet,
   View,
   Text,
 } = React;
 
-var Comment = require('./Comment');
-var Button = require('./Button');
+import Comment from './Comment';
+import Button from './Button';
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   indentedThread: {
     marginLeft: 14,
   },
@@ -29,13 +30,14 @@ var styles = StyleSheet.create({
   },
 });
 
-var CommentsThread = React.createClass({
-  getInitialState: function(){
-    return {
+export default class CommentsThread extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
       expandedComments: [] // List of comment IDs with expand/collapse buttons
     };
-  },
-  _toggleComments: function(commentID){
+  }
+  _toggleComments(commentID){
     var expandedComments = this.state.expandedComments;
     var index = expandedComments.indexOf(commentID);
     if (index >= 0){
@@ -46,8 +48,8 @@ var CommentsThread = React.createClass({
     this.setState({
       expandedComments: expandedComments
     });
-  },
-  render: function(){
+  }
+  render(){
     var data = this.props.data || [];
     var level = this.props.level || 0;
     var op = this.props.op;
@@ -99,6 +101,4 @@ var CommentsThread = React.createClass({
     });
     return <View>{commentItems}</View>;
   }
-});
-
-module.exports = CommentsThread;
+}

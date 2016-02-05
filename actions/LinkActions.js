@@ -1,11 +1,11 @@
 'use strict';
 
-var alt = require('../alt');
-var CacheStore = require('../components/CacheStore');
+import alt from '../alt';
+import CacheStore from '../components/CacheStore';
 
 class LinkActions {
-  getLinks() {
-    return function(dispatch) {
+  getLinks(){
+    return function(dispatch){
       var self = this;
       CacheStore.get('links').then(function(links){
         links = links || [];
@@ -14,8 +14,8 @@ class LinkActions {
     };
   }
 
-  addLink(link) {
-    return function(dispatch) {
+  addLink(link){
+    return function(dispatch){
       var self = this;
       CacheStore.get('links').then(function(links){
         links = links || [];
@@ -29,4 +29,4 @@ class LinkActions {
   }
 }
 
-module.exports = alt.createActions(LinkActions);
+export default alt.createActions(LinkActions);

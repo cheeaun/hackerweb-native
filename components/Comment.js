@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
 var {
   StyleSheet,
   View,
@@ -8,12 +8,12 @@ var {
   Image,
 } = React;
 
-var SafariView = require('react-native-safari-view');
-var HTMLView = require('../components/HTMLView');
+import SafariView from 'react-native-safari-view';
+import HTMLView from '../components/HTMLView';
 
-var colors = require('../colors');
+import colors from '../colors';
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   comment: {
     padding: 15,
     flex: 1,
@@ -62,38 +62,33 @@ var linkPress = function(u){
   });
 };
 
-var Comment = React.createClass({
-  mixins: [ React.addons.PureRenderMixin ],
-  render: function(){
-    var data = this.props.data;
-    var op = this.props.op;
-    var level = data.level;
-    var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/> : null;
+export default (props) => {
+  var data = props.data;
+  var op = props.op;
+  var level = data.level;
+  var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/> : null;
 
-    var innerComment = data.deleted ? (
+  var innerComment = data.deleted ? (
+    <View style={styles.commentMetadata}>
+      <Text style={styles.commentDeleted}>[deleted]</Text>
+      <Text style={styles.commentTime}>{data.time_ago}</Text>
+    </View>
+  ) : (
+    <View>
       <View style={styles.commentMetadata}>
-        <Text style={styles.commentDeleted}>[deleted]</Text>
-        <Text style={styles.commentTime}>{data.time_ago}</Text>
+        <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
+        <Text style={styles.commentTime} onPress={linkPress.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
-    ) : (
-      <View>
-        <View style={styles.commentMetadata}>
-          <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
-          <Text style={styles.commentTime} onPress={linkPress.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
-        </View>
-        <HTMLView html={data.content}/>
-      </View>
-    );
+      <HTMLView html={data.content}/>
+    </View>
+  );
 
-    return (
-      <View style={[styles.comment, level > 0 && styles.subComment]}>
-        {commentArrow}
-        <View style={styles.commentInner}>
-          {innerComment}
-        </View>
+  return (
+    <View style={[styles.comment, level > 0 && styles.subComment]}>
+      {commentArrow}
+      <View style={styles.commentInner}>
+        {innerComment}
       </View>
-    );
-  }
-});
-
-module.exports = Comment;
+    </View>
+  );
+}
