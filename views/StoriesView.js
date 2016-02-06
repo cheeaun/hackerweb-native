@@ -8,6 +8,7 @@ var {
   Text,
   ListView,
   TouchableOpacity,
+  TouchableHighlight,
   Image,
 } = React;
 
@@ -20,7 +21,6 @@ import LinkStore from '../stores/LinkStore';
 import LinkActions from '../actions/LinkActions';
 
 import LoadingIndicator from '../components/LoadingIndicator';
-import ListItemIOS from '../components/ListItemIOS';
 import HTMLView from '../components/HTMLView';
 import CommentsView from './CommentsView';
 import domainify from '../utils/domainify';
@@ -55,9 +55,15 @@ const styles = StyleSheet.create({
   itemHighligtedSeparator: {
     opacity: 0,
   },
+  story: {
+    backgroundColor: colors.sectionBackgroundColor,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
   storyPosition: {
     paddingRight: 5,
     paddingTop: 10,
+    paddingLeft: 15,
   },
   storyPositionNumber: {
     width: 22,
@@ -109,6 +115,24 @@ const styles = StyleSheet.create({
   },
 });
 
+var showBrowser = function(u){
+  if (!u) return;
+  SafariView.show({
+    url: u
+  });
+  setTimeout(function(){
+    LinkActions.addLink(u);
+  }, 1000); // Set the link inactive after 1 second
+};
+
+var showActivity = function(u, t){
+  if (!u) return;
+  ActivityView.show({
+    text: t || '',
+    url: u,
+  });
+};
+
 export default class StoriesView extends Component {
   constructor(props){
     super(props);
@@ -158,6 +182,16 @@ export default class StoriesView extends Component {
       }
     });
   }
+  _onStoryLayout(e, rowID){
+    /*
+      Temporary workaround for:
+      - https://github.com/facebook/react-native/issues/5141
+      - https://github.com/facebook/react-native/issues/1472
+    */
+    const height = e.nativeEvent.layout.height;
+    const ref = this[`_disclosure-${rowID}`];
+    if (ref) ref.setNativeProps({ style: { height } });
+  }
   renderRow(row, sectionID, rowID, highlightRow){
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
@@ -165,60 +199,52 @@ export default class StoriesView extends Component {
     var externalLink = !/^item/i.test(url);
 
     var self = this;
-    var linkPress = externalLink ? function(){
-      SafariView.show({
-        url: url
-      });
-      setTimeout(function(){
-        LinkActions.addLink(url);
-      }, 1000); // Set the link inactive after 1 second
-    } : this._navigateToComments.bind(this, row);
-    var linkLongPress = function(){
-      ActivityView.show({
-        text: row.title,
-        url: url,
-      });
-    };
-
+    var linkPress = externalLink ? showBrowser.bind(null, url) : this._navigateToComments.bind(this, row);
     var domainText = externalLink ? <Text numberOfLines={1} style={styles.storyDomain}>{domainify(url)}</Text> : null;
 
-    if (row.type == 'job'){
-      return (
-        <ListItemIOS onHighlight={() => highlightRow(sectionID, rowID)} onUnhighlight={() => highlightRow(null, null)} onPress={linkPress}>
+    return (
+      <TouchableHighlight onPress={linkPress} onLongPress={showActivity.bind(null, url, row.title)} onShowUnderlay={() => highlightRow(sectionID, rowID)} onHideUnderlay={() => highlightRow(null, null)}>
+        <View style={styles.story}>
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
           </View>
-          <View style={styles.storyInfo}>
+          <View style={styles.storyInfo} onLayout={e => this._onStoryLayout.call(this, e, rowID)}>
             <Text style={[styles.storyTitle, visited && styles.storyTitleVisited]}>{row.title}</Text>
             {domainText}
-            <Text style={styles.storyMetadata}>{row.time_ago}</Text>
+            {(() => {
+              if (row.type == 'job'){
+                return <Text style={styles.storyMetadata}>{row.time_ago}</Text>;
+              } else {
+                var commentsText = <Text>&middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>;
+                return (
+                  <View>
+                    <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
+                    <Text style={styles.storyMetadata}>{row.time_ago} {row.comments_count ? commentsText : null}</Text>
+                  </View>
+                );
+              }
+            })()}
           </View>
-        </ListItemIOS>
-      );
-    }
-
-    var commentsText = <Text>&middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>;
-    var disclosureButton = externalLink ? <TouchableOpacity onPress={this._navigateToComments.bind(this, row)}>
-      <View style={styles.storyComments}>
-        <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
-      </View>
-    </TouchableOpacity> : <View style={styles.storyDisclosure}>
-      <Image style={styles.disclosureIcon} source={require('../images/disclosure-indicator.png')}/>
-    </View>;
-
-    return (
-      <ListItemIOS onHighlight={() => highlightRow(sectionID, rowID)} onUnhighlight={() => highlightRow(null, null)} onPress={linkPress} onLongPress={linkLongPress}>
-        <View style={styles.storyPosition}>
-          <Text style={styles.storyPositionNumber}>{position}</Text>
+          {(() => {
+            if (row.type == 'job') return;
+            if (externalLink){
+              return (
+                <TouchableOpacity onPress={this._navigateToComments.bind(self, row)}>
+                  <View style={styles.storyComments} ref={(component) => this[`_disclosure-${rowID}`] = component}>
+                    <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
+                  </View>
+                </TouchableOpacity>
+              );
+            } else {
+              return (
+                <View style={styles.storyDisclosure}>
+                  <Image style={styles.disclosureIcon} source={require('../images/disclosure-indicator.png')}/>
+                </View>
+              );
+            }
+          })()}
         </View>
-        <View style={styles.storyInfo}>
-          <Text style={[styles.storyTitle, visited && styles.storyTitleVisited]}>{row.title}</Text>
-          {domainText}
-          <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
-          <Text style={styles.storyMetadata}>{row.time_ago} {row.comments_count ? commentsText : null}</Text>
-        </View>
-        {disclosureButton}
-      </ListItemIOS>
+      </TouchableHighlight>
     );
   }
   renderSeparator(sectionID, rowID, adjacentRowHighlighted){
