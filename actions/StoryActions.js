@@ -3,7 +3,7 @@
 import alt from '../alt';
 import CacheStore from '../components/CacheStore';
 
-const API_HOST = 'https://node-hnapi.herokuapp.com/';
+const API_HOST = 'https://api.hackerwebapp.com/';
 var fetchTimeout = () => {
   return new Promise(function(resolve, reject){
     setTimeout(function(){
