@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
 });
 
-var linkPress = function(u){
+var showBrowser = function(u){
   if (!u) return;
   SafariView.show({
     url: u
@@ -121,7 +121,7 @@ var linkPress = function(u){
   }, 1000); // Set the link inactive after 1 second
 };
 
-var linkLongPress = function(u, t){
+var showActivity = function(u, t){
   if (!u) return;
   ActivityView.show({
     text: t || '',
@@ -168,7 +168,7 @@ export default class CommentsView extends Component {
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
       storyHeader = (
-        <TouchableHighlight onPress={linkPress.bind(null, url)} onLongPress={linkLongPress.bind(null, url, data.title)}>
+        <TouchableHighlight onPress={showBrowser.bind(null, url)} onLongPress={showActivity.bind(null, url, data.title)}>
           <View style={{backgroundColor: colors.viewBackgroundColor}}>
             <Text style={styles.storyTitle}>{data.title}</Text>
             {domainText}
@@ -245,7 +245,7 @@ export default class CommentsView extends Component {
           {storyHeader}
           <Text style={styles.storyMetadata}>{data.points} points by {data.user}</Text>
           <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count ? commentsText : null}</Text>
-          <TouchableHighlight onPress={linkPress.bind(null, hnURL)} onLongPress={linkLongPress.bind(null, hnURL, data.title)}>
+          <TouchableHighlight onPress={showBrowser.bind(null, hnURL)} onLongPress={showActivity.bind(null, hnURL, data.title)}>
             <View style={styles.externalLink}>
               <Image style={styles.externalArrowIcon} source={require('../images/external-arrow.png')}/>
               <Text style={styles.storyMetadata}>{hnShortURL}</Text>
