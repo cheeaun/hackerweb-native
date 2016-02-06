@@ -200,7 +200,7 @@ export default class StoriesView extends Component {
 
     var self = this;
     var linkPress = externalLink ? showBrowser.bind(null, url) : this._navigateToComments.bind(this, row);
-    var domainText = externalLink ? <Text numberOfLines={1} style={styles.storyDomain}>{domainify(url)}</Text> : null;
+    var domainText = externalLink && (<Text numberOfLines={1} style={styles.storyDomain}>{domainify(url)}</Text>);
 
     return (
       <TouchableHighlight onPress={linkPress} onLongPress={showActivity.bind(null, url, row.title)} onShowUnderlay={() => highlightRow(sectionID, rowID)} onHideUnderlay={() => highlightRow(null, null)}>
@@ -215,18 +215,17 @@ export default class StoriesView extends Component {
               if (row.type == 'job'){
                 return <Text style={styles.storyMetadata}>{row.time_ago}</Text>;
               } else {
-                var commentsText = <Text>&middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>;
+                var commentsText = row.comments_count && (<Text> &middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>);
                 return (
                   <View>
                     <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
-                    <Text style={styles.storyMetadata}>{row.time_ago} {row.comments_count ? commentsText : null}</Text>
+                    <Text style={styles.storyMetadata}>{row.time_ago}{commentsText}</Text>
                   </View>
                 );
               }
             })()}
           </View>
-          {(() => {
-            if (row.type == 'job') return;
+          {row.type != 'job' && (() => {
             if (externalLink){
               return (
                 <TouchableOpacity onPress={this._navigateToComments.bind(self, row)}>
