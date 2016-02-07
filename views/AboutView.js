@@ -12,7 +12,6 @@ var {
 } = React;
 
 import SafariView from 'react-native-safari-view';
-import AppInfo from 'react-native-app-info';
 
 import colors from '../colors';
 
@@ -119,7 +118,6 @@ export default (props) => {
         <View style={styles.aboutTextContainer}>
           <Text style={styles.aboutHeading}>HackerWeb</Text>
           <Text style={styles.aboutDescription}>A simply readable Hacker News app.</Text>
-          <Text style={styles.aboutDescription}>{AppInfo.getInfoShortVersion()}</Text>
         </View>
       </View>
       <View style={styles.listContainer}>

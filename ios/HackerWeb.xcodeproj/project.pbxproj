@@ -23,7 +23,6 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		9B47A38A1C5E056C00228361 /* libActivityView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B47A3701C5E055500228361 /* libActivityView.a */; };
-		9B47A38B1C5E057100228361 /* libRNAppInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B47A3811C5E055C00228361 /* libRNAppInfo.a */; };
 		9B47A38C1C5E057600228361 /* libSafariViewManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B47A3891C5E056200228361 /* libSafariViewManager.a */; };
 /* End PBXBuildFile section */
 
@@ -175,7 +174,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B47A38C1C5E057600228361 /* libSafariViewManager.a in Frameworks */,
-				9B47A38B1C5E057100228361 /* libRNAppInfo.a in Frameworks */,
 				9B47A38A1C5E056C00228361 /* libActivityView.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
