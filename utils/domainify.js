@@ -1,6 +1,6 @@
 'use strict';
 
-import urlparse from '../vendor/url-parse';
+import urlparse from 'url-parse';
 
 export default (url) => {
   if (!url) return;
