@@ -159,10 +159,14 @@ export default class StoriesView extends Component {
     LinkStore.unlisten(this._onLinkChange);
   }
   _onChange(state){
+    let stories = state.stories.map((story) => {
+      story._visited = this.state.links.includes(story.url);
+      return Object.assign({}, story);
+    });
     this.setState({
+      stories,
       // Have to "clone" state.stories because `cloneWithRows` is confused with the reference
-      dataSource: this.state.dataSource.cloneWithRows([].concat(state.stories)),
-      stories: state.stories,
+      dataSource: this.state.dataSource.cloneWithRows(stories),
       loading: state.storiesLoading,
       error: state.storiesError,
     });
@@ -171,6 +175,7 @@ export default class StoriesView extends Component {
     this.setState({
       links: state.links,
     });
+    this._onChange(this.state);
   }
   _navigateToComments(data){
     this.props.navigator.push({
@@ -195,7 +200,7 @@ export default class StoriesView extends Component {
   renderRow(row, sectionID, rowID, highlightRow){
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
-    var visited = this.state.links.includes(url);
+    var visited = row._visited;
     var externalLink = !/^item/i.test(url);
 
     var self = this;
