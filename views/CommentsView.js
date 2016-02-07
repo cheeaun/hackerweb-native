@@ -157,6 +157,15 @@ export default class CommentsView extends Component {
       loading: state.storyLoading,
       error: state.storyError,
     });
+    /* Note:
+      Title update doesn't work yet due to https://github.com/facebook/react-native/issues/476
+      Hopefully this works https://github.com/bjornco/react-native/commit/5fcb2a8673a2c17f4fdb03327008397a10a9c53a
+    */
+    if (state.story && state.story.title){
+      var route = this.props.navigator.navigationContext.currentRoute;
+      route.title = state.story.title;
+      this.props.navigator.replace(route);
+    }
   }
   render(){
     var data = this.state.data || this.props.data;

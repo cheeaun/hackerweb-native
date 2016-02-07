@@ -9,11 +9,13 @@ var {
   Modal,
   NavigatorIOS,
   View,
+  LinkingIOS,
 } = React;
 
 import StoryActions from './actions/StoryActions';
 import StoriesView from './views/StoriesView';
 import AboutView from './views/AboutView';
+import CommentsView from './views/CommentsView';
 
 import colors from './colors';
 
@@ -35,12 +37,15 @@ class App extends Component {
       showNav: false,
     };
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
+    this._handleOpenURL = this._handleOpenURL.bind(this);
   }
   componentDidMount(){
     AppStateIOS.addEventListener('change', this._handleAppStateChange);
+    LinkingIOS.addEventListener('url', this._handleOpenURL);
   }
   componentWillUnmount(){
     AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+    LinkingIOS.removeEventListener('url', this._handleOpenURL);
   }
   _handleAppStateChange(currentAppState){
     if (currentAppState == 'active' && this.state.currentAppState != currentAppState){
@@ -48,6 +53,19 @@ class App extends Component {
     }
     this.setState({
       currentAppState: currentAppState,
+    });
+  }
+  _handleOpenURL(e){
+    var url = e.url;
+    if (!url) return;
+    var id = (url.match(/item\?id=([a-z\d]+)/i) || [,null])[1];
+    if (!id) return;
+    this.refs.nav.push({
+      component: CommentsView,
+      wrapperStyle: styles.wrapper,
+      passProps: {
+        data: {id}
+      },
     });
   }
   _showAbout(){
@@ -83,6 +101,7 @@ class App extends Component {
       <View style={styles.container}>
         <View style={styles.container} pointerEvents={pointerEvents}>
           <NavigatorIOS
+            ref="nav"
             style={styles.container}
             initialRoute={{
               title: 'HackerWeb',
