@@ -5,8 +5,8 @@ import CacheStore from '../components/CacheStore';
 
 const API_HOST = 'https://api.hackerwebapp.com/';
 var fetchTimeout = () => {
-  return new Promise(function(resolve, reject){
-    setTimeout(function(){
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
       reject(new Error('Response timeout.'));
     }, 20000); // 20 seconds
   })
@@ -18,27 +18,24 @@ class StoryActions {
   }
 
   fetchStories(){
-    var self = this;
-    return function(dispatch){
+    return (dispatch) => {
       dispatch();
-      var request = function(){
+      var request = () => {
         Promise.race([
           fetch(API_HOST + 'news'),
           fetchTimeout()
         ])
-          .then(function(response){
-            return response.json();
-          })
-          .then(function(stories){
+          .then((response) => response.json())
+          .then((stories) => {
             if (!stories || !stories.length) throw new Error('Stories payload is empty');
-            self.updateStories(stories);
+            this.updateStories(stories);
             CacheStore.set('stories', stories, 10); // 10 minutes
           })
-          .catch(self.storiesFailed);
+          .catch(this.storiesFailed);
       };
-      CacheStore.get('stories').then(function(stories){
+      CacheStore.get('stories').then((stories) => {
         if (stories){
-          self.updateStories(stories);
+          this.updateStories(stories);
         } else {
           request();
         }
@@ -59,27 +56,24 @@ class StoryActions {
   }
 
   fetchStory(id) {
-    var self = this;
-    return function(dispatch) {
+    return (dispatch) => {
       dispatch(id);
-      var request = function(){
+      var request = () => {
         Promise.race([
           fetch(API_HOST + 'item/' + id),
           fetchTimeout()
         ])
-          .then(function(response){
-            return response.json();
-          })
-          .then(function(story){
+          .then((response) =>  response.json())
+          .then((story) => {
             if (!story) throw new Error('Story payload is empty');
-            self.updateStory(story);
+            this.updateStory(story);
             CacheStore.set('story' + id, story, 5); // 5 minutes
           })
-          .catch(self.storyFailed);
+          .catch(this.storyFailed);
       };
-      CacheStore.get('story-' + id).then(function(story){
+      CacheStore.get('story-' + id).then((story) => {
         if (story){
-          self.updateStory(story);
+          this.updateStory(story);
         } else {
           request();
         }

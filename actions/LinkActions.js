@@ -5,13 +5,13 @@ import CacheStore from '../components/CacheStore';
 
 class LinkActions {
   getLinks(){
-    return function(dispatch){
+    return (dispatch) => {
       CacheStore.get('links').then((links = []) => dispatch(links));
     };
   }
 
   addLink(link){
-    return function(dispatch){
+    return (dispatch) => {
       CacheStore.get('links').then((links = []) => {
         if (!links.includes(link)){
           dispatch(link);
