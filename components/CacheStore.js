@@ -1,9 +1,6 @@
 'use strict';
 
-import React from 'react-native';
-var {
-  AsyncStorage,
-} = React;
+import { AsyncStorage } from 'react-native';
 
 // Inspired by lscache https://github.com/pamelafox/lscache
 
@@ -19,12 +16,12 @@ var CacheStore = {
   get(key){
     const theKey = CACHE_PREFIX + key;
     const exprKey = CACHE_EXPIRATION_PREFIX + key;
-    return AsyncStorage.getItem(exprKey).then(function(expiry){
+    return AsyncStorage.getItem(exprKey).then((expiry) => {
       if (expiry && currentTime() >= parseInt(expiry, 10)){
         AsyncStorage.multiRemove([exprKey, theKey]);
         return new Promise.reject(null);
       }
-      return AsyncStorage.getItem(theKey).then(function(item){
+      return AsyncStorage.getItem(theKey).then((item) => {
         return Promise.resolve(JSON.parse(item));
       });
     });
@@ -34,7 +31,7 @@ var CacheStore = {
     const theKey = CACHE_PREFIX + key;
     const exprKey = CACHE_EXPIRATION_PREFIX + key;
     if (time){
-      return AsyncStorage.setItem(exprKey, (currentTime() + time).toString()).then(function(){
+      return AsyncStorage.setItem(exprKey, (currentTime() + time).toString()).then(() => {
         return AsyncStorage.setItem(theKey, JSON.stringify(value));
       });
     } else {
