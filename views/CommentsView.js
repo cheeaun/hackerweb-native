@@ -139,10 +139,11 @@ export default class CommentsView extends Component {
       error: storyError,
     };
     this._onChange = this._onChange.bind(this);
+    this._fetchStory = this._fetchStory.bind(this);
   }
   componentDidMount(){
     StoryStore.listen(this._onChange);
-    this._fetchStory.call(this);
+    this._fetchStory();
   }
   componentWillUnmount(){
     StoryStore.unlisten(this._onChange);
