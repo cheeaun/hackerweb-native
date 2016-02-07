@@ -58,6 +58,7 @@ class StoryActions {
   fetchStory(id) {
     return (dispatch) => {
       dispatch(id);
+      const key = `story-${id}`;
       var request = () => {
         Promise.race([
           fetch(API_HOST + 'item/' + id),
@@ -67,11 +68,11 @@ class StoryActions {
           .then((story) => {
             if (!story) throw new Error('Story payload is empty');
             this.updateStory(story);
-            CacheStore.set('story-' + id, story, 5); // 5 minutes
+            CacheStore.set(key, story, 5); // 5 minutes
           })
           .catch(this.storyFailed);
       };
-      CacheStore.get('story-' + id).then((story) => {
+      CacheStore.get(key).then((story) => {
         if (story){
           this.updateStory(story);
         } else {
