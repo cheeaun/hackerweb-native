@@ -163,6 +163,7 @@ export default class CommentsView extends Component {
     */
     if (state.story && state.story.title){
       var route = this.props.navigator.navigationContext.currentRoute;
+      if (!route) return;
       route.title = state.story.title;
       this.props.navigator.replace(route);
     }
