@@ -188,8 +188,8 @@ export default class CommentsView extends Component {
       );
     }
 
-    var hnShortURL = 'news.ycombinator.com/item?id=' + data.id;
-    var hnURL = 'https://' + hnShortURL;
+    var hnShortURL = `news.ycombinator.com/item?id=${data.id}`;
+    var hnURL = `https://${hnShortURL}`;
 
     var contentSection;
     if (data.content){
