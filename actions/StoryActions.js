@@ -67,7 +67,7 @@ class StoryActions {
           .then((story) => {
             if (!story) throw new Error('Story payload is empty');
             this.updateStory(story);
-            CacheStore.set('story' + id, story, 5); // 5 minutes
+            CacheStore.set('story-' + id, story, 5); // 5 minutes
           })
           .catch(this.storyFailed);
       };
