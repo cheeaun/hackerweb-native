@@ -39,8 +39,10 @@ class StoryStore {
   }
 
   handleFetchStory(id){
-    if (this.story && this.story.id != id) this.story = null;
-    this.storyLoading = true;
+    if (this.story && this.story.id != id){
+      this.story = null;
+      this.storyLoading = true;
+    }
     this.storyError = false;
   }
 
