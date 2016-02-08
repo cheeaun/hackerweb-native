@@ -111,20 +111,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = ActivityView;
 		};
-		9B47A3801C5E055C00228361 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B47A37B1C5E055C00228361 /* RNAppInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CDD7BF781B2D5125006FDA75;
-			remoteInfo = RNAppInfo;
-		};
-		9B47A3821C5E055C00228361 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9B47A37B1C5E055C00228361 /* RNAppInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CDD7BF831B2D5126006FDA75;
-			remoteInfo = RNAppInfoTests;
-		};
 		9B47A3881C5E056200228361 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9B47A3841C5E056200228361 /* SafariViewManager.xcodeproj */;
@@ -157,7 +143,6 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		9B47A36B1C5E055500228361 /* ActivityView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ActivityView.xcodeproj; path = "../node_modules/react-native-activity-view/ActivityView.xcodeproj"; sourceTree = "<group>"; };
-		9B47A37B1C5E055C00228361 /* RNAppInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAppInfo.xcodeproj; path = "../node_modules/react-native-app-info/RNAppInfo.xcodeproj"; sourceTree = "<group>"; };
 		9B47A3841C5E056200228361 /* SafariViewManager.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SafariViewManager.xcodeproj; path = "../node_modules/react-native-safari-view/SafariViewManager.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -298,7 +283,6 @@
 			isa = PBXGroup;
 			children = (
 				9B47A3841C5E056200228361 /* SafariViewManager.xcodeproj */,
-				9B47A37B1C5E055C00228361 /* RNAppInfo.xcodeproj */,
 				9B47A36B1C5E055500228361 /* ActivityView.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -347,15 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				9B47A3701C5E055500228361 /* libActivityView.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		9B47A37C1C5E055C00228361 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9B47A3811C5E055C00228361 /* libRNAppInfo.a */,
-				9B47A3831C5E055C00228361 /* RNAppInfoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -420,6 +395,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = L7N9UC2662;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "HackerWeb" */;
@@ -477,10 +455,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = 9B47A37C1C5E055C00228361 /* Products */;
-					ProjectRef = 9B47A37B1C5E055C00228361 /* RNAppInfo.xcodeproj */;
 				},
 				{
 					ProductGroup = 9B47A3851C5E056200228361 /* Products */;
@@ -571,20 +545,6 @@
 			fileType = archive.ar;
 			path = libActivityView.a;
 			remoteRef = 9B47A36F1C5E055500228361 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9B47A3811C5E055C00228361 /* libRNAppInfo.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNAppInfo.a;
-			remoteRef = 9B47A3801C5E055C00228361 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9B47A3831C5E055C00228361 /* RNAppInfoTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RNAppInfoTests.xctest;
-			remoteRef = 9B47A3821C5E055C00228361 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9B47A3891C5E056200228361 /* libSafariViewManager.a */ = {
@@ -714,6 +674,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -725,6 +687,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HackerWeb;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -732,6 +695,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -742,6 +708,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = HackerWeb;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
