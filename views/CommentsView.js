@@ -221,7 +221,13 @@ export default class CommentsView extends Component {
     }
 
     var commentsSection;
-    if (this.state.loading){
+    if (data && data.comments && data.comments.length){
+      commentsSection = (
+        <View style={styles.commentsThread}>
+          <CommentsThread data={data.comments} op={data.user} />
+        </View>
+      );
+    } else if (this.state.loading){
       commentsSection = (
         <View style={styles.viewCommentsBlank}>
           <LoadingIndicator/>
@@ -236,12 +242,6 @@ export default class CommentsView extends Component {
               <Text style={styles.retryText}>Try again</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      );
-    } else if (data && data.comments && data.comments.length){
-      commentsSection = (
-        <View style={styles.commentsThread}>
-          <CommentsThread data={data.comments} op={data.user} />
         </View>
       );
     } else {
