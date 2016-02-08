@@ -220,7 +220,7 @@ export default class StoriesView extends Component {
               if (row.type == 'job'){
                 return <Text style={styles.storyMetadata}>{row.time_ago}</Text>;
               } else {
-                var commentsText = row.comments_count && (<Text> &middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>);
+                var commentsText = row.comments_count>0 && (<Text> &middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>);
                 return (
                   <View>
                     <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
