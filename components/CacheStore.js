@@ -46,27 +46,27 @@ var CacheStore = {
 
   isExpired(key){
     const exprKey = CACHE_EXPIRATION_PREFIX + key;
-    return AsyncStorage.getItem(exprKey).then(function(expiry){
+    return AsyncStorage.getItem(exprKey).then((expiry) => {
       var expired = expiry && currentTime() >= parseInt(expiry, 10);
       return expired ? Promise.resolve() : new Promise.reject(null);
     });
   },
 
   flush(){
-    return AsyncStorage.getAllKeys().then(function(keys){
-      var theKeys = keys.filter(function(key){
+    return AsyncStorage.getAllKeys().then((keys) => {
+      var theKeys = keys.filter((key) => {
         return key.indexOf(CACHE_PREFIX) == 0 || key.indexOf(CACHE_EXPIRATION_PREFIX) == 0;
       });
       return AsyncStorage.multiRemove(theKeys);
     });
   },
 
-  flushExpired: function(){
-    return AsyncStorage.getAllKeys().then(function(keys){
-      keys.forEach(function(key){
+  flushExpired(){
+    return AsyncStorage.getAllKeys().then((keys) => {
+      keys.forEach((key) => {
         if (key.indexOf(CACHE_EXPIRATION_PREFIX) == 0){
           var exprKey = key;
-          return AsyncStorage.getItem(exprKey).then(function(expiry){
+          return AsyncStorage.getItem(exprKey).then((expiry) => {
             if (expiry && currentTime() >= parseInt(expiry, 10)){
               var theKey = CACHE_PREFIX + key.replace(CACHE_EXPIRATION_PREFIX, '');
               return AsyncStorage.multiRemove([exprKey, theKey]);
