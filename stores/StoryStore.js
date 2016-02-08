@@ -43,6 +43,7 @@ class StoryStore {
       this.story = null;
       this.storyLoading = true;
     }
+    if (!this.story) this.storyLoading = true;
     this.storyError = false;
   }
 
