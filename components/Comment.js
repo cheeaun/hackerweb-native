@@ -31,13 +31,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 8,
   },
+  commentUserWrap: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   commentUser: {
     fontWeight: '500',
     color: colors.userColor,
-    flex: 1,
+  },
+  opUserContainer: {
+    backgroundColor: colors.opBackgroundColor,
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 2,
+    marginLeft: 5,
   },
   opUser: {
-    fontSize: 11,
+    fontSize: 10,
+    fontWeight: 'bold',
     color: colors.opColor,
   },
   commentDeleted: {
@@ -75,7 +87,12 @@ export default (props) => {
   ) : (
     <View>
       <View style={styles.commentMetadata}>
-        <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}><Text>{data.user}</Text> {op == data.user && <Text style={styles.opUser}>OP</Text>}</Text>
+        <View style={styles.commentUserWrap}>
+          <View>
+            <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}>{data.user}</Text>
+          </View>
+          {op == data.user && <View style={styles.opUserContainer}><Text style={styles.opUser}>OP</Text></View>}
+        </View>
         <Text style={styles.commentTime} onPress={linkPress.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
       <HTMLView html={data.content}/>
