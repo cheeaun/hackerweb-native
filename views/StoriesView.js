@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   storyPosition: {
-    paddingRight: 5,
     paddingTop: 10,
     paddingLeft: 15,
   },
