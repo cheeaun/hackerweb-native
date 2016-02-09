@@ -6,10 +6,10 @@
   "insignificantColor": "#8e8e93",
   "sectionInsignificantColor": "#6d6d72",
   "separatorColor": "#c8c7cc",
-  "blockCodeBackgroundColor": "#eeeeee",
+  "blockCodeBackgroundColor": "#eee",
   "progressBarBackgroundColor": "#eee",
   "progressBarColor": "#007aff",
-  "sectionBackgroundColor": "#ffffff",
+  "sectionBackgroundColor": "#fff",
   "domainColor": "#003d80",
   "defaultButtonThemeColor": "#848484"
 }
