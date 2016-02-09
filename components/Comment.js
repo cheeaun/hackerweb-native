@@ -65,7 +65,7 @@ export default (props) => {
   var data = props.data;
   var op = props.op;
   var level = data.level;
-  var commentArrow = level > 0 ? <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/> : null;
+  var commentArrow = level>0 && <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/>;
 
   var innerComment = data.deleted ? (
     <View style={styles.commentMetadata}>
