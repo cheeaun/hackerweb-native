@@ -1,13 +1,12 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   Component,
   StyleSheet,
   Text,
   View,
   TouchableWithoutFeedback,
-} = React;
+} from 'react-native';
 
 import colors from '../colors';
 

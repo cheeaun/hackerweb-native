@@ -1,7 +1,6 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   Component,
   AppStateIOS,
   AppRegistry,
@@ -10,7 +9,7 @@ var {
   NavigatorIOS,
   View,
   LinkingIOS,
-} = React;
+} from 'react-native';
 
 import StoryActions from './actions/StoryActions';
 import StoriesView from './views/StoriesView';

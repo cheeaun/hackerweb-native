@@ -1,7 +1,6 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   Component,
   StyleSheet,
   View,
@@ -10,7 +9,7 @@ var {
   TouchableOpacity,
   TouchableHighlight,
   Image,
-} = React;
+} from 'react-native';
 
 import SafariView from 'react-native-safari-view';
 import ActivityView from 'react-native-activity-view';

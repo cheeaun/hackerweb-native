@@ -1,17 +1,17 @@
 'use strict';
 
-import React from 'react-native';
-import htmlparser from '../vendor/htmlparser2';
-var {
+import React, {
   Component,
   StyleSheet,
   Text,
   View,
   ScrollView,
-} = React;
+} from 'react-native';
+
+import SafariView from 'react-native-safari-view';
+import htmlparser from '../vendor/htmlparser2';
 
 import colors from '../colors';
-import SafariView from 'react-native-safari-view';
 
 const nodeStyles = StyleSheet.create({
   p: {
@@ -40,7 +40,7 @@ var onLinkPress = function(url){
   });
 };
 
-var dom2elements = function(nodes, opts){
+function dom2elements(nodes, opts){
   if (!nodes || !nodes.length) return;
   var linkHandler = opts.linkHandler;
   return nodes.map((node) => {
@@ -80,7 +80,7 @@ var dom2elements = function(nodes, opts){
   });
 };
 
-var processDOM = function(html, opts, callback){
+function processDOM(html, opts, callback){
   if (typeof opts == 'function'){
     callback = opts;
     opts = {};
@@ -105,7 +105,7 @@ export default class HTMLView extends Component {
   constructor(props){
     super(props);
     this.state = {
-      elements: null
+      elements: null,
     };
   }
   static processDOM = processDOM;
@@ -115,9 +115,9 @@ export default class HTMLView extends Component {
     var self = this;
     processDOM(html, {
       onLinkPress: this.props.onLinkPress || onLinkPress,
-    }, function(elements){
-      self.setState({
-        elements: elements
+    }, (elements) => {
+      this.setState({
+        elements: elements,
       });
     });
   }

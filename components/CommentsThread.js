@@ -1,12 +1,11 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   Component,
   StyleSheet,
   View,
   Text,
-} = React;
+} from 'react-native';
 
 import Comment from './Comment';
 import Button from './Button';

@@ -1,13 +1,12 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   Component,
   StyleSheet,
   Text,
   View,
   ActivityIndicatorIOS,
-} = React;
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,10 +30,9 @@ export default class LoadingIndicator extends Component {
     };
   }
   componentDidMount(){
-    var self = this;
-    this._timer = setTimeout(function(){
-      self.setState({
-        opacity: 1
+    this._timer = setTimeout(() => {
+      this.setState({
+        opacity: 1,
       });
     }, 900); // less than 1 second
   }

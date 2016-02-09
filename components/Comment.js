@@ -1,12 +1,11 @@
 'use strict';
 
-import React from 'react-native';
-var {
+import React, {
   StyleSheet,
   View,
   Text,
   Image,
-} = React;
+} from 'react-native';
 
 import SafariView from 'react-native-safari-view';
 import HTMLView from '../components/HTMLView';
