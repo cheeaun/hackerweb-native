@@ -176,7 +176,7 @@ export default class CommentsView extends Component {
     var url = data.url;
     var externalLink = !/^item/i.test(url);
     var domainText = null;
-    var storyHeader = <View><Text style={styles.storyTitle}>{data.title}</Text></View>;
+    var storyHeader = null;
 
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
@@ -188,6 +188,8 @@ export default class CommentsView extends Component {
           </View>
         </TouchableHighlight>
       );
+    } else {
+      storyHeader = <View><Text style={styles.storyTitle}>{data.title}</Text></View>;
     }
 
     var hnShortURL = `news.ycombinator.com/item?id=${data.id}`;
