@@ -93,6 +93,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.domainColor,
   },
+  storyMetadataWrap: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   storyMetadata: {
     fontSize: 13,
     color: colors.insignificantColor,
@@ -222,8 +226,8 @@ export default class StoriesView extends Component {
               } else {
                 var commentsText = row.comments_count>0 && (<Text> &middot; {row.comments_count} comment{row.comments_count != 1 && 's'}</Text>);
                 return (
-                  <View>
-                    <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user}</Text>
+                  <View style={styles.storyMetadataWrap}>
+                    <Text style={styles.storyMetadata}>{row.points} point{row.points != 1 && 's'} by {row.user} </Text>
                     <Text style={styles.storyMetadata}>{row.time_ago}{commentsText}</Text>
                   </View>
                 );
