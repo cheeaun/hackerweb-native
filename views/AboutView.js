@@ -78,37 +78,30 @@ const styles = StyleSheet.create({
   }
 });
 
-export default (props) => {
-  var linkPress = function(url){
+var linkPress = function(url){
+  LinkingIOS.openURL(url);
+  /* BUG: Once <Modal> is open, SafariView can't work anymore.
+  if (/^mailto:/.test(url)){
+    // Note: won't work in Simulator because there's no Mail there
     LinkingIOS.openURL(url);
-    /* BUG: Once <Modal> is open, SafariView can't work anymore.
-    if (/^mailto:/.test(url)){
-      // Note: won't work in Simulator because there's no Mail there
-      LinkingIOS.openURL(url);
-    } else {
-      SafariView.show({
-        url: url
-      });
-    }
-    */
-  };
-  var links = [
-    { text: 'HackerWeb homepage', url: 'http://hackerwebapp.com/' },
-    { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
-    { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
-    { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
-    { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
-    { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
-  ];
-  var items = links.map(function(link, i){
-    return (
-      <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
-        <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
-          <Text style={styles.link}>{link.text}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  });
+  } else {
+    SafariView.show({
+      url: url
+    });
+  }
+  */
+};
+
+const links = [
+  { text: 'HackerWeb homepage', url: 'http://hackerwebapp.com/' },
+  { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
+  { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
+  { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
+  { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
+  { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
+];
+
+export default (props) => {
   return (
     <ScrollView>
       <View style={styles.aboutContainer}>
@@ -121,7 +114,15 @@ export default (props) => {
         </View>
       </View>
       <View style={styles.listContainer}>
-        {items}
+        {(() => links.map((link, i) => {
+          return (
+            <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
+              <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
+                <Text style={styles.link}>{link.text}</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }))()}
       </View>
       <View style={styles.disclaimer}>
         <Text style={styles.disclaimerText}>Built by Lim Chee Aun.</Text>
