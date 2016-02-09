@@ -71,6 +71,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.domainColor,
   },
+  storyMetadataWrap: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   storyMetadata: {
     fontSize: 13,
     color: colors.insignificantColor,
@@ -258,8 +262,10 @@ export default class CommentsView extends Component {
       <ScrollView>
         <View style={styles.storySection}>
           {storyHeader}
-          <Text style={styles.storyMetadata}>{data.points} points by {data.user}</Text>
-          <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count ? commentsText : null}</Text>
+          <View style={styles.storyMetadataWrap}>
+            <Text style={styles.storyMetadata}>{data.points} points by {data.user} </Text>
+            <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count>0 && commentsText}</Text>
+          </View>
           <TouchableHighlight onPress={showBrowser.bind(null, hnURL)} onLongPress={showActivity.bind(null, hnURL, data.title)}>
             <View style={styles.externalLink}>
               <Image style={styles.externalArrowIcon} source={require('../images/external-arrow.png')}/>
