@@ -58,7 +58,11 @@ const styles = StyleSheet.create({
   externalArrowIcon: {
     width: 12,
     height: 9,
-    marginRight: 6,
+    marginLeft: 2,
+    marginRight: 4,
+  },
+  storyLink: {
+    backgroundColor: colors.viewBackgroundColor,
   },
   storyTitle: {
     fontSize: 17
@@ -111,6 +115,16 @@ const styles = StyleSheet.create({
   },
   pollPoints: {
     color: colors.insignificantColor,
+  },
+  touchableLink: {
+    borderRadius: 3,
+    transform: [
+      {translateX: -2},
+      {translateY: -2}
+    ]
+  },
+  touchableLinkInner: {
+    padding: 2
   },
 });
 
@@ -184,8 +198,8 @@ export default class CommentsView extends Component {
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
       storyHeader = (
-        <TouchableHighlight onPress={showBrowser.bind(null, url)} onLongPress={showActivity.bind(null, url, data.title)}>
-          <View style={{backgroundColor: colors.viewBackgroundColor}}>
+        <TouchableHighlight onPress={showBrowser.bind(null, url)} onLongPress={showActivity.bind(null, url, data.title)} style={styles.touchableLink}>
+          <View style={[styles.storyLink, styles.touchableLinkInner]}>
             <Text style={styles.storyTitle}>{data.title}</Text>
             {domainText}
           </View>
@@ -265,8 +279,8 @@ export default class CommentsView extends Component {
             <Text style={styles.storyMetadata}>{data.points} points by {data.user} </Text>
             <Text style={styles.storyMetadata}>{data.time_ago} {data.comments_count>0 && commentsText}</Text>
           </View>
-          <TouchableHighlight onPress={showBrowser.bind(null, hnURL)} onLongPress={showActivity.bind(null, hnURL, data.title)}>
-            <View style={styles.externalLink}>
+          <TouchableHighlight onPress={showBrowser.bind(null, hnURL)} onLongPress={showActivity.bind(null, hnURL, data.title)} style={styles.touchableLink}>
+            <View style={[styles.externalLink, styles.touchableLinkInner]}>
               <Image style={styles.externalArrowIcon} source={require('../images/external-arrow.png')}/>
               <Text style={styles.storyMetadata}>{hnShortURL}</Text>
             </View>
