@@ -51,17 +51,17 @@ const styles = StyleSheet.create({
     borderTopColor: colors.separatorColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.separatorColor,
-    paddingLeft: 15,
     backgroundColor: colors.sectionBackgroundColor,
   },
   listItem: {
     paddingVertical: 13,
-    paddingRight: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.separatorColor,
+    paddingHorizontal: 15,
   },
-  lastListItem: {
-    borderBottomWidth: 0,
+  listItemSeparator: {
+    marginLeft: 15,
+    marginTop: -1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.separatorColor,
   },
   link: {
     backgroundColor: colors.sectionBackgroundColor,
@@ -115,10 +115,11 @@ export default (props) => {
       <View style={styles.listContainer}>
         {(() => links.map((link, i) => {
           return (
-            <View key={link.text} style={[styles.listItem, i == links.length-1 && styles.lastListItem]}>
-              <TouchableOpacity onPress={linkPress.bind(null, link.url)}>
+            <View key={link.text}>
+              <TouchableOpacity onPress={linkPress.bind(null, link.url)} style={styles.listItem}>
                 <Text style={styles.link}>{link.text}</Text>
               </TouchableOpacity>
+              {i < links.length-1 && <View style={styles.listItemSeparator}></View>}
             </View>
           );
         }))()}
