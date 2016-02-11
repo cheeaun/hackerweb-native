@@ -9,10 +9,10 @@ import React, {
   TouchableOpacity,
   TouchableHighlight,
   Image,
+  ActionSheetIOS,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
-import ActivityView from 'react-native-activity-view';
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
@@ -129,10 +129,10 @@ var showBrowser = function(u){
 
 var showActivity = function(u, t){
   if (!u) return;
-  ActivityView.show({
-    text: t || '',
+  ActionSheetIOS.showShareActionSheetWithOptions({
     url: u,
-  });
+    message: t || '',
+  }, () => {}, () => {});
 };
 
 export default class StoriesView extends Component {
