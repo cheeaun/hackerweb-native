@@ -184,6 +184,8 @@ export default class StoriesView extends Component {
       title: data.title,
       component: CommentsView,
       wrapperStyle: styles.wrapper,
+      rightButtonIcon: require('../images/share-icon.png'),
+      onRightButtonPress: showActivity.bind(null, `https://news.ycombinator.com/item?id=${data.id}`, data.title),
       passProps: {
         data: data
       }
