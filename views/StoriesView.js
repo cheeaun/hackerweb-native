@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   storyTitle: {
-    fontSize: 17
+    fontSize: 17,
   },
   storyTitleVisited: {
     color: colors.insignificantColor,
