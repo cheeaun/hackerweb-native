@@ -11,10 +11,14 @@ class StoryStore {
     this.story = null;
     this.storyLoading = false;
     this.storyError = false;
+    this.hasMoreStories = false;
 
     this.bindListeners({
       handleFetchStories: StoryActions.FETCH_STORIES,
+      handleFetchMoreStories: StoryActions.FETCH_MORE_STORIES,
       handleUpdateStories: StoryActions.UPDATE_STORIES,
+      handleUpdateMoreStories: StoryActions.UPDATE_MORE_STORIES,
+      handleHasMoreStories: StoryActions.HAS_MORE_STORIES,
       handleStoriesFailed: StoryActions.STORIES_FAILED,
       handleFetchStory: StoryActions.FETCH_STORY,
       handleUpdateStory: StoryActions.UPDATE_STORY,
@@ -25,12 +29,24 @@ class StoryStore {
   handleFetchStories(){
     this.storiesLoading = true;
     this.storiesError = false;
+    this.hasMoreStories = false;
+  }
+
+  handleFetchMoreStories(){
   }
 
   handleUpdateStories(stories){
     this.stories = stories;
     this.storiesLoading = false;
     this.storiesError = false;
+  }
+
+  handleHasMoreStories(){
+    this.hasMoreStories = true;
+  }
+
+  handleUpdateMoreStories(stories){
+    this.stories = this.stories.concat(stories);
   }
 
   handleStoriesFailed(error){

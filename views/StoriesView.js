@@ -115,6 +115,12 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: colors.viewBackgroundColor,
   },
+  moreLink: {
+    padding: 19,
+    textAlign: 'center',
+    color: colors.linkColor,
+    fontSize: 17,
+  },
 });
 
 var showBrowser = function(u){
@@ -138,7 +144,7 @@ var showActivity = function(u, t){
 export default class StoriesView extends Component {
   constructor(props){
     super(props);
-    var { stories, storiesLoading, storiesError } = StoryStore.getState();
+    var { stories, storiesLoading, storiesError, hasMoreStories } = StoryStore.getState();
     var { links } = LinkStore.getState();
     this.state = {
       stories,
@@ -171,6 +177,7 @@ export default class StoriesView extends Component {
       dataSource: this.state.dataSource.cloneWithRows(stories),
       loading: state.storiesLoading,
       error: state.storiesError,
+      hasMoreStories: state.hasMoreStories,
     });
   }
   _onLinkChange(state){
@@ -258,6 +265,17 @@ export default class StoriesView extends Component {
   renderSeparator(sectionID, rowID, adjacentRowHighlighted){
     return <View key={rowID} style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
   }
+  renderFooter(){
+    const {hasMoreStories, stories} = this.state;
+    if (hasMoreStories && stories && stories.length <= 30){
+      return (
+        <TouchableOpacity onPress={StoryActions.fetchMoreStories}>
+          <Text style={styles.moreLink}>More&hellip;</Text>
+        </TouchableOpacity>
+      );
+    }
+    return null;
+  }
   render(){
     if (this.state.loading){
       return (
@@ -280,6 +298,7 @@ export default class StoriesView extends Component {
         dataSource={this.state.dataSource}
         renderRow={this.renderRow.bind(this)}
         renderSeparator={this.renderSeparator.bind(this)}
+        renderFooter={this.renderFooter.bind(this)}
       />
     );
   }

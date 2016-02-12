@@ -17,6 +17,10 @@ class StoryActions {
     return stories;
   }
 
+  updateMoreStories(stories){
+    return stories;
+  }
+
   fetchStories(){
     return (dispatch) => {
       dispatch();
@@ -32,6 +36,16 @@ class StoryActions {
             CacheStore.set('stories', stories, 10); // 10 minutes
           })
           .catch(this.storiesFailed);
+
+        // Meanwhile...
+        fetch(API_HOST + 'news2')
+          .then((response) => response.json())
+          .then((stories) => {
+            if (!stories || !stories.length) return;
+            this.hasMoreStories();
+            CacheStore.set('stories2', stories, 10); // 10 minutes
+          })
+          .catch(() => {});
       };
       CacheStore.get('stories').then((stories) => {
         if (stories){
@@ -41,6 +55,16 @@ class StoryActions {
         }
       }).catch(request);
     };
+  }
+
+  hasMoreStories(){
+    return true;
+  }
+
+  fetchMoreStories(){
+    CacheStore.get('stories2').then((stories) => {
+      if (stories) this.updateMoreStories(stories);
+    }).catch(() => {});
   }
 
   fetchStoriesIfExpired(){
