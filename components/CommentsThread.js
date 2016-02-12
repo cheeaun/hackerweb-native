@@ -5,6 +5,8 @@ import React, {
   StyleSheet,
   View,
   Text,
+  LayoutAnimation,
+  TouchableOpacity,
 } from 'react-native';
 
 import Comment from './Comment';
@@ -27,77 +29,109 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginLeft: 15,
   },
+  moreLink: {
+    padding: 19,
+    textAlign: 'center',
+    color: colors.linkColor,
+    fontSize: 17,
+  }
 });
 
+const SubCommentsThread = (props) => {
+  const {data, op} = props;
+  if (!data || !data.length) return <View></View>;
+  return (
+    <View>
+      {data.map((comment) => {
+        return (
+          <View key={comment.id} style={comment.level > 1 && styles.indentedThread}>
+            <Comment data={comment} op={op}/>
+            <SubCommentsThread data={comment.comments} op={op}/>
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+const LIMIT = 30;
 export default class CommentsThread extends Component {
   constructor(props){
     super(props);
     this.state = {
-      expandedComments: [] // List of comment IDs with expand/collapse buttons
+      expandedComments: [], // List of comment IDs with expand/collapse buttons
+      limit: LIMIT,
     };
   }
   _toggleComments(commentID){
-    var expandedComments = this.state.expandedComments;
+    var {expandedComments} = this.state;
     var index = expandedComments.indexOf(commentID);
     if (index >= 0){
       expandedComments.splice(index, 1);
     } else {
       expandedComments.push(commentID);
     }
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
-      expandedComments: expandedComments
+      expandedComments: expandedComments,
+    });
+  }
+  _increaseLimit(){
+    this.setState({
+      limit: this.state.limit + LIMIT,
     });
   }
   render(){
-    var data = this.props.data || [];
-    var level = this.props.level || 0;
-    var op = this.props.op;
-    var self = this;
-    var tooManyComments = JSON.stringify(data).length > 20*1000;
-    var commentItems = data.map(function(comment){
-      var hasComments = comment.comments && comment.comments.length;
-      var subComments = hasComments ? <CommentsThread data={comment.comments} op={op} level={comment.level + 1}/> : null;
-      var expanded = self.state.expandedComments.indexOf(comment.id) >= 0;
+    const {data, op} = this.props;
+    if (!data || !data.length) return null;
+    const {limit} = this.state;
+    const tooManyComments = JSON.stringify(data).length > 20*1000;
+    const commentItems = data.slice(0, limit).map((comment) => {
+      let subComments = <SubCommentsThread data={comment.comments} op={op}/>;
+      let {comments} = comment;
+      let hasComments = comments && comments.length;
+      let hasOnlyOneComment = comments.length == 1 && !comments[0].comments.length;
 
-      if (level == 0){
-        if (tooManyComments){
-          var commentsCount = comment.comments.length;
-          var dive = function(comments){
-            comments.forEach(function(c){
-              var len = c.comments.length;
-              commentsCount += len;
-              if (len) dive(c.comments);
-            });
-          };
-          dive(comment.comments);
+      if (tooManyComments && hasComments && !hasOnlyOneComment){
+        let expanded = this.state.expandedComments.indexOf(comment.id) >= 0;
+        let commentsCount = comment.comments.length;
+        let dive = function(comments){
+          comments.forEach(function(c){
+            var len = c.comments.length;
+            commentsCount += len;
+            if (len) dive(c.comments);
+          });
+        };
+        dive(comment.comments);
 
-          var subCommentsButton = hasComments ? <Button onPress={self._toggleComments.bind(self, comment.id)} buttonStyles={styles.repliesButton}>{commentsCount} {commentsCount == 1 ? 'reply' : 'replies'}</Button> : null;
+        let subCommentsButton = commentsCount && <Button onPress={this._toggleComments.bind(this, comment.id)} buttonStyles={styles.repliesButton}>{commentsCount} {commentsCount == 1 ? 'reply' : 'replies'}</Button>;
 
-          return (
-            <View key={comment.id}>
-              <Comment data={comment} op={op}/>
-              {subCommentsButton}
-              {expanded ? subComments : null}
-              <View style={styles.commentsSeparator}></View>
-            </View>
-          );
-        } else {
-          return (
-            <View key={comment.id}>
-              <Comment data={comment} op={op}/>
-              {subComments}
-              <View style={styles.commentsSeparator}></View>
-            </View>
-          );
-        }
+        return (
+          <View key={comment.id}>
+            <Comment data={comment} op={op}/>
+            {subCommentsButton}
+            {expanded ? subComments : null}
+            <View style={styles.commentsSeparator}></View>
+          </View>
+        );
+      } else {
+        return (
+          <View key={comment.id}>
+            <Comment data={comment} op={op}/>
+            {subComments}
+            <View style={styles.commentsSeparator}></View>
+          </View>
+        );
       }
-      return (
-        <View key={comment.id} style={level > 1 && styles.indentedThread}>
-          <Comment data={comment} op={op}/>
-          {subComments}
-        </View>
-      );
     });
-    return <View>{commentItems}</View>;
+
+    return (
+      <View>
+        {commentItems}
+        {data.length > limit && <TouchableOpacity onPress={this._increaseLimit.bind(this)}>
+          <Text style={styles.moreLink}>More comments&hellip;</Text>
+        </TouchableOpacity>}
+      </View>
+    );
   }
 }

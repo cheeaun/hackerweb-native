@@ -74,9 +74,8 @@ var linkPress = function(u){
 };
 
 export default (props) => {
-  var data = props.data;
-  var op = props.op;
-  var level = data.level;
+  const {data, op} = props;
+  const {level} = data;
   var commentArrow = level>0 && <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/>;
 
   var innerComment = data.deleted ? (
