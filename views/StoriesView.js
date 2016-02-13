@@ -72,12 +72,13 @@ var showActivity = function(u, t){
 export default class StoriesView extends Component {
   constructor(props){
     super(props);
-    var { stories, storiesLoading, storiesError, hasMoreStories } = StoryStore.getState();
+    const { stories, storiesLoading, storiesError, hasMoreStories } = StoryStore.getState();
     this.state = {
       stories,
       loading: storiesLoading,
       error: storiesError,
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
+      hasMoreStories,
     };
     this._onChange = this._onChange.bind(this);
   }
@@ -89,12 +90,12 @@ export default class StoriesView extends Component {
     StoryStore.unlisten(this._onChange);
   }
   _onChange(state){
-    const {stories, hasMoreStories} = state;
+    const {stories, storiesLoading, storiesError, hasMoreStories} = state;
     this.setState({
       stories,
       dataSource: this.state.dataSource.cloneWithRows(stories),
-      loading: state.storiesLoading,
-      error: state.storiesError,
+      loading: storiesLoading,
+      error: storiesError,
       hasMoreStories,
     });
   }
