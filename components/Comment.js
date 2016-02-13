@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-var linkPress = function(u){
+var showBrowser = function(u){
   if (!u) return;
   SafariView.show({
     url: u
@@ -87,11 +87,11 @@ export default (props) => {
       <View style={styles.commentMetadata}>
         <View style={styles.commentUserWrap}>
           <View>
-            <Text style={styles.commentUser} onPress={linkPress.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}>{data.user}</Text>
+            <Text style={styles.commentUser} onPress={showBrowser.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}>{data.user}</Text>
           </View>
           {op == data.user && <View style={styles.opUserContainer}><Text style={styles.opUser}>OP</Text></View>}
         </View>
-        <Text style={styles.commentTime} onPress={linkPress.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
+        <Text style={styles.commentTime} onPress={showBrowser.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
       <HTMLView html={data.content}/>
     </View>
