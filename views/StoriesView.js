@@ -93,7 +93,7 @@ export default class StoriesView extends Component {
     const {stories, storiesLoading, storiesError, hasMoreStories} = state;
     this.setState({
       stories,
-      dataSource: this.state.dataSource.cloneWithRows(stories),
+      dataSource: this.state.dataSource.cloneWithRows([].concat(stories)),
       loading: storiesLoading,
       error: storiesError,
       hasMoreStories,
