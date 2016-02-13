@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 
 export default (props) => {
   const {data, op} = props;
-  const {level} = data;
+  const {level, user} = data;
 
   const innerComment = data.deleted ? (
     <View style={styles.commentMetadata}>
@@ -80,14 +80,13 @@ export default (props) => {
       <View style={styles.commentMetadata}>
         <View style={styles.commentUserWrap}>
           <View>
-            <Text style={styles.commentUser} onPress={showBrowser.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(data.user)}`)}>{data.user}</Text>
+            <Text style={styles.commentUser} onPress={showBrowser.bind(null, `https://news.ycombinator.com/user?id=${encodeURIComponent(user)}`)}>{user}</Text>
           </View>
-          {op == data.user && <View style={styles.opUserContainer}><Text style={styles.opUser}>OP</Text></View>}
+          {op == user && <View style={styles.opUserContainer}><Text style={styles.opUser}>OP</Text></View>}
         </View>
         <Text style={styles.commentTime} onPress={showBrowser.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
       <HTMLView html={data.content} onLinkPress={showBrowser}/>
-      <HTMLView html={data.content}/>
     </View>
   );
 

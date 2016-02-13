@@ -119,7 +119,7 @@ export default (props) => {
               <TouchableOpacity onPress={linkPress.bind(null, link.url)} style={styles.listItem}>
                 <Text style={styles.link}>{link.text}</Text>
               </TouchableOpacity>
-              {i < links.length-1 && <View style={styles.listItemSeparator}></View>}
+              {i < links.length-1 && <View style={styles.listItemSeparator}/>}
             </View>
           );
         }))()}

@@ -7,8 +7,6 @@ import React, {
 
 import Comment from './Comment';
 
-import colors from '../colors';
-
 const styles = StyleSheet.create({
   indentedThread: {
     marginLeft: 14,
@@ -17,7 +15,7 @@ const styles = StyleSheet.create({
 
 const CommentsThread = (props) => {
   const {data, op} = props;
-  if (!data || !data.length) return <View></View>;
+  if (!data || !data.length) return <View/>;
   return (
     <View>
       {data.map((comment) => {
