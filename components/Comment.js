@@ -76,9 +76,8 @@ var linkPress = function(u){
 export default (props) => {
   const {data, op} = props;
   const {level} = data;
-  var commentArrow = level>0 && <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/>;
 
-  var innerComment = data.deleted ? (
+  const innerComment = data.deleted ? (
     <View style={styles.commentMetadata}>
       <Text style={styles.commentDeleted}>[deleted]</Text>
       <Text style={styles.commentTime}>{data.time_ago}</Text>
@@ -100,7 +99,7 @@ export default (props) => {
 
   return (
     <View style={[styles.comment, level > 0 && styles.subComment]}>
-      {commentArrow}
+      {level > 0 && <Image style={styles.commentArrowIcon} source={require('../images/comment-arrow.png')}/>}
       <View style={styles.commentInner}>
         {innerComment}
       </View>
