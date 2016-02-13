@@ -173,7 +173,6 @@ export default class StoriesView extends Component {
     });
     this.setState({
       stories,
-      // Have to "clone" state.stories because `cloneWithRows` is confused with the reference
       dataSource: this.state.dataSource.cloneWithRows(stories),
       loading: state.storiesLoading,
       error: state.storiesError,
