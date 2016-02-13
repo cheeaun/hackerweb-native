@@ -11,6 +11,7 @@ import React, {
   Image,
   ActionSheetIOS,
   ListView,
+  LayoutAnimation,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
@@ -166,6 +167,7 @@ export default class CommentsView extends Component {
   _onChange(state){
     const {story} = state;
     const comments = (story && story.comments) || [];
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
       data: story,
       dataSource: this.state.dataSource.cloneWithRows(comments),
