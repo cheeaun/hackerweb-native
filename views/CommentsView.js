@@ -6,11 +6,11 @@ import React, {
   ActivityIndicatorIOS,
   View,
   Text,
-  ScrollView,
   TouchableHighlight,
   TouchableOpacity,
   Image,
   ActionSheetIOS,
+  ListView,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
@@ -19,9 +19,9 @@ import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
 import LinkActions from '../actions/LinkActions';
 
+import CommentRow from '../components/CommentRow';
 import LoadingIndicator from '../components/LoadingIndicator';
 import HTMLView from '../components/HTMLView';
-import CommentsThread from '../components/CommentsThread';
 import ProgressBar from '../components/ProgressBar';
 import domainify from '../utils/domainify';
 
@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 50,
     backgroundColor: colors.sectionBackgroundColor,
+  },
+  footer: {
     borderTopColor: colors.separatorColor,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.separatorColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 30,
+    height: 30,
   },
   errorContainer: {
     alignItems: 'center',
@@ -97,6 +97,10 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     marginBottom: 30,
   },
+  separator: {
+    backgroundColor: colors.separatorColor,
+    height: StyleSheet.hairlineWidth,
+  },
   externalLink: {
     flex: 1,
     flexDirection: 'row',
@@ -152,6 +156,7 @@ export default class CommentsView extends Component {
     var { story, storyLoading, storyError } = StoryStore.getState();
     this.state = {
       data: story,
+      dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loading: storyLoading,
       error: storyError,
     };
@@ -169,8 +174,11 @@ export default class CommentsView extends Component {
     StoryActions.fetchStory(this.props.data.id);
   }
   _onChange(state){
+    const {story} = state;
+    const comments = (story && story.comments) || [];
     this.setState({
-      data: state.story,
+      data: story,
+      dataSource: this.state.dataSource.cloneWithRows(comments),
       loading: state.storyLoading,
       error: state.storyError,
     });
@@ -187,13 +195,14 @@ export default class CommentsView extends Component {
       }
     }
   }
-  render(){
-    var data = this.state.data || this.props.data;
-    var commentsText = <Text>&middot; {data.comments_count} comment{data.comments_count != 1 && 's'}</Text>;
-    var url = data.url;
-    var externalLink = !/^item/i.test(url);
-    var domainText = null;
-    var storyHeader = null;
+  _renderHeader(){
+    let {data, loading, error} = this.state;
+    data = data || this.props.data;
+    const commentsText = <Text>&middot; {data.comments_count} comment{data.comments_count != 1 && 's'}</Text>;
+    const url = data.url;
+    const externalLink = !/^item/i.test(url);
+    let domainText = null;
+    let storyHeader = null;
 
     if (externalLink){
       domainText = <Text style={styles.storyDomain}>{domainify(data.url)}</Text>;
@@ -209,21 +218,16 @@ export default class CommentsView extends Component {
       storyHeader = <View><Text style={styles.storyTitle}>{data.title}</Text></View>;
     }
 
-    var hnShortURL = `news.ycombinator.com/item?id=${data.id}`;
-    var hnURL = `https://${hnShortURL}`;
+    const hnShortURL = `news.ycombinator.com/item?id=${data.id}`;
+    const hnURL = `https://${hnShortURL}`;
 
-    var contentSection;
+    let contentSection;
     if (data.content){
-      var contentElements;
-      HTMLView.processDOM(data.content, (elements) => {
-        contentElements = elements;
-      });
-
-      var pollElements;
+      let pollElements;
       if (data.poll && data.poll.length){
-        var maxPoints = Math.max.apply(null, data.poll.map((p) => p.points ));
+        let maxPoints = Math.max.apply(null, data.poll.map((p) => p.points ));
         pollElements = data.poll.map((p) => {
-          var points = p.points;
+          let {points} = p;
           return (
             <View>
               <View style={styles.pollContainer}>
@@ -236,23 +240,24 @@ export default class CommentsView extends Component {
         });
       }
 
-      contentSection = <View style={styles.storyContent}>{contentElements}{pollElements}</View>;
-    }
-
-    var commentsSection;
-    if (data && data.comments && data.comments.length){
-      commentsSection = (
-        <View style={styles.commentsThread}>
-          <CommentsThread data={data.comments} op={data.user} />
+      contentSection = (
+        <View style={styles.storyContent}>
+          <HTMLView html={data.content}/>
+          {pollElements}
         </View>
       );
-    } else if (this.state.loading){
+    }
+
+    let commentsSection;
+    if (data && data.comments && data.comments.length){
+      commentsSection = null;
+    } else if (loading){
       commentsSection = (
         <View style={styles.viewCommentsBlank}>
           <LoadingIndicator/>
         </View>
       );
-    } else if (this.state.error){
+    } else if (error){
       commentsSection = (
         <View style={styles.viewCommentsBlank}>
           <View style={styles.errorContainer}>
@@ -272,7 +277,7 @@ export default class CommentsView extends Component {
     }
 
     return (
-      <ScrollView>
+      <View>
         <View style={styles.storySection}>
           {storyHeader}
           <View style={styles.storyMetadataWrap}>
@@ -287,8 +292,24 @@ export default class CommentsView extends Component {
           </TouchableHighlight>
         </View>
         {contentSection}
+        <View style={styles.separator}/>
         {commentsSection}
-      </ScrollView>
+      </View>
+    );
+  }
+  render(){
+    const {data, dataSource} = this.state;
+    const comments = (data && data.comments) || [];
+    const hasManyComments = JSON.stringify(comments).length > 20*1000;
+    const op = data && data.user;
+    return (
+      <ListView
+        renderHeader={this._renderHeader.bind(this)}
+        dataSource={dataSource}
+        renderRow={(comment) => <CommentRow key={comment.id} comment={comment} op={op} hasManyComments={hasManyComments}/>}
+        renderSeparator={(sectionID, rowID) => <View key={rowID} style={styles.separator}/>}
+        renderFooter={() => <View style={styles.footer}/>}
+      />
     );
   }
 }
