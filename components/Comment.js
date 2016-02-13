@@ -86,6 +86,7 @@ export default (props) => {
         </View>
         <Text style={styles.commentTime} onPress={showBrowser.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
+      <HTMLView html={data.content} onLinkPress={showBrowser}/>
       <HTMLView html={data.content}/>
     </View>
   );

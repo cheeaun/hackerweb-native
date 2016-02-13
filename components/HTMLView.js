@@ -6,9 +6,9 @@ import React, {
   Text,
   View,
   ScrollView,
+  LinkingIOS,
 } from 'react-native';
 
-import SafariView from 'react-native-safari-view';
 import htmlparser from '../vendor/htmlparser2';
 
 import colors from '../colors';
@@ -31,26 +31,20 @@ const nodeStyles = StyleSheet.create({
   },
   i: {
     fontStyle: 'italic',
-  }
+  },
 });
-
-var onLinkPress = function(url){
-  SafariView.show({
-    url: url
-  });
-};
 
 function dom2elements(nodes, opts){
   if (!nodes || !nodes.length) return;
-  var linkHandler = opts.linkHandler;
+  const {onLinkPress} = opts;
   return nodes.map((node) => {
-    var nodeName = node.name;
-    var key = nodeName + '-' + Math.random();
-    var style = nodeStyles[nodeName];
-    if (node.type == 'tag'){
-      var elements = dom2elements(node.children, opts);
+    const {name, type, children} = node;
+    const key = name + '-' + Math.random();
+    const style = nodeStyles[name];
+    if (type == 'tag'){
+      var elements = dom2elements(children, opts);
       if (!elements) return null;
-      if (nodeName == 'pre'){
+      if (name == 'pre'){
         return (
           <ScrollView
             key={key}
@@ -62,19 +56,19 @@ function dom2elements(nodes, opts){
           </ScrollView>
         );
       }
-      if (nodeName == 'p'){
+      if (name == 'p'){
         // Weird that <pre> is inside <p>
-        if (node.children.some((c) => c.name == 'pre')){
+        if (children.some((c) => c.name == 'pre')){
           return elements;
         }
         return <Text key={key} style={style}>{elements}</Text>;
       }
-      if (nodeName == 'a'){
-        var href = node.attribs.href;
+      if (name == 'a'){
+        const {href} = node.attribs;
         return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)}>{elements}</Text>;
       }
       return <Text key={key} style={style}>{elements}</Text>;
-    } else if (node.type == 'text'){
+    } else if (type == 'text'){
       return <Text key={key} style={style}>{node.data}</Text>;
     }
   });
@@ -85,11 +79,11 @@ function processDOM(html, opts, callback){
     callback = opts;
     opts = {};
   }
-  var handler = new htmlparser.DomHandler((err, dom) => {
-    var elements = dom2elements(dom, opts);
+  const handler = new htmlparser.DomHandler((err, dom) => {
+    const elements = dom2elements(dom, opts);
     callback(elements);
   });
-  var parser = new htmlparser.Parser(handler, {
+  const parser = new htmlparser.Parser(handler, {
     recognizeSelfClosing: true,
     lowerCaseAttributeNames: true,
     lowerCaseTags: true,
@@ -108,13 +102,11 @@ export default class HTMLView extends Component {
       elements: null,
     };
   }
-  static processDOM = processDOM;
   componentDidMount(){
-    var html = this.props.html;
+    const {html, onLinkPress} = this.props;
     if (!html) return null;
-    var self = this;
     processDOM(html, {
-      onLinkPress: this.props.onLinkPress || onLinkPress,
+      onLinkPress: onLinkPress || LinkingIOS.openURL,
     }, (elements) => {
       this.setState({
         elements: elements,
