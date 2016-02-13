@@ -49,12 +49,14 @@ export default class Button extends Component {
     });
   }
   render(){
-    var pressed = this.state.pressed;
-    var props = this.props;
+    const {pressed} = this.state;
+    const {onPress, buttonStyles, pressedButtonStyles, textStyles, pressedTextStyles, children} = this.props;
     return (
-      <TouchableWithoutFeedback onPress={props.onPress.bind(this)} onPressIn={this._onPressIn.bind(this)} onPressOut={this._onPressOut.bind(this)}>
-        <View style={[props.buttonStyles, styles.button, pressed && styles.pressedButton, pressed && props.pressedButtonStyles]}>
-          <Text style={[props.textStyles, styles.text, pressed && styles.pressedText, pressed && props.pressedTextStyles]}>{props.children}</Text>
+      <TouchableWithoutFeedback onPress={onPress} onPressIn={this._onPressIn.bind(this)} onPressOut={this._onPressOut.bind(this)}>
+        <View style={[buttonStyles, styles.button, pressed && styles.pressedButton, pressed && pressedButtonStyles]}>
+          <Text style={[textStyles, styles.text, pressed && styles.pressedText, pressed && pressedTextStyles]}>
+            {children}
+          </Text>
         </View>
       </TouchableWithoutFeedback>
     );
