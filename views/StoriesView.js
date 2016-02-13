@@ -207,7 +207,7 @@ export default class StoriesView extends Component {
     const ref = this[`_disclosure-${rowID}`];
     if (ref) ref.setNativeProps({ style: { height } });
   }
-  renderRow(row, sectionID, rowID, highlightRow){
+  _renderRow(row, sectionID, rowID, highlightRow){
     var position = parseInt(rowID, 10) + 1;
     var url = row.url;
     var visited = row._visited;
@@ -261,10 +261,10 @@ export default class StoriesView extends Component {
       </TouchableHighlight>
     );
   }
-  renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+  _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
     return <View key={rowID} style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
   }
-  renderFooter(){
+  _renderFooter(){
     const {hasMoreStories, stories} = this.state;
     if (hasMoreStories && stories && stories.length <= 30){
       return (
@@ -276,14 +276,15 @@ export default class StoriesView extends Component {
     return null;
   }
   render(){
-    if (this.state.loading){
+    const {loading, error, dataSource} = this.state;
+    if (loading){
       return (
         <View style={styles.viewLoading}>
           <LoadingIndicator/>
         </View>
       );
     }
-    if (this.state.error){
+    if (error){
       return (
         <View style={styles.viewError}>
           <Text style={styles.errorText}>Couldn't load stories.</Text>
@@ -293,11 +294,10 @@ export default class StoriesView extends Component {
     return (
       <ListView
         style={styles.navbarSpacing}
-        initialListSize={10}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow.bind(this)}
-        renderSeparator={this.renderSeparator.bind(this)}
-        renderFooter={this.renderFooter.bind(this)}
+        dataSource={dataSource}
+        renderRow={this._renderRow.bind(this)}
+        renderSeparator={this._renderSeparator.bind(this)}
+        renderFooter={this._renderFooter.bind(this)}
       />
     );
   }
