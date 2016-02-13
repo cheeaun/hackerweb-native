@@ -16,7 +16,7 @@ class LinkActions {
         links = links || [];
         if (!links.includes(link)){
           dispatch(link);
-          links.push(link);
+          links.unshift(link);
           CacheStore.set('links', links.slice(0, 100));
         }
       });
