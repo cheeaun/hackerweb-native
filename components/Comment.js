@@ -9,7 +9,7 @@ import React, {
 
 import SafariView from 'react-native-safari-view';
 import HTMLView from '../components/HTMLView';
-
+import showBrowser from '../utils/showBrowser';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
@@ -65,13 +65,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-
-var showBrowser = function(u){
-  if (!u) return;
-  SafariView.show({
-    url: u
-  });
-};
 
 export default (props) => {
   const {data, op} = props;

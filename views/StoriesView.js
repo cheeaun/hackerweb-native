@@ -22,6 +22,7 @@ import LinkActions from '../actions/LinkActions';
 import LoadingIndicator from '../components/LoadingIndicator';
 import HTMLView from '../components/HTMLView';
 import CommentsView from './CommentsView';
+import showBrowser from '../utils/showBrowser';
 import domainify from '../utils/domainify';
 
 import colors from '../colors';
@@ -122,16 +123,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-
-var showBrowser = function(u){
-  if (!u) return;
-  SafariView.show({
-    url: u
-  });
-  setTimeout(function(){
-    LinkActions.addLink(u);
-  }, 1000); // Set the link inactive after 1 second
-};
 
 var showActivity = function(u, t){
   if (!u) return;

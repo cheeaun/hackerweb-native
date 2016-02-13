@@ -17,12 +17,12 @@ import SafariView from 'react-native-safari-view';
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
-import LinkActions from '../actions/LinkActions';
 
 import CommentRow from '../components/CommentRow';
 import LoadingIndicator from '../components/LoadingIndicator';
 import HTMLView from '../components/HTMLView';
 import ProgressBar from '../components/ProgressBar';
+import showBrowser from '../utils/showBrowser';
 import domainify from '../utils/domainify';
 
 import colors from '../colors';
@@ -131,16 +131,6 @@ const styles = StyleSheet.create({
     padding: 2
   },
 });
-
-var showBrowser = function(u){
-  if (!u) return;
-  SafariView.show({
-    url: u
-  });
-  setTimeout(function(){
-    LinkActions.addLink(u);
-  }, 1000); // Set the link inactive after 1 second
-};
 
 var showActivity = function(u, t){
   if (!u) return;
