@@ -54,6 +54,10 @@ class StoryActions {
           request();
         }
       }).catch(request);
+
+      CacheStore.get('stories2').then((stories) => {
+        if (stories) this.hasMoreStories();
+      }).catch(() => {});
     };
   }
 
