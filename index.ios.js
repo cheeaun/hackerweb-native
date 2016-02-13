@@ -35,6 +35,8 @@ class App extends Component {
       isAboutVisible: false,
       showNav: false,
     };
+    this._reloadCount = 0;
+    this._reloadCountTimeout = null;
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
     this._handleOpenURL = this._handleOpenURL.bind(this);
   }
@@ -109,7 +111,18 @@ class App extends Component {
               leftButtonTitle: 'About',
               onLeftButtonPress: this._showAbout.bind(this),
               rightButtonIcon: require('./images/refresh-icon.png'),
-              onRightButtonPress: StoryActions.fetchStories,
+              onRightButtonPress: () => {
+                // For the compulsive-type of people who likes to press Reload multiple times
+                this._reloadCount++;
+                clearTimeout(this._reloadCountTimeout);
+                if (this._reloadCount >= 3){
+                  StoryActions.flush();
+                  this._reloadCount = 0;
+                } else {
+                  this._reloadCountTimeout = setTimeout(() => this._reloadCount = 0, 3000);
+                }
+                StoryActions.fetchStories();
+              },
             }}/>
         </View>
         <Modal animated={true} visible={isAboutVisible}>

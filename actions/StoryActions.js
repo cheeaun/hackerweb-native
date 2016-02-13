@@ -21,9 +21,14 @@ class StoryActions {
     return stories;
   }
 
+  flush(){
+    CacheStore.flush(); // Clears everything
+  }
+
   fetchStories(){
     return (dispatch) => {
       dispatch();
+
       var request = () => {
         Promise.race([
           fetch(API_HOST + 'news'),
@@ -47,6 +52,7 @@ class StoryActions {
           })
           .catch(() => {});
       };
+
       CacheStore.get('stories').then((stories) => {
         if (stories){
           this.updateStories(stories);
