@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   storyMetadataWrap: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    marginBottom: 2,
   },
   storyMetadata: {
     fontSize: 13,
