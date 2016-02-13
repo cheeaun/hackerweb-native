@@ -31,9 +31,10 @@ export default class ProgressBar extends Component {
     this._onBarLayout = this._onBarLayout.bind(this);
   }
   _onBarLayout(e){
-    var width = e.nativeEvent.layout.width;
+    const {value, max} = this.props;
+    const width = e.nativeEvent.layout.width;
     Animated.spring(this.state.progressWidth, {
-      toValue: this.props.value/this.props.max*100,
+      toValue: value/max*100,
       duration: 300,
     }).start();
   }
