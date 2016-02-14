@@ -82,7 +82,7 @@ export default class StoriesView extends Component {
     };
     this._onChange = this._onChange.bind(this);
   }
-  componentWillMount(){
+  componentDidMount(){
     StoryStore.listen(this._onChange);
     StoryActions.fetchStories();
   }

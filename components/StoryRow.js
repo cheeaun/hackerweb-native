@@ -87,7 +87,7 @@ export default class StoryRow extends Component {
     };
     this._onLinkChange = this._onLinkChange.bind(this);
   }
-  componentWillMount(){
+  componentDidMount(){
     LinkStore.listen(this._onLinkChange);
     LinkActions.getLinks();
   }

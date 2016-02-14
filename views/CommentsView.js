@@ -155,7 +155,7 @@ export default class CommentsView extends Component {
     this._onChange = this._onChange.bind(this);
     this._fetchStory = this._fetchStory.bind(this);
   }
-  componentWillMount(){
+  componentDidMount(){
     StoryStore.listen(this._onChange);
     this._fetchStory();
   }
