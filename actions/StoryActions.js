@@ -112,7 +112,7 @@ class StoryActions {
         } else {
           request();
         }
-      }, request);
+      }).catch(request);
     };
   }
 
