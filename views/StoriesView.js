@@ -156,7 +156,7 @@ export default class StoriesView extends Component {
     return (
       <ListView
         style={styles.navbarSpacing}
-        pageSize={5}
+        pageSize={10}
         dataSource={dataSource}
         renderRow={this._renderRow.bind(this)}
         renderSeparator={this._renderSeparator.bind(this)}
