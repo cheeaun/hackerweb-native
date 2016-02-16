@@ -8,6 +8,7 @@ import React, {
   ListView,
   TouchableOpacity,
   ActionSheetIOS,
+  LayoutAnimation,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
@@ -90,6 +91,7 @@ export default class StoriesView extends Component {
   }
   _onChange(state){
     const {stories, storiesLoading, storiesError, hasMoreStories} = state;
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     this.setState({
       stories,
       dataSource: this.state.dataSource.cloneWithRows([].concat(stories)),
