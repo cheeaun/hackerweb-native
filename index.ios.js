@@ -53,13 +53,13 @@ class App extends Component {
       StoryActions.fetchStoriesIfExpired();
     }
     this.setState({
-      currentAppState: currentAppState,
+      currentAppState,
     });
   }
   _handleOpenURL(e){
-    var url = e.url;
+    const {url} = e;
     if (!url) return;
-    var id = (url.match(/item\?id=([a-z\d]+)/i) || [,null])[1];
+    const id = (url.match(/item\?id=([a-z\d]+)/i) || [,null])[1];
     if (!id) return;
     this.refs.nav.push({
       component: CommentsView,
@@ -73,9 +73,8 @@ class App extends Component {
     this.setState({
       isAboutVisible: true,
     });
-    var self = this;
-    setTimeout(function(){
-      self.setState({
+    setTimeout(() => {
+      this.setState({
         showNav: true,
       });
     }, 1);
@@ -87,9 +86,9 @@ class App extends Component {
     });
   }
   render(){
-    var isAboutVisible = this.state.isAboutVisible;
-    var pointerEvents = isAboutVisible ? 'none' : 'auto';
-    var nav = this.state.showNav ? <NavigatorIOS
+    const {isAboutVisible, showNav} = this.state;
+    const pointerEvents = isAboutVisible ? 'none' : 'auto';
+    const nav = showNav && <NavigatorIOS
       style={styles.container}
       initialRoute={{
         title: 'About',
@@ -97,7 +96,7 @@ class App extends Component {
         wrapperStyle: styles.wrapper,
         leftButtonTitle: 'Close',
         onLeftButtonPress: this._hideAbout.bind(this),
-      }}/> : null;
+      }}/>;
     return (
       <View style={styles.container}>
         <View style={styles.container} pointerEvents={pointerEvents}>
