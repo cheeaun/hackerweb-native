@@ -4,12 +4,23 @@ import alt from '../alt';
 import CacheStore from '../components/CacheStore';
 
 const API_HOST = 'https://api.hackerwebapp.com/';
-var fetchTimeout = () => {
+const FETCH_TIMEOUT = 20000; // 20 seconds
+function fetchTimeout(){
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      reject(new Error('Response timeout.'));
-    }, 20000); // 20 seconds
+    setTimeout(() => reject(new Error('Response timeout.')), FETCH_TIMEOUT);
   })
+};
+const MAX_RETRIES = 3;
+function betterFetch(url, times){
+  times = times || 0;
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then((response) => response.json())
+      .then(resolve)
+      .catch((times >= MAX_RETRIES) ? reject : (e) => {
+        setTimeout(() => betterFetch(url, times+1), 500);
+      });
+  });
 };
 
 class StoryActions {
@@ -31,10 +42,9 @@ class StoryActions {
 
       var request = () => {
         Promise.race([
-          fetch(API_HOST + 'news'),
+          betterFetch(API_HOST + 'news'),
           fetchTimeout()
         ])
-          .then((response) => response.json())
           .then((stories) => {
             if (!stories || !stories.length) throw new Error('Stories payload is empty');
             this.updateStories(stories);
@@ -43,8 +53,7 @@ class StoryActions {
           .catch(this.storiesFailed);
 
         // Meanwhile...
-        fetch(API_HOST + 'news2')
-          .then((response) => response.json())
+        betterFetch(API_HOST + 'news2')
           .then((stories) => {
             if (!stories || !stories.length) return;
             this.hasMoreStories();
