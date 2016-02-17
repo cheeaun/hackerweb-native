@@ -65,7 +65,10 @@ function dom2elements(nodes, opts){
       }
       if (name == 'a'){
         const {href} = node.attribs;
-        return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)}>{elements}</Text>;
+        // Steps to make sure children inside is ACTUALLY text
+        const child = children && children.length == 1 && children[0];
+        const text = child && child.type == 'text' && child.data;
+        return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)}>{text || elements}</Text>;
       }
       return <Text key={key} style={style}>{elements}</Text>;
     } else if (type == 'text'){
