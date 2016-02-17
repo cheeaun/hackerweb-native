@@ -8,7 +8,7 @@ import React, {
   Modal,
   NavigatorIOS,
   View,
-  LinkingIOS,
+  Linking,
 } from 'react-native';
 
 import StoryActions from './actions/StoryActions';
@@ -42,11 +42,11 @@ class App extends Component {
   }
   componentDidMount(){
     AppStateIOS.addEventListener('change', this._handleAppStateChange);
-    LinkingIOS.addEventListener('url', this._handleOpenURL);
+    Linking.addEventListener('url', this._handleOpenURL);
   }
   componentWillUnmount(){
     AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-    LinkingIOS.removeEventListener('url', this._handleOpenURL);
+    Linking.removeEventListener('url', this._handleOpenURL);
   }
   _handleAppStateChange(currentAppState){
     if (currentAppState == 'active' && this.state.currentAppState != currentAppState){

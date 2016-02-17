@@ -6,7 +6,7 @@ import React, {
   Text,
   View,
   ScrollView,
-  LinkingIOS,
+  Linking,
 } from 'react-native';
 
 import htmlparser from '../vendor/htmlparser2';
@@ -106,7 +106,7 @@ export default class HTMLView extends Component {
     const {html, onLinkPress} = this.props;
     if (!html) return null;
     processDOM(html, {
-      onLinkPress: onLinkPress || LinkingIOS.openURL,
+      onLinkPress: onLinkPress || Linking.openURL,
     }, (elements) => {
       this.setState({
         elements: elements,

@@ -7,7 +7,7 @@ import React, {
   Image,
   ScrollView,
   TouchableOpacity,
-  LinkingIOS,
+  Linking,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
 });
 
 var linkPress = function(url){
-  LinkingIOS.openURL(url);
+  Linking.openURL(url);
   /* BUG: Once <Modal> is open, SafariView can't work anymore.
   if (/^mailto:/.test(url)){
     // Note: won't work in Simulator because there's no Mail there
-    LinkingIOS.openURL(url);
+    Linking.openURL(url);
   } else {
     SafariView.show({
       url: url

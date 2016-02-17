@@ -1,6 +1,6 @@
 'use strict';
 
-import { LinkingIOS, AlertIOS } from 'react-native';
+import { Linking, AlertIOS } from 'react-native';
 import SafariView from 'react-native-safari-view';
 import LinkActions from '../actions/LinkActions';
 
@@ -15,11 +15,11 @@ export default (url) => {
       setTimeout(() => LinkActions.addLink(url), 1000);
     })
     .catch(() => {
-      LinkingIOS.canOpenURL(url, (supported) => {
+      Linking.canOpenURL(url, (supported) => {
         if (!supported){
           AlertIOS.alert('Can\'t handle URL: ' + url);
         } else {
-          LinkingIOS.openURL(url);
+          Linking.openURL(url);
           // Log link visit to History
           setTimeout(() => LinkActions.addLink(url), 1000);
         }
