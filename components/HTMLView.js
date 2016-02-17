@@ -39,7 +39,7 @@ function dom2elements(nodes, opts){
   const {onLinkPress} = opts;
   return nodes.map((node) => {
     const {name, type, children} = node;
-    const key = name + '-' + Math.random();
+    const key = (name || type) + '-' + Math.random();
     const style = nodeStyles[name];
     if (type == 'tag'){
       var elements = dom2elements(children, opts);
