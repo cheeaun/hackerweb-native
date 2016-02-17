@@ -87,19 +87,9 @@ class App extends Component {
   }
   render(){
     const {isAboutVisible, showNav} = this.state;
-    const pointerEvents = isAboutVisible ? 'none' : 'auto';
-    const nav = showNav && <NavigatorIOS
-      style={styles.container}
-      initialRoute={{
-        title: 'About',
-        component: AboutView,
-        wrapperStyle: styles.wrapper,
-        leftButtonTitle: 'Close',
-        onLeftButtonPress: this._hideAbout.bind(this),
-      }}/>;
     return (
       <View style={styles.container}>
-        <View style={styles.container} pointerEvents={pointerEvents}>
+        <View style={styles.container} pointerEvents={isAboutVisible ? 'none' : 'auto'}>
           <NavigatorIOS
             ref="nav"
             style={styles.container}
@@ -125,7 +115,15 @@ class App extends Component {
             }}/>
         </View>
         <Modal animated={true} visible={isAboutVisible}>
-          {nav}
+          {showNav && <NavigatorIOS
+            style={styles.container}
+            initialRoute={{
+              title: 'About',
+              component: AboutView,
+              wrapperStyle: styles.wrapper,
+              leftButtonTitle: 'Close',
+              onLeftButtonPress: this._hideAbout.bind(this),
+            }}/>}
         </Modal>
       </View>
     );
