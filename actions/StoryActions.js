@@ -18,7 +18,9 @@ function betterFetch(url, times){
       .then((response) => response.json())
       .then(resolve)
       .catch((times >= MAX_RETRIES) ? reject : (e) => {
-        setTimeout(() => betterFetch(url, times+1), 500);
+        setTimeout(() => {
+          betterFetch(url, times+1).then(resolve).catch(reject);
+        }, 500);
       });
   });
 };
