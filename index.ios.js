@@ -33,7 +33,6 @@ class App extends Component {
     this.state = {
       currentAppState: AppStateIOS.currentState,
       isAboutVisible: false,
-      showNav: false,
     };
     this._reloadCount = 0;
     this._reloadCountTimeout = null;
@@ -73,20 +72,14 @@ class App extends Component {
     this.setState({
       isAboutVisible: true,
     });
-    setTimeout(() => {
-      this.setState({
-        showNav: true,
-      });
-    }, 1);
   }
   _hideAbout(){
     this.setState({
       isAboutVisible: false,
-      showNav: false,
     });
   }
   render(){
-    const {isAboutVisible, showNav} = this.state;
+    const {isAboutVisible} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.container} pointerEvents={isAboutVisible ? 'none' : 'auto'}>
@@ -115,7 +108,7 @@ class App extends Component {
             }}/>
         </View>
         <Modal animated={true} visible={isAboutVisible}>
-          {showNav && <NavigatorIOS
+          <NavigatorIOS
             style={styles.container}
             initialRoute={{
               title: 'About',
@@ -123,7 +116,7 @@ class App extends Component {
               wrapperStyle: styles.wrapper,
               leftButtonTitle: 'Close',
               onLeftButtonPress: this._hideAbout.bind(this),
-            }}/>}
+            }}/>
         </Modal>
       </View>
     );
