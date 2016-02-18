@@ -24,6 +24,9 @@ import showBrowser from '../utils/showBrowser';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   navbarSpacing: {
     marginTop: 64,
   },
@@ -163,14 +166,19 @@ export default class StoriesView extends Component {
       );
     }
     return (
-      <ListView
-        style={styles.navbarSpacing}
-        pageSize={10}
-        dataSource={dataSource}
-        renderRow={this._renderRow.bind(this)}
-        renderSeparator={this._renderSeparator.bind(this)}
-        renderFooter={this._renderFooter.bind(this)}
-      />
+      <View style={styles.container}>
+        <ListView
+          style={styles.navbarSpacing}
+          pageSize={10}
+          dataSource={dataSource}
+          renderRow={this._renderRow.bind(this)}
+          renderSeparator={this._renderSeparator.bind(this)}
+          renderFooter={this._renderFooter.bind(this)}
+        />
+        {/* Temporary FIX: Prevent the taps on NavigatorIOS buttons "leaking" into the ListView rows' taps */}
+        <View onStartShouldSetResponder={() => false} style={{width: 100, height: 10, position: 'absolute', top: styles.navbarSpacing-2}} />
+        <View onStartShouldSetResponder={() => false} style={{width: 60, height: 10, position: 'absolute', top: styles.navbarSpacing-2, right: 0}} />
+      </View>
     );
   }
 }
