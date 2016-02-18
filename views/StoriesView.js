@@ -126,11 +126,20 @@ export default class StoriesView extends Component {
   _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
     return <View key={rowID} style={[styles.itemSeparator, adjacentRowHighlighted && styles.itemHighligtedSeparator]}/>;
   }
+  _fetchMoreStories(){
+    // Delay the fetching a bit to create that sense of something's happening in the background
+    if (this._fetchingMore) return;
+    this._fetchingMore = true;
+    setTimeout(() => {
+      StoryActions.fetchMoreStories();
+      this._fetchingMore = false;
+    }, 300);
+  }
   _renderFooter(){
     const {hasMoreStories, stories} = this.state;
     if (hasMoreStories && stories && stories.length <= 30){
       return (
-        <TouchableOpacity onPress={StoryActions.fetchMoreStories}>
+        <TouchableOpacity onPress={this._fetchMoreStories.bind(this)}>
           <Text style={styles.moreLink}>More&hellip;</Text>
         </TouchableOpacity>
       );
