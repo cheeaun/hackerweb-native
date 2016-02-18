@@ -162,6 +162,7 @@ export default class StoriesView extends Component {
       return (
         <View style={styles.viewError}>
           <Text style={styles.errorText}>Couldn't load stories.</Text>
+          <Text style={styles.errorText}>{error && error.message ? error.message : '😭'}</Text>
         </View>
       );
     }
