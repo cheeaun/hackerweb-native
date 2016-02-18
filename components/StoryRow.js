@@ -114,8 +114,14 @@ export default class StoryRow extends Component {
     const {url, type, comments_count, points, time_ago} = data;
     const externalLink = !/^item/i.test(url);
     const {visited} = this.state;
+
+    // Turns out that longPress is not common at all in native iOS apps
+    // But I actually like this feature on the browser, thus I'm keeping
+    // this but delay it slightly longer than default 500
+    const delayLongPress = 1000;
+
     return (
-      <TouchableHighlight {...touchableProps}>
+      <TouchableHighlight {...touchableProps} delayLongPress={delayLongPress}>
         <View style={styles.story}>
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
