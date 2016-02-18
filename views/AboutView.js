@@ -10,7 +10,7 @@ import React, {
   Linking,
 } from 'react-native';
 
-import SafariView from 'react-native-safari-view';
+// import SafariView from 'react-native-safari-view';
 
 import colors from '../colors';
 
