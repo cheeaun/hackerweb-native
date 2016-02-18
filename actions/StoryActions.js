@@ -106,10 +106,9 @@ class StoryActions {
       const key = `story-${id}`;
       var request = () => {
         Promise.race([
-          fetch(API_HOST + 'item/' + id),
+          betterFetch(API_HOST + 'item/' + id),
           fetchTimeout()
         ])
-          .then((response) => response.json())
           .then((story) => {
             if (!story) throw new Error('Story payload is empty');
             this.updateStory(story);
