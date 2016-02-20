@@ -69,9 +69,9 @@ class StoryStore {
     this.storyError = false;
 
     // Update story in stories
-    var stories = this.stories;
-    for (var i=0, l=stories.length; i<l; i++){
-      var s = stories[i];
+    const stories = this.stories;
+    for (let i=0, l=stories.length; i<l; i++){
+      const s = stories[i];
       if (s.id == story.id){
         this.stories[i] = story;
         break;
