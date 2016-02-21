@@ -109,6 +109,7 @@ Development
 ### Requirements
 
 - [React Native](https://facebook.github.io/react-native/)
+- [React Native Package Manager](https://github.com/rnpm/rnpm)
 - [Node.js](https://nodejs.org/)
 - [Xcode](https://developer.apple.com/xcode/)
 - [iOS](https://www.apple.com/ios/) **9**
@@ -116,6 +117,7 @@ Development
 ### Getting started
 
 - `npm install` - Install all dependencies
+- `rnpm link` - Linking all native dependencies
 
 ### Implementations
 
