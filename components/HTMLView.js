@@ -72,7 +72,7 @@ function dom2elements(nodes, opts){
       }
       return <Text key={key} style={style}>{elements}</Text>;
     } else if (type == 'text'){
-      return <Text key={key} style={style}>{node.data}</Text>;
+      return <Text key={key} style={style}>{node.data.replace(/\n$/, '')}</Text>;
     }
   });
 };
