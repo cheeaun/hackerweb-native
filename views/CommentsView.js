@@ -93,12 +93,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 30,
   },
-  commentsThread: {
-    backgroundColor: colors.sectionBackgroundColor,
-    borderTopColor: colors.separatorColor,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    marginBottom: 30,
-  },
   separator: {
     backgroundColor: colors.separatorColor,
     height: StyleSheet.hairlineWidth,
