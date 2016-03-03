@@ -101,7 +101,7 @@ So this is it. HackerWeb for iOS. Since 2011.
 Preview
 ---
 
-![](media/hackerweb-preview.gif)
+![Preview](media/hackerweb-preview.gif)
 
 Development
 ---
