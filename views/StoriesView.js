@@ -116,7 +116,8 @@ export default class StoriesView extends Component {
       }
     });
     // Log link visit to History
-    if (data.url) LinkActions.addLink(data.url);
+    const {url} = data;
+    if (/^item/i.test(url)) LinkActions.addLink(url);
   }
   _renderRow(row, sectionID, rowID, highlightRow){
     const position = parseInt(rowID, 10) + 1;
