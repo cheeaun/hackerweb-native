@@ -15,6 +15,7 @@ import SafariView from 'react-native-safari-view';
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
+import LinkActions from '../actions/LinkActions';
 
 import StoryRow from '../components/StoryRow';
 import LoadingIndicator from '../components/LoadingIndicator';
@@ -114,6 +115,8 @@ export default class StoriesView extends Component {
         data: data,
       }
     });
+    // Log link visit to History
+    if (data.url) LinkActions.addLink(data.url);
   }
   _renderRow(row, sectionID, rowID, highlightRow){
     const position = parseInt(rowID, 10) + 1;
