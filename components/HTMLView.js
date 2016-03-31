@@ -21,6 +21,7 @@ const nodeStyles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: colors.blockCodeBackgroundColor,
     borderRadius: 3,
+    marginBottom: 8,
   },
   code: {
     fontFamily: 'Menlo',
@@ -34,7 +35,7 @@ const nodeStyles = StyleSheet.create({
   },
 });
 
-function dom2elements(nodes, opts){
+function dom2elements(nodes, opts, parentName){
   if (!nodes || !nodes.length) return;
   const {onLinkPress} = opts;
   return nodes.map((node) => {
@@ -42,7 +43,7 @@ function dom2elements(nodes, opts){
     const key = (name || type) + '-' + Math.random();
     const style = nodeStyles[name];
     if (type == 'tag'){
-      var elements = dom2elements(children, opts);
+      var elements = dom2elements(children, opts, name);
       if (!elements) return null;
       if (name == 'pre'){
         return (
@@ -56,13 +57,6 @@ function dom2elements(nodes, opts){
           </ScrollView>
         );
       }
-      if (name == 'p'){
-        // Weird that <pre> is inside <p>
-        if (children.some((c) => c.name == 'pre')){
-          return elements;
-        }
-        return <Text key={key} style={style}>{elements}</Text>;
-      }
       if (name == 'a'){
         const {href} = node.attribs;
         // Steps to make sure children inside is ACTUALLY text
@@ -72,7 +66,16 @@ function dom2elements(nodes, opts){
       }
       return <Text key={key} style={style}>{elements}</Text>;
     } else if (type == 'text'){
-      return <Text key={key} style={style}>{node.data.replace(/\n$/, '')}</Text>;
+      const {data} = node;
+      let text;
+      if (parentName == 'code'){
+        // Trim EOL newline
+        text = data.replace(/\n$/, '');
+      } else {
+        // Trim ALL newlines, because HTML
+        text = data.replace(/[\n\s\t]+/g, ' ');
+      }
+      return <Text key={key} style={style}>{text}</Text>;
     }
   });
 };
@@ -94,6 +97,11 @@ function processDOM(html, opts, callback){
   });
   // Clean up HTML first
   if (!html.match(/^<p>/i)) html = '<p>' + html;
+  // Stop <pre> from being wrapped by <p>
+  html = html.replace(/<p>\s*<pre>/ig, '</p><pre>');
+  if (!html.match(/<\/pre>\s*<p>/i)){
+    html = html.replace(/<\/pre>([^<])/ig, '</pre><p>$1');
+  }
   parser.write(html);
   parser.end();
 }
