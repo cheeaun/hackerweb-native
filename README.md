@@ -52,7 +52,7 @@ This article has good documentation on this: [Running On Device (iOS)](https://f
 
 - `LoadingIndicator` - inspired by [react-native-activity-indicator-ios](https://github.com/pwmckenna/react-native-activity-indicator-ios)
 - `HTMLView` - inspired by [react-native-htmlview](https://github.com/jsdf/react-native-htmlview), [react-native-htmltext](https://github.com/siuying/react-native-htmltext) and [react-native-html-render](https://github.com/soliury/react-native-html-render)
-- `CacheStore` - inspired by [lscache](https://github.com/pamelafox/lscache)
+- [react-native-cache-store](https://github.com/cheeaun/react-native-cache-store)
 
 Similar apps
 ---
