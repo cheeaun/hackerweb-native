@@ -1,7 +1,7 @@
 'use strict';
 
 import alt from '../alt';
-import CacheStore from '../components/CacheStore';
+import CacheStore from 'react-native-cache-store';
 
 class LinkActions {
   getLinks(){

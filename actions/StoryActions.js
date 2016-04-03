@@ -1,7 +1,7 @@
 'use strict';
 
 import alt from '../alt';
-import CacheStore from '../components/CacheStore';
+import CacheStore from 'react-native-cache-store';
 
 const API_HOST = 'https://api.hackerwebapp.com/';
 const FETCH_TIMEOUT = 20000; // 20 seconds
