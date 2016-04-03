@@ -9,6 +9,7 @@ import React, {
   Linking,
 } from 'react-native';
 
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import htmlparser from '../vendor/htmlparser2';
 
 import colors from '../colors';
@@ -112,6 +113,7 @@ export default class HTMLView extends Component {
     this.state = {
       elements: null,
     };
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
   componentDidMount(){
     const {html, onLinkPress} = this.props;
