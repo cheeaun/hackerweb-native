@@ -91,14 +91,20 @@ var linkPress = function(url){
   */
 };
 
-const links = [
-  { text: 'HackerWeb homepage', url: 'http://hackerwebapp.com/' },
-  { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
-  { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
-  { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
-  { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
-  { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
-];
+function linksContainer(links){
+  return <View style={styles.listContainer}>
+    {links.map((link, i) => {
+      return (
+        <View key={link.text}>
+          <TouchableOpacity onPress={linkPress.bind(null, link.url)} style={styles.listItem}>
+            <Text style={styles.link}>{link.text}</Text>
+          </TouchableOpacity>
+          {i < links.length-1 && <View style={styles.listItemSeparator}/>}
+        </View>
+      );
+    })}
+  </View>
+};
 
 export default (props) => {
   return (
@@ -112,18 +118,18 @@ export default (props) => {
           <Text style={styles.aboutDescription}>A simply readable Hacker News app.</Text>
         </View>
       </View>
-      <View style={styles.listContainer}>
-        {(() => links.map((link, i) => {
-          return (
-            <View key={link.text}>
-              <TouchableOpacity onPress={linkPress.bind(null, link.url)} style={styles.listItem}>
-                <Text style={styles.link}>{link.text}</Text>
-              </TouchableOpacity>
-              {i < links.length-1 && <View style={styles.listItemSeparator}/>}
-            </View>
-          );
-        }))()}
-      </View>
+      {linksContainer([
+        { text: '🌟 Rate HackerWeb on the App Store', url: 'http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1084209377&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8' },
+        { text: '☕️ Buy me a cup of coffee', url: 'https://donorbox.org/support-cheeaun' },
+      ])}
+      {linksContainer([
+        { text: 'HackerWeb homepage', url: 'https://hackerwebapp.com/' },
+        { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
+        { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
+        { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
+        { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
+        { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
+      ])}
       <View style={styles.disclaimer}>
         <Text style={styles.disclaimerText}>Built by Lim Chee Aun.</Text>
         <Text style={styles.disclaimerText}>Not affiliated with Hacker News or YCombinator.</Text>
