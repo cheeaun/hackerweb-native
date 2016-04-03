@@ -9,6 +9,7 @@ import React, {
   TouchableOpacity,
   ActionSheetIOS,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
 
 import SafariView from 'react-native-safari-view';
@@ -170,10 +171,11 @@ export default class StoriesView extends Component {
         </View>
       );
     }
+    const isIOS = Platform.OS === 'ios';
     return (
       <View style={styles.container}>
         <ListView
-          style={styles.navbarSpacing}
+          style={isIOS && styles.navbarSpacing}
           pageSize={10}
           dataSource={dataSource}
           renderRow={this._renderRow.bind(this)}
@@ -181,8 +183,8 @@ export default class StoriesView extends Component {
           renderFooter={this._renderFooter.bind(this)}
         />
         {/* Temporary FIX: Prevent the taps on NavigatorIOS buttons "leaking" into the ListView rows' taps */}
-        <View onStartShouldSetResponder={() => false} style={{width: 100, height: 10, position: 'absolute', top: styles.navbarSpacing-2}} />
-        <View onStartShouldSetResponder={() => false} style={{width: 60, height: 10, position: 'absolute', top: styles.navbarSpacing-2, right: 0}} />
+        {isIOS && <View onStartShouldSetResponder={() => false} style={{width: 100, height: 10, position: 'absolute', top: styles.navbarSpacing-2}} />}
+        {isIOS && <View onStartShouldSetResponder={() => false} style={{width: 60, height: 10, position: 'absolute', top: styles.navbarSpacing-2, right: 0}} />}
       </View>
     );
   }
