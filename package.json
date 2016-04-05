@@ -10,7 +10,7 @@
     "react": "~0.14.8",
     "react-addons-pure-render-mixin": "~0.14.8",
     "react-native": "~0.22.2",
-    "react-native-cache-store": "~1.0.1",
+    "react-native-cache-store": "~1.0.2",
     "react-native-safari-view": "~0.4.0",
     "url-parse": "~1.1.1"
   }
