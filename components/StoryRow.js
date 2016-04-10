@@ -7,8 +7,13 @@ import React, {
   Text,
   TouchableOpacity,
   TouchableHighlight,
+  TouchableNativeFeedback,
   Image,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
+const CrossTouchable = isIOS ? TouchableHighlight : TouchableNativeFeedback;
 
 import LinkStore from '../stores/LinkStore';
 import LinkActions from '../actions/LinkActions';
@@ -45,6 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   storyTitle: {
+    color: colors.primaryTextColor,
     fontSize: 17,
   },
   storyTitleVisited: {
@@ -68,6 +74,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginTop: 3,
     marginBottom: 2,
+    opacity: isIOS ? 1 : .54,
   },
   disclosureIcon: {
     width: 8,
@@ -121,7 +128,7 @@ export default class StoryRow extends Component {
     const delayLongPress = 1000;
 
     return (
-      <TouchableHighlight {...touchableProps} delayLongPress={delayLongPress}>
+      <CrossTouchable {...touchableProps} delayLongPress={delayLongPress}>
         <View style={styles.story}>
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
@@ -161,7 +168,7 @@ export default class StoryRow extends Component {
             }
           })()}
         </View>
-      </TouchableHighlight>
+      </CrossTouchable>
     );
   }
 }

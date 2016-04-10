@@ -12,6 +12,8 @@ import React, {
   Platform,
 } from 'react-native';
 
+const isIOS = Platform.OS === 'ios';
+
 import SafariView from 'react-native-safari-view';
 
 import StoryStore from '../stores/StoryStore';
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
   itemSeparator: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: colors.separatorColor,
-    marginLeft: 15,
+    marginLeft: isIOS ? 15 : 0,
     marginTop: -StyleSheet.hairlineWidth,
   },
   itemHighligtedSeparator: {
@@ -107,6 +109,7 @@ export default class StoriesView extends Component {
   }
   _navigateToComments(data){
     this.props.navigator.push({
+      id: 'Comments',
       title: data.title,
       component: CommentsView,
       wrapperStyle: styles.wrapper,
@@ -171,7 +174,6 @@ export default class StoriesView extends Component {
         </View>
       );
     }
-    const isIOS = Platform.OS === 'ios';
     return (
       <View style={styles.container}>
         <ListView
