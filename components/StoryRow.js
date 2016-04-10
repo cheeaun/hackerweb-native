@@ -83,7 +83,7 @@ export default class StoryRow extends Component {
     const {data} = props;
     const {links} = LinkStore.getState();
     this.state = {
-      visited: links.includes(data.url),
+      visited: links.indexOf(data.url) >= 0,
     };
     this._onLinkChange = this._onLinkChange.bind(this);
   }
