@@ -5,16 +5,18 @@ import React, {
   View,
   Text,
   Image,
+  Platform,
 } from 'react-native';
 
-import SafariView from 'react-native-safari-view';
+const isIOS = Platform.OS === 'ios';
+
 import HTMLView from '../components/HTMLView';
 import showBrowser from '../utils/showBrowser';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
   comment: {
-    padding: 15,
+    padding: isIOS ? 15 : 16,
     flex: 1,
     flexDirection: 'row',
   },
@@ -63,6 +65,7 @@ const styles = StyleSheet.create({
     height: 9,
     marginRight: 6,
     marginTop: 4,
+    opacity: isIOS ? 1 : .54,
   },
 });
 

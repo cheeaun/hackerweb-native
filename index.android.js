@@ -42,7 +42,7 @@ class HackerWeb extends Component {
         return <View style={styles.container}>
           <ToolbarAndroid
             title="HackerWeb"
-            titleColor={colors.insignificantColor}
+            titleColor={colors.primaryTextColor}
             style={styles.toolbar}
             actions={[
               {
@@ -73,7 +73,7 @@ class HackerWeb extends Component {
         return <View style={[styles.container, styles.wrapper]}>
           <ToolbarAndroid
             title={title}
-            titleColor={colors.insignificantColor}
+            titleColor={colors.primaryTextColor}
             style={styles.toolbar}
             navIcon={require('./images/arrow-back.png')}
             onIconClicked={navigator.pop}
@@ -90,7 +90,7 @@ class HackerWeb extends Component {
         return <View style={[styles.container, styles.wrapper]}>
           <ToolbarAndroid
             title="About"
-            titleColor={colors.insignificantColor}
+            titleColor={colors.primaryTextColor}
             style={styles.toolbar}
           />
           <AboutView />

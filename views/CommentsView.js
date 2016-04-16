@@ -12,7 +12,10 @@ import React, {
   ActionSheetIOS,
   ListView,
   LayoutAnimation,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
 
 import ChromeCustomTabsClient from 'react-native-chrome-custom-tabs';
 
@@ -29,6 +32,7 @@ import domainify from '../utils/domainify';
 
 import colors from '../colors';
 
+const hairlineWidth = isIOS ? StyleSheet.hairlineWidth : 1;
 const styles = StyleSheet.create({
   viewCommentsBlank: {
     flex: 1,
@@ -40,7 +44,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     borderTopColor: colors.separatorColor,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: hairlineWidth,
     height: 30,
   },
   errorContainer: {
@@ -58,22 +62,24 @@ const styles = StyleSheet.create({
     opacity: .6,
   },
   externalArrowIcon: {
-    width: 12,
-    height: 9,
+    width: isIOS ? 12 : 10,
+    height: isIOS ? 9 : 10,
     marginLeft: 2,
     marginRight: 4,
+    opacity: isIOS ? 1 : .54,
   },
   storyLink: {
     backgroundColor: colors.viewBackgroundColor,
   },
   storyTitle: {
-    fontSize: 17
+    color: colors.primaryTextColor,
+    fontSize: 17,
   },
   storySection: {
     padding: 15,
   },
   storyDomain: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.domainColor,
   },
   storyMetadataWrap: {
@@ -82,21 +88,21 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   storyMetadata: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.insignificantColor,
   },
   storyContent: {
     backgroundColor: colors.sectionBackgroundColor,
-    padding: 15,
+    padding: isIOS ? 15 : 16,
     borderTopColor: colors.separatorColor,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: hairlineWidth,
     borderBottomColor: colors.separatorColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: hairlineWidth,
     marginBottom: 30,
   },
   separator: {
     backgroundColor: colors.separatorColor,
-    height: StyleSheet.hairlineWidth,
+    height: hairlineWidth,
   },
   externalLink: {
     flex: 1,

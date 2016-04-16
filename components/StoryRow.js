@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   storyPosition: {
-    paddingTop: 10,
+    paddingTop: isIOS ? 10 : 16,
     paddingLeft: 15,
   },
   storyPositionNumber: {
@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
   },
   storyInfo: {
     padding: 10,
+    paddingVertical: isIOS ? 10 : 16,
     flex: 1,
   },
   storyComments: {
-    padding: 10,
+    padding: isIOS ? 10 : 16,
   },
   storyDisclosure: {
     paddingVertical: 15,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     color: colors.insignificantColor,
   },
   storyDomain: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.domainColor,
   },
   storyMetadataWrap: {
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   storyMetadata: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.insignificantColor,
   },
   commentIcon: {
-    width: 20,
-    height: 19,
-    marginHorizontal: 2,
+    width: isIOS ? 20 : 24,
+    height: isIOS ? 19 : 24,
+    marginHorizontal: isIOS ? 2 : 0,
     marginTop: 3,
     marginBottom: 2,
     opacity: isIOS ? 1 : .54,

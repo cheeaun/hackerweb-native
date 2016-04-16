@@ -7,14 +7,14 @@ import React, {
   Text,
   ListView,
   TouchableOpacity,
+  TouchableNativeFeedback,
   ActionSheetIOS,
   LayoutAnimation,
   Platform,
 } from 'react-native';
 
 const isIOS = Platform.OS === 'ios';
-
-import SafariView from 'react-native-safari-view';
+const CrossTouchable = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
@@ -28,6 +28,7 @@ import showActivity from '../utils/showActivity';
 
 import colors from '../colors';
 
+const hairlineWidth = isIOS ? tyleSheet.hairlineWidth : 1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -50,10 +51,10 @@ const styles = StyleSheet.create({
     opacity: .6,
   },
   itemSeparator: {
-    height: StyleSheet.hairlineWidth,
+    height: hairlineWidth,
     backgroundColor: colors.separatorColor,
     marginLeft: isIOS ? 15 : 0,
-    marginTop: -StyleSheet.hairlineWidth,
+    marginTop: -hairlineWidth,
   },
   itemHighligtedSeparator: {
     opacity: 0,
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.linkColor,
     fontSize: 17,
+    textAlignVertical: 'center',
   },
 });
 
@@ -143,9 +145,11 @@ export default class StoriesView extends Component {
     const {hasMoreStories, stories} = this.state;
     if (hasMoreStories && stories && stories.length <= 30){
       return (
-        <TouchableOpacity onPress={this._fetchMoreStories.bind(this)}>
-          <Text style={styles.moreLink}>More&hellip;</Text>
-        </TouchableOpacity>
+        <CrossTouchable onPress={this._fetchMoreStories.bind(this)}>
+          <View>
+            <Text style={styles.moreLink}>More&hellip;</Text>
+          </View>
+        </CrossTouchable>
       );
     }
     return null;
