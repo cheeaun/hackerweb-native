@@ -28,7 +28,7 @@ import showActivity from '../utils/showActivity';
 
 import colors from '../colors';
 
-const hairlineWidth = isIOS ? tyleSheet.hairlineWidth : 1;
+const hairlineWidth = isIOS ? StyleSheet.hairlineWidth : 1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
