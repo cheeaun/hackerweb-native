@@ -104,7 +104,7 @@ export default class StoryRow extends Component {
   }
   _onLinkChange(state){
     this.setState({
-      visited: state.links.includes(this.props.data.url),
+      visited: state.links.indexOf(this.props.data.url) >= 0,
     });
   }
   _onStoryLayout(e){
