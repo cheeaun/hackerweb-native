@@ -2,6 +2,7 @@
     package="com.hackerweb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk android:minSdkVersion="23" />
 
     <application
       android:allowBackup="true"
