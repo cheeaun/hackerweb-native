@@ -16,6 +16,7 @@ import React, {
 } from 'react-native';
 
 const isIOS = Platform.OS === 'ios';
+const isAndroid = Platform.OS === 'android';
 
 import ChromeCustomTabsClient from 'react-native-chrome-custom-tabs';
 
@@ -169,7 +170,7 @@ export default class CommentsView extends Component {
       error: state.storyError,
     });
 
-    if (story && story.url){
+    if (isAndroid && story && story.url){
       const externalLink = !/^item/i.test(story.url);
       const url = externalLink ? story.url : `https://news.ycombinator.com/item?id=${story.id}`;
       ChromeCustomTabsClient.mayLaunchUrl(url);
