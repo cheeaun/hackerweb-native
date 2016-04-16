@@ -14,7 +14,7 @@ import React, {
   LayoutAnimation,
 } from 'react-native';
 
-import SafariView from 'react-native-safari-view';
+import ChromeCustomTabsClient from 'react-native-chrome-custom-tabs';
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
@@ -24,6 +24,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import HTMLView from '../components/HTMLView';
 import ProgressBar from '../components/ProgressBar';
 import showBrowser from '../utils/showBrowser';
+import showActivity from '../utils/showActivity';
 import domainify from '../utils/domainify';
 
 import colors from '../colors';
@@ -128,14 +129,6 @@ const styles = StyleSheet.create({
   },
 });
 
-var showActivity = function(u, t){
-  if (!u) return;
-  ActionSheetIOS.showShareActionSheetWithOptions({
-    url: u,
-    message: t || '',
-  }, () => {}, () => {});
-};
-
 export default class CommentsView extends Component {
   constructor(props){
     super(props);
@@ -169,6 +162,13 @@ export default class CommentsView extends Component {
       loading: state.storyLoading,
       error: state.storyError,
     });
+
+    if (story && story.url){
+      const externalLink = !/^item/i.test(story.url);
+      const url = externalLink ? story.url : `https://news.ycombinator.com/item?id=${story.id}`;
+      ChromeCustomTabsClient.mayLaunchUrl(url);
+    }
+
     /* Note:
       Title update doesn't work yet due to https://github.com/facebook/react-native/issues/476
       Hopefully this works https://github.com/bjornco/react-native/commit/5fcb2a8673a2c17f4fdb03327008397a10a9c53a

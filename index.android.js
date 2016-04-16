@@ -95,8 +95,6 @@ class HackerWeb extends Component {
           />
           <AboutView />
         </View>;
-      case 'Web':
-        return <View style={styles.container}></View>;
     }
   }
   render(){

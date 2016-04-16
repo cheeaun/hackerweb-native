@@ -24,6 +24,7 @@ import StoryRow from '../components/StoryRow';
 import LoadingIndicator from '../components/LoadingIndicator';
 import CommentsView from './CommentsView';
 import showBrowser from '../utils/showBrowser';
+import showActivity from '../utils/showActivity';
 
 import colors from '../colors';
 
@@ -67,14 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-
-var showActivity = function(u, t){
-  if (!u) return;
-  ActionSheetIOS.showShareActionSheetWithOptions({
-    url: u,
-    message: t || '',
-  }, () => {}, () => {});
-};
 
 export default class StoriesView extends Component {
   constructor(props){
