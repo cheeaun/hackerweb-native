@@ -11,6 +11,7 @@ import React, {
   Text,
   View,
   ToolbarAndroid,
+  BackAndroid,
 } from 'react-native';
 
 import StoriesView from './views/StoriesView';
@@ -35,8 +36,19 @@ const styles = StyleSheet.create({
   },
 });
 
+let _navigator;
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length == 1){
+    return false;
+  }
+  _navigator.pop();
+  return true;
+});
+
 class HackerWeb extends Component {
   _navigatorRenderScene(route, navigator){
+    _navigator = navigator;
     switch (route.id){
       case 'Stories':
         return <View style={styles.container}>
