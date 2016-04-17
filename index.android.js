@@ -1,4 +1,5 @@
 'use strict';
+
 import React, {
   AppRegistry,
   Component,
@@ -135,7 +136,7 @@ class HackerWeb extends Component {
           if (route.id == 'About'){
             return Navigator.SceneConfigs.FloatFromBottom;
           }
-          return Navigator.SceneConfigs.PushFromRight;
+          return Navigator.SceneConfigs.FloatFromRight;
         }}
       />
     );
