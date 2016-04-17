@@ -19,9 +19,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  spinner: {
+  spinner: isIOS ? {
     width: 30,
     height: 30,
+  } : {
+    width: 24,
+    height: 24,
   },
   text: {
     opacity: .6,
@@ -54,7 +57,7 @@ export default class LoadingIndicator extends Component {
             <Text style={styles.text}>Loading&hellip;</Text>
           </View>
         ) : (
-          <ProgressBarAndroid color={colors.disabledColor} indeterminate={true} />
+          <ProgressBarAndroid color={colors.disabledColor} styleAttr="Small" style={styles.spinner} indeterminate={true} />
         )}
       </View>
     );
