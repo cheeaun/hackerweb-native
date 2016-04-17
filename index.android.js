@@ -4,17 +4,17 @@ import React, {
   Component,
   StyleSheet,
   Navigator,
+  AppState,
   Text,
   View,
   ToolbarAndroid,
   BackAndroid,
 } from 'react-native';
 
+import StoryActions from './actions/StoryActions';
 import StoriesView from './views/StoriesView';
 import CommentsView from './views/CommentsView';
 import AboutView from './views/AboutView';
-
-import StoryActions from './actions/StoryActions';
 
 import colors from './colors';
 
@@ -43,6 +43,27 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 });
 
 class HackerWeb extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      currentAppState: AppState.currentState,
+    };
+    this._handleAppStateChange = this._handleAppStateChange.bind(this);
+  }
+  componentDidMount(){
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+  componentWillUnmount(){
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+  _handleAppStateChange(currentAppState){
+    if (currentAppState == 'active' && this.state.currentAppState != currentAppState){
+      StoryActions.fetchStoriesIfExpired();
+    }
+    this.setState({
+      currentAppState,
+    });
+  }
   _navigatorRenderScene(route, navigator){
     _navigator = navigator;
     switch (route.id){
