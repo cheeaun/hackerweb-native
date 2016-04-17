@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   toolbar: {
     backgroundColor: colors.toolbarBackgroundColor,
     height: 56,
-    elevation: 4,
+    elevation: 2,
   },
 });
 
