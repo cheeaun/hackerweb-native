@@ -17,7 +17,7 @@ class LinkActions {
       CacheStore.get('links')
         .then((links) => {
           links = links || [];
-          if (!links.includes(link)){
+          if (links.indexOf(link) < 0){
             dispatch(link);
             links.unshift(link);
             CacheStore.set('links', links.slice(0, 100));
