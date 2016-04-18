@@ -132,12 +132,7 @@ class HackerWeb extends Component {
       <Navigator
         initialRoute={{id: 'Stories'}}
         renderScene={this._navigatorRenderScene}
-        configureScene={(route) => {
-          if (route.id == 'About'){
-            return Navigator.SceneConfigs.FloatFromBottom;
-          }
-          return Navigator.SceneConfigs.FloatFromRight;
-        }}
+        configureScene={() => Navigator.SceneConfigs.FloatFromBottomAndroid}
       />
     );
   }
