@@ -10,6 +10,7 @@ import React, {
   View,
   ToolbarAndroid,
   BackAndroid,
+  Linking,
 } from 'react-native';
 
 import StoryActions from './actions/StoryActions';
@@ -53,6 +54,19 @@ class HackerWeb extends Component {
   }
   componentDidMount(){
     AppState.addEventListener('change', this._handleAppStateChange);
+    Linking.getInitialURL().then((url) => {
+      if (!url) return;
+      const id = (url.match(/item\?id=([a-z\d]+)/i) || [,null])[1];
+      if (!id) return;
+      _navigator.push({
+        id: 'Comments',
+        component: CommentsView,
+        wrapperStyle: styles.wrapper,
+        passProps: {
+          data: {id},
+        }
+      });
+    }).catch(() => {});
   }
   componentWillUnmount(){
     AppState.removeEventListener('change', this._handleAppStateChange);

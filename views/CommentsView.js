@@ -184,7 +184,10 @@ export default class CommentsView extends Component {
       var route = this.props.navigator.navigationContext.currentRoute;
       if (!route) return;
       if (route.title != state.story.title){
-        route.title = state.story.title;
+        const {story} = state;
+        route.title = story.title;
+        if (!route.rightButtonIcon) route.rightButtonIcon = require('../images/share-icon.png');
+        route.onRightButtonPress = showActivity.bind(null, `https://news.ycombinator.com/item?id=${story.id}`, story.title);
         this.props.navigator.replace(route);
       }
     }
