@@ -1,4 +1,4 @@
-package com.hackerweb;
+package cheeaun.hackerweb;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;

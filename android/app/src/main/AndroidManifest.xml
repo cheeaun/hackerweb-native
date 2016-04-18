@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hackerweb">
+    package="cheeaun.hackerweb">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk android:minSdkVersion="23" />
