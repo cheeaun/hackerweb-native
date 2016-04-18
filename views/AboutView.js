@@ -127,7 +127,13 @@ export default (props) => {
         </View>
       </View>
       {linksContainer([
-        { text: '🌟 Rate HackerWeb on the App Store', url: 'http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1084209377&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8' },
+        isIOS ? {
+          text: '🌟 Rate HackerWeb on the App Store',
+          url: 'http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1084209377&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8'
+        } : {
+          text: '🌟 Rate HackerWeb on Google Play',
+          url: 'https://play.google.com/store/apps/details?id=cheeaun.hackerweb'
+        },
         { text: '☕️ Buy me a cup of coffee', url: 'https://donorbox.org/support-cheeaun' },
       ])}
       {linksContainer([
