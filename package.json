@@ -9,7 +9,7 @@
     "alt": "~0.18.4",
     "react": "~0.14.8",
     "react-addons-pure-render-mixin": "~0.14.7",
-    "react-native": "~0.23.1",
+    "react-native": "~0.24.0",
     "react-native-android-share": "https://github.com/haydenth/react-native-android-share.git",
     "react-native-cache-store": "~1.0.2",
     "react-native-chrome-custom-tabs": "~0.0.2",
