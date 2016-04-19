@@ -140,7 +140,7 @@ export default (props) => {
         { text: 'HackerWeb homepage', url: 'https://hackerwebapp.com/' },
         { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
         { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
-        { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
+        { text: 'HackerWeb on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
         { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
         { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
       ])}
