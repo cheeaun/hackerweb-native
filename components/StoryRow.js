@@ -13,7 +13,8 @@ import React, {
 } from 'react-native';
 
 const isIOS = Platform.OS === 'ios';
-const CrossTouchable = isIOS ? TouchableHighlight : TouchableNativeFeedback;
+const CrossTouchableHighlight = isIOS ? TouchableHighlight : TouchableNativeFeedback;
+const CrossTouchableOpacity = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
 import LinkStore from '../stores/LinkStore';
 import LinkActions from '../actions/LinkActions';
@@ -129,7 +130,7 @@ export default class StoryRow extends Component {
     const delayLongPress = 1000;
 
     return (
-      <CrossTouchable {...touchableProps} delayLongPress={delayLongPress}>
+      <CrossTouchableHighlight {...touchableProps} delayLongPress={delayLongPress}>
         <View style={styles.story}>
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
@@ -154,11 +155,11 @@ export default class StoryRow extends Component {
           {type != 'job' && (() => {
             if (externalLink){
               return (
-                <TouchableOpacity onPress={onCommentPress}>
+                <CrossTouchableOpacity onPress={onCommentPress}>
                   <View style={styles.storyComments} ref="commentButton">
                     <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
                   </View>
-                </TouchableOpacity>
+                </CrossTouchableOpacity>
               );
             } else {
               return (
@@ -169,7 +170,7 @@ export default class StoryRow extends Component {
             }
           })()}
         </View>
-      </CrossTouchable>
+      </CrossTouchableHighlight>
     );
   }
 }
