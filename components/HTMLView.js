@@ -21,6 +21,7 @@ const nodeStyles = StyleSheet.create({
   p: {
     color: colors.primaryTextColor,
     marginBottom: 8,
+    lineHeight: isIOS ? null : 20,
   },
   pre: {
     paddingVertical: 10,
