@@ -1,14 +1,20 @@
-HackerWeb for iOS
+HackerWeb
 ===
 
-A simply readable Hacker News app for iOS.
+A simply readable Hacker News app for iOS and Android.
 
 Read about the story here: [Building HackerWeb for iOS](http://cheeaun.com/blog/2016/03/building-hackerweb-ios/).
 
 Preview
 ---
 
-![Preview](media/hackerweb-preview.gif)
+### iOS
+
+![Preview on iOS](media/hackerweb-preview-ios.gif)
+
+### Android
+
+![Preview on Android](media/hackerweb-preview-android.gif)
 
 Development
 ---
@@ -20,6 +26,7 @@ Development
 - [Node.js](https://nodejs.org/)
 - [Xcode](https://developer.apple.com/xcode/)
 - [iOS](https://www.apple.com/ios/) **9**
+- Android SDK API **23**
 
 ### Getting started
 
@@ -29,9 +36,15 @@ Development
 ### Implementations
 
 - [Alt](http://alt.js.org/) - the Flux thing
-- [react-native-safari-view](https://github.com/naoufal/react-native-safari-view) - the reason why iOS 9 is the minimum requirement
 - [htmlparser2](https://github.com/fb55/htmlparser2) - for parsing the comments HTML
 - [url-parse](https://github.com/unshiftio/url-parse) - for extracting domains out of story URLs
+- **iOS**
+  - [react-native-safari-view](https://github.com/naoufal/react-native-safari-view) - the reason why iOS 9 is the minimum requirement
+
+- **Android**
+  - [react-native-chrome-custom-tabs](https://github.com/dstaley/react-native-chrome-custom-tabs) - same as SafariView for iOS, but for Chrome
+  - [react-native-android-share](https://github.com/haydenth/react-native-android-share) - for sharing
+
 
 ### Bundling standalone modules
 
@@ -44,15 +57,11 @@ Some `npm` modules don't work with React Native so I have to compile them into a
 5. `browserify lib/index.js --standalone htmlparser2 | derequire > htmlparser2.js`
 6. Move the generated `htmlparser2.js` file to the `vendor` folder in this repo
 
-### Running on device (iOS)
-
-This article has good documentation on this: [Running On Device (iOS)](https://facebook.github.io/react-native/docs/running-on-device-ios.html).
-
 ### Components
 
 - `LoadingIndicator` - inspired by [react-native-activity-indicator-ios](https://github.com/pwmckenna/react-native-activity-indicator-ios)
 - `HTMLView` - inspired by [react-native-htmlview](https://github.com/jsdf/react-native-htmlview), [react-native-htmltext](https://github.com/siuying/react-native-htmltext) and [react-native-html-render](https://github.com/soliury/react-native-html-render)
-- [react-native-cache-store](https://github.com/cheeaun/react-native-cache-store)
+- [react-native-cache-store](https://github.com/cheeaun/react-native-cache-store) - for local caching
 
 Similar apps
 ---
