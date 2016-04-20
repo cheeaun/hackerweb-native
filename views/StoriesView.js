@@ -7,12 +7,14 @@ import React, {
   Text,
   ListView,
   TouchableOpacity,
+  TouchableNativeFeedback,
   ActionSheetIOS,
   LayoutAnimation,
   Platform,
 } from 'react-native';
 
-import SafariView from 'react-native-safari-view';
+const isIOS = Platform.OS === 'ios';
+const CrossTouchable = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
 import StoryStore from '../stores/StoryStore';
 import StoryActions from '../actions/StoryActions';
@@ -22,9 +24,11 @@ import StoryRow from '../components/StoryRow';
 import LoadingIndicator from '../components/LoadingIndicator';
 import CommentsView from './CommentsView';
 import showBrowser from '../utils/showBrowser';
+import showActivity from '../utils/showActivity';
 
 import colors from '../colors';
 
+const hairlineWidth = isIOS ? StyleSheet.hairlineWidth : 1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,10 +51,10 @@ const styles = StyleSheet.create({
     opacity: .6,
   },
   itemSeparator: {
-    height: StyleSheet.hairlineWidth,
+    height: hairlineWidth,
     backgroundColor: colors.separatorColor,
-    marginLeft: 15,
-    marginTop: -StyleSheet.hairlineWidth,
+    marginLeft: isIOS ? 15 : 0,
+    marginTop: -hairlineWidth,
   },
   itemHighligtedSeparator: {
     opacity: 0,
@@ -63,16 +67,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.linkColor,
     fontSize: 17,
+    textAlignVertical: 'center',
   },
 });
-
-var showActivity = function(u, t){
-  if (!u) return;
-  ActionSheetIOS.showShareActionSheetWithOptions({
-    url: u,
-    message: t || '',
-  }, () => {}, () => {});
-};
 
 export default class StoriesView extends Component {
   constructor(props){
@@ -107,6 +104,7 @@ export default class StoriesView extends Component {
   }
   _navigateToComments(data){
     this.props.navigator.push({
+      id: 'Comments',
       title: data.title,
       component: CommentsView,
       wrapperStyle: styles.wrapper,
@@ -147,9 +145,11 @@ export default class StoriesView extends Component {
     const {hasMoreStories, stories} = this.state;
     if (hasMoreStories && stories && stories.length <= 30){
       return (
-        <TouchableOpacity onPress={this._fetchMoreStories.bind(this)}>
-          <Text style={styles.moreLink}>More&hellip;</Text>
-        </TouchableOpacity>
+        <CrossTouchable onPress={this._fetchMoreStories.bind(this)}>
+          <View>
+            <Text style={styles.moreLink}>More&hellip;</Text>
+          </View>
+        </CrossTouchable>
       );
     }
     return null;
@@ -171,7 +171,6 @@ export default class StoriesView extends Component {
         </View>
       );
     }
-    const isIOS = Platform.OS === 'ios';
     return (
       <View style={styles.container}>
         <ListView

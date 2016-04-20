@@ -7,21 +7,27 @@ import React, {
   Image,
   ScrollView,
   TouchableOpacity,
+  TouchableNativeFeedback,
   Linking,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
+const CrossTouchable = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
 // import SafariView from 'react-native-safari-view';
 
 import colors from '../colors';
 
+const hairlineWidth = isIOS ? StyleSheet.hairlineWidth : 1;
 const styles = StyleSheet.create({
   aboutContainer: {
-    marginTop: 34,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    marginTop: isIOS ? 34 : 0,
+    paddingVertical: isIOS ? 10 : 32,
+    paddingHorizontal: isIOS ? 15 : 16,
+    borderTopWidth: isIOS ? hairlineWidth : 0,
     borderTopColor: colors.separatorColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: hairlineWidth,
     borderBottomColor: colors.separatorColor,
     backgroundColor: colors.sectionBackgroundColor,
     flexDirection: 'row',
@@ -31,13 +37,14 @@ const styles = StyleSheet.create({
     height: 60,
     marginRight: 10,
     borderColor: colors.separatorColor,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 14,
+    borderWidth: hairlineWidth,
+    borderRadius: isIOS ? 14 : 2,
   },
   aboutTextContainer: {
     flex: 1,
   },
   aboutHeading: {
+    color: colors.primaryTextColor,
     fontWeight: '500',
     fontSize: 17,
   },
@@ -47,26 +54,25 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     marginTop: 34,
-    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopWidth: hairlineWidth,
     borderTopColor: colors.separatorColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: hairlineWidth,
     borderBottomColor: colors.separatorColor,
     backgroundColor: colors.sectionBackgroundColor,
   },
   listItem: {
-    paddingVertical: 13,
-    paddingHorizontal: 15,
+    paddingVertical: isIOS ? 13 : 16,
+    paddingHorizontal: isIOS ? 15 : 16,
   },
   listItemSeparator: {
     marginLeft: 15,
     marginTop: -1,
-    height: StyleSheet.hairlineWidth,
+    height: hairlineWidth,
     backgroundColor: colors.separatorColor,
   },
   link: {
-    backgroundColor: colors.sectionBackgroundColor,
     color: colors.linkColor,
-    fontSize: 17,
+    fontSize: isIOS ? 17 : 16,
   },
   disclaimer: {
     paddingVertical: 27,
@@ -96,9 +102,11 @@ function linksContainer(links){
     {links.map((link, i) => {
       return (
         <View key={link.text}>
-          <TouchableOpacity onPress={linkPress.bind(null, link.url)} style={styles.listItem}>
-            <Text style={styles.link}>{link.text}</Text>
-          </TouchableOpacity>
+          <CrossTouchable onPress={linkPress.bind(null, link.url)}>
+            <View style={styles.listItem}>
+              <Text style={styles.link}>{link.text}</Text>
+            </View>
+          </CrossTouchable>
           {i < links.length-1 && <View style={styles.listItemSeparator}/>}
         </View>
       );
@@ -119,14 +127,20 @@ export default (props) => {
         </View>
       </View>
       {linksContainer([
-        { text: '🌟 Rate HackerWeb on the App Store', url: 'http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1084209377&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8' },
+        isIOS ? {
+          text: '🌟 Rate HackerWeb on the App Store',
+          url: 'http://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1084209377&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8'
+        } : {
+          text: '🌟 Rate HackerWeb on Google Play',
+          url: 'https://play.google.com/store/apps/details?id=cheeaun.hackerweb'
+        },
         { text: '☕️ Buy me a cup of coffee', url: 'https://donorbox.org/support-cheeaun' },
       ])}
       {linksContainer([
         { text: 'HackerWeb homepage', url: 'https://hackerwebapp.com/' },
         { text: 'Hacker News homepage', url: 'https://news.ycombinator.com/' },
         { text: 'Hacker News FAQ', url: 'https://news.ycombinator.com/newsfaq.html' },
-        { text: 'HackerWeb for iOS on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
+        { text: 'HackerWeb on GitHub', url: 'https://github.com/cheeaun/hackerweb-ios' },
         { text: 'Follow @cheeaun', url: 'https://twitter.com/cheeaun' },
         { text: 'Send Feedback', url: 'mailto:cheeaun+hackerweb@gmail.com?subject=HackerWeb feedback' },
       ])}

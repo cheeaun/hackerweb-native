@@ -7,7 +7,10 @@ import React, {
   View,
   ScrollView,
   Linking,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import htmlparser from '../vendor/htmlparser2';
@@ -16,7 +19,9 @@ import colors from '../colors';
 
 const nodeStyles = StyleSheet.create({
   p: {
+    color: colors.primaryTextColor,
     marginBottom: 8,
+    lineHeight: isIOS ? null : 20,
   },
   pre: {
     paddingVertical: 10,
@@ -25,7 +30,8 @@ const nodeStyles = StyleSheet.create({
     marginBottom: 8,
   },
   code: {
-    fontFamily: 'Menlo',
+    color: colors.primaryTextColor,
+    fontFamily: isIOS ? 'Menlo' : 'monospace',
     fontSize: 12,
   },
   a: {

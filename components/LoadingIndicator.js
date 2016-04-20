@@ -6,16 +6,25 @@ import React, {
   Text,
   View,
   ActivityIndicatorIOS,
+  ProgressBarAndroid,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
+
+import colors from '../colors';
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  spinner: {
+  spinner: isIOS ? {
     width: 30,
     height: 30,
+  } : {
+    width: 24,
+    height: 24,
   },
   text: {
     opacity: .6,
@@ -42,8 +51,14 @@ export default class LoadingIndicator extends Component {
   render(){
     return (
       <View style={[styles.container, {opacity: this.state.opacity}]}>
-        <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
-        <Text style={styles.text}>Loading&hellip;</Text>
+        {isIOS ? (
+          <View>
+            <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
+            <Text style={styles.text}>Loading&hellip;</Text>
+          </View>
+        ) : (
+          <ProgressBarAndroid color={colors.disabledColor} styleAttr="Small" style={styles.spinner} indeterminate={true} />
+        )}
       </View>
     );
   }

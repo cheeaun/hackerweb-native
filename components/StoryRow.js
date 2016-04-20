@@ -7,8 +7,14 @@ import React, {
   Text,
   TouchableOpacity,
   TouchableHighlight,
+  TouchableNativeFeedback,
   Image,
+  Platform,
 } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
+const CrossTouchableHighlight = isIOS ? TouchableHighlight : TouchableNativeFeedback;
+const CrossTouchableOpacity = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
 import LinkStore from '../stores/LinkStore';
 import LinkActions from '../actions/LinkActions';
@@ -23,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   storyPosition: {
-    paddingTop: 10,
+    paddingTop: isIOS ? 10 : 16,
     paddingLeft: 15,
   },
   storyPositionNumber: {
@@ -34,10 +40,11 @@ const styles = StyleSheet.create({
   },
   storyInfo: {
     padding: 10,
+    paddingVertical: isIOS ? 10 : 16,
     flex: 1,
   },
   storyComments: {
-    padding: 10,
+    padding: isIOS ? 10 : 16,
   },
   storyDisclosure: {
     paddingVertical: 15,
@@ -45,13 +52,14 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
   storyTitle: {
+    color: colors.primaryTextColor,
     fontSize: 17,
   },
   storyTitleVisited: {
     color: colors.insignificantColor,
   },
   storyDomain: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.domainColor,
   },
   storyMetadataWrap: {
@@ -59,15 +67,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   storyMetadata: {
-    fontSize: 13,
+    fontSize: isIOS ? 13 : 14,
     color: colors.insignificantColor,
   },
   commentIcon: {
-    width: 20,
-    height: 19,
-    marginHorizontal: 2,
+    width: isIOS ? 20 : 24,
+    height: isIOS ? 19 : 24,
+    marginHorizontal: isIOS ? 2 : 0,
     marginTop: 3,
     marginBottom: 2,
+    opacity: isIOS ? 1 : .54,
   },
   disclosureIcon: {
     width: 8,
@@ -96,7 +105,7 @@ export default class StoryRow extends Component {
   }
   _onLinkChange(state){
     this.setState({
-      visited: state.links.includes(this.props.data.url),
+      visited: state.links.indexOf(this.props.data.url) >= 0,
     });
   }
   _onStoryLayout(e){
@@ -121,7 +130,7 @@ export default class StoryRow extends Component {
     const delayLongPress = 1000;
 
     return (
-      <TouchableHighlight {...touchableProps} delayLongPress={delayLongPress}>
+      <CrossTouchableHighlight {...touchableProps} delayLongPress={delayLongPress}>
         <View style={styles.story}>
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
@@ -146,11 +155,11 @@ export default class StoryRow extends Component {
           {type != 'job' && (() => {
             if (externalLink){
               return (
-                <TouchableOpacity onPress={onCommentPress}>
+                <CrossTouchableOpacity onPress={onCommentPress}>
                   <View style={styles.storyComments} ref="commentButton">
                     <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
                   </View>
-                </TouchableOpacity>
+                </CrossTouchableOpacity>
               );
             } else {
               return (
@@ -161,7 +170,7 @@ export default class StoryRow extends Component {
             }
           })()}
         </View>
-      </TouchableHighlight>
+      </CrossTouchableHighlight>
     );
   }
 }
