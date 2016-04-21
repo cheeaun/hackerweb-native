@@ -26,7 +26,7 @@ Development
 - [Node.js](https://nodejs.org/)
 - [Xcode](https://developer.apple.com/xcode/)
 - [iOS](https://www.apple.com/ios/) **9**
-- Android SDK API **23**
+- Android SDK API **21**
 
 ### Getting started
 
