@@ -45,18 +45,6 @@ Development
   - [react-native-chrome-custom-tabs](https://github.com/dstaley/react-native-chrome-custom-tabs) - same as SafariView for iOS, but for Chrome
   - [react-native-android-share](https://github.com/haydenth/react-native-android-share) - for sharing
 
-
-### Bundling standalone modules
-
-Some `npm` modules don't work with React Native so I have to compile them into a standalone module. Here's an example of the steps to bundle `htmlparser2`:
-
-1. `npm install -g browserify` if not installed
-2. `git clone https://github.com/fb55/htmlparser2`
-3. `cd htmlparser2`
-4. `npm install`
-5. `browserify lib/index.js --standalone htmlparser2 | derequire > htmlparser2.js`
-6. Move the generated `htmlparser2.js` file to the `vendor` folder in this repo
-
 ### Components
 
 - `LoadingIndicator` - inspired by [react-native-activity-indicator-ios](https://github.com/pwmckenna/react-native-activity-indicator-ios)

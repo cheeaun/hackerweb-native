@@ -13,7 +13,7 @@ import React, {
 const isIOS = Platform.OS === 'ios';
 
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import htmlparser from '../vendor/htmlparser2';
+import htmlparser from 'htmlparser2';
 
 import colors from '../colors';
 

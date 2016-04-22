@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "alt": "~0.18.4",
+    "buffer": "~4.6.0",
+    "events": "~1.1.0",
+    "htmlparser2": "~3.9.0",
     "react": "~0.14.8",
     "react-addons-pure-render-mixin": "~0.14.7",
     "react-native": "~0.24.0",
@@ -14,6 +17,7 @@
     "react-native-cache-store": "~1.0.2",
     "react-native-chrome-custom-tabs": "~0.0.2",
     "react-native-safari-view": "~0.4.0",
+    "stream": "~0.0.2",
     "url-parse": "~1.1.1"
   }
 }
