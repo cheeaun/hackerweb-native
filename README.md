@@ -26,7 +26,7 @@ Development
 - [Node.js](https://nodejs.org/)
 - [Xcode](https://developer.apple.com/xcode/)
 - [iOS](https://www.apple.com/ios/) **9**
-- Android SDK API **21**
+- Android SDK API **23** (minimum support: 21)
 
 ### Getting started
 
@@ -40,7 +40,6 @@ Development
 - [url-parse](https://github.com/unshiftio/url-parse) - for extracting domains out of story URLs
 - **iOS**
   - [react-native-safari-view](https://github.com/naoufal/react-native-safari-view) - the reason why iOS 9 is the minimum requirement
-
 - **Android**
   - [react-native-chrome-custom-tabs](https://github.com/dstaley/react-native-chrome-custom-tabs) - same as SafariView for iOS, but for Chrome
   - [react-native-android-share](https://github.com/haydenth/react-native-android-share) - for sharing
