@@ -161,7 +161,7 @@ export default class StoryRow extends Component {
                   </View>
                 </CrossTouchableOpacity>
               );
-            } else {
+            } else if (isIOS){
               return (
                 <View style={styles.storyDisclosure}>
                   <Image style={styles.disclosureIcon} source={require('../images/disclosure-indicator.png')}/>
