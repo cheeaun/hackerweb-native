@@ -8,6 +8,7 @@ import React, {
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Image,
   ActionSheetIOS,
   ListView,
@@ -145,6 +146,7 @@ export default class CommentsView extends Component {
       dataSource: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2}),
       loading: storyLoading,
       error: storyError,
+      pollDisplay: 'points',
     };
     this._onChange = this._onChange.bind(this);
     this._fetchStory = this._fetchStory.bind(this);
@@ -192,8 +194,14 @@ export default class CommentsView extends Component {
       }
     }
   }
+  _togglePollDisplay(){
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    this.setState({
+      pollDisplay: this.state.pollDisplay == 'points' ? 'percentage' : 'points',
+    });
+  }
   _renderHeader(){
-    let {data, loading, error} = this.state;
+    let {data, loading, error, pollDisplay} = this.state;
     data = data || this.props.data;
     const commentsText = <Text>&middot; {data.comments_count} comment{data.comments_count != 1 && 's'}</Text>;
     const url = data.url;
@@ -223,16 +231,25 @@ export default class CommentsView extends Component {
       let pollElements;
       if (data.poll && data.poll.length){
         let maxPoints = Math.max.apply(null, data.poll.map((p) => p.points ));
+        let totalPoints = data.poll.reduce((a, b) => a + b.points, 0);
         pollElements = data.poll.map((p) => {
           let {points} = p;
+          let pointsText;
+          if (pollDisplay == 'points'){
+            pointsText = `${points} point${points != 1 ? 's' : ''}`;
+          } else {
+            pointsText = `${(points/totalPoints*100).toFixed(1)}%`;
+          }
           return (
-            <View>
-              <View style={styles.pollContainer}>
-                <Text style={styles.pollItem}>{p.item}</Text>
-                <Text style={styles.pollPoints}>{points} point{points != 1 && 's'}</Text>
+            <TouchableWithoutFeedback key={p.item} onPress={this._togglePollDisplay.bind(this)}>
+              <View>
+                <View style={styles.pollContainer}>
+                  <Text style={styles.pollItem}>{p.item}</Text>
+                  <Text style={styles.pollPoints}>{pointsText}</Text>
+                </View>
+                <ProgressBar value={points} max={maxPoints}></ProgressBar>
               </View>
-              <ProgressBar value={points} max={maxPoints}></ProgressBar>
-            </View>
+            </TouchableWithoutFeedback>
           );
         });
       }
