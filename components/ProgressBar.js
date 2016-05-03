@@ -34,7 +34,7 @@ export default class ProgressBar extends Component {
     const {value, max} = this.props;
     const width = e.nativeEvent.layout.width;
     Animated.spring(this.state.progressWidth, {
-      toValue: value/max*100,
+      toValue: value/max*width,
       duration: 300,
     }).start();
   }
