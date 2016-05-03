@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   pollItem: {
-    fontWeight: '500',
+    color: colors.primaryTextColor,
     flex: 1,
   },
   pollPoints: {
