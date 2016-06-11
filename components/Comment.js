@@ -13,6 +13,7 @@ const isIOS = Platform.OS === 'ios';
 
 import HTMLView from '../components/HTMLView';
 import showBrowser from '../utils/showBrowser';
+import showActivity from '../utils/showActivity';
 import colors from '../colors';
 
 const styles = StyleSheet.create({
@@ -90,7 +91,7 @@ export default (props) => {
         </View>
         <Text style={styles.commentTime} onPress={showBrowser.bind(null, `https://news.ycombinator.com/item?id=${data.id}`)}>{data.time_ago}</Text>
       </View>
-      <HTMLView html={data.content} onLinkPress={showBrowser}/>
+      <HTMLView html={data.content} onLinkPress={showBrowser} onLinkLongPress={showActivity}/>
     </View>
   );
 

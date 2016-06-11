@@ -256,7 +256,7 @@ export default class CommentsView extends Component {
 
       contentSection = (
         <View style={styles.storyContent}>
-          <HTMLView html={data.content} onLinkPress={showBrowser}/>
+          <HTMLView html={data.content} onLinkPress={showBrowser} onLinkLongPress={showActivity}/>
           {pollElements}
         </View>
       );

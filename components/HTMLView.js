@@ -44,7 +44,7 @@ const nodeStyles = StyleSheet.create({
 
 function dom2elements(nodes, opts, parentName){
   if (!nodes || !nodes.length) return;
-  const {onLinkPress} = opts;
+  const {onLinkPress, onLinkLongPress} = opts;
   return nodes.map((node) => {
     const {name, type, children} = node;
     const key = (name || type) + '-' + Math.random();
@@ -69,7 +69,7 @@ function dom2elements(nodes, opts, parentName){
         // Steps to make sure children inside is ACTUALLY text
         const child = children && children.length == 1 && children[0];
         const text = child && child.type == 'text' && child.data;
-        return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)}>{text || elements}</Text>;
+        return <Text key={key} style={style} onPress={onLinkPress.bind(null, href)} onLongPress={onLinkLongPress.bind(null, href)}>{text || elements}</Text>;
       }
       return <Text key={key} style={style}>{elements}</Text>;
     } else if (type == 'text'){
@@ -122,10 +122,11 @@ export default class HTMLView extends Component {
     this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
   componentDidMount(){
-    const {html, onLinkPress} = this.props;
+    const {html, onLinkPress, onLinkLongPress} = this.props;
     if (!html) return null;
     processDOM(html, {
       onLinkPress: onLinkPress || Linking.openURL,
+      onLinkLongPress: onLinkLongPress || function(){},
     }, (elements) => {
       this.setState({
         elements: elements,
