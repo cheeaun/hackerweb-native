@@ -107,7 +107,7 @@ class App extends Component {
               },
             }}/>
         </View>
-        <Modal animated={true} visible={isAboutVisible}>
+        <Modal animationType="slide" visible={isAboutVisible}>
           <NavigatorIOS
             style={styles.container}
             initialRoute={{
