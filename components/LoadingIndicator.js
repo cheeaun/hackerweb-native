@@ -49,16 +49,20 @@ export default class LoadingIndicator extends Component {
     clearTimeout(this._timer);
   }
   render(){
+    const {opacity} = this.state;
+
+    if (isIOS){
+      return (
+        <View style={[styles.container, {opacity}]}>
+          <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
+          <Text style={styles.text}>Loading&hellip;</Text>
+        </View>
+      );
+    }
+
     return (
-      <View style={[styles.container, {opacity: this.state.opacity}]}>
-        {isIOS ? (
-          <View>
-            <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
-            <Text style={styles.text}>Loading&hellip;</Text>
-          </View>
-        ) : (
-          <ProgressBarAndroid color={colors.disabledColor} styleAttr="Small" style={styles.spinner} indeterminate={true} />
-        )}
+      <View style={[styles.container, {opacity}]}>
+        <ProgressBarAndroid color={colors.disabledColor} styleAttr="Small" style={styles.spinner} indeterminate={true} />
       </View>
     );
   }
