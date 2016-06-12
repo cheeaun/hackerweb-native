@@ -108,16 +108,6 @@ export default class StoryRow extends Component {
       visited: state.links.indexOf(this.props.data.url) >= 0,
     });
   }
-  _onStoryLayout(e){
-    /*
-      Temporary flexbox workaround for:
-      - https://github.com/facebook/react-native/issues/5141
-      - https://github.com/facebook/react-native/issues/1472
-    */
-    const {height} = e.nativeEvent.layout;
-    const {commentButton} = this.refs;
-    if (commentButton) commentButton.setNativeProps({ style: { height } });
-  }
   render(){
     const {data, position, onCommentPress, ...touchableProps} = this.props;
     const {url, type, comments_count, points, time_ago} = data;
@@ -135,7 +125,7 @@ export default class StoryRow extends Component {
           <View style={styles.storyPosition}>
             <Text style={styles.storyPositionNumber}>{position}</Text>
           </View>
-          <View style={styles.storyInfo} onLayout={this._onStoryLayout.bind(this)}>
+          <View style={styles.storyInfo}>
             <Text style={[styles.storyTitle, visited && styles.storyTitleVisited]}>{data.title}</Text>
             {externalLink && <Text numberOfLines={1} style={styles.storyDomain}>{domainify(url)}</Text>}
             {(() => {
@@ -156,7 +146,7 @@ export default class StoryRow extends Component {
             if (externalLink){
               return (
                 <CrossTouchableOpacity onPress={onCommentPress}>
-                  <View style={styles.storyComments} ref="commentButton">
+                  <View style={styles.storyComments}>
                     <Image style={styles.commentIcon} source={require('../images/comments-icon.png')}/>
                   </View>
                 </CrossTouchableOpacity>
