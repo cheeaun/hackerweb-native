@@ -10,13 +10,13 @@
     "buffer": "~4.6.0",
     "events": "~1.1.0",
     "htmlparser2": "~3.9.0",
-    "react": "~15.1.0",
-    "react-addons-pure-render-mixin": "~15.1.0",
-    "react-native": "~0.27.2",
+    "react": "^16.4.1",
+    "react-native": "^0.56.0-rc.3",
     "react-native-android-share": "https://github.com/haydenth/react-native-android-share.git",
-    "react-native-cache-store": "~1.0.2",
+    "react-native-cache-store": "^1.0.2",
     "react-native-chrome-custom-tabs": "~0.0.2",
-    "react-native-safari-view": "~0.4.1",
+    "react-native-iphone-x-helper": "^1.0.3",
+    "react-native-safari-view": "^2.1.0",
     "stream": "~0.0.2",
     "url-parse": "~1.1.1"
   }
