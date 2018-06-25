@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,7 +12,6 @@ import {
 
 const isIOS = Platform.OS === 'ios';
 
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import htmlparser from 'htmlparser2';
 
 import colors from '../colors';
@@ -113,13 +112,12 @@ function processDOM(html, opts, callback){
   parser.end();
 }
 
-export default class HTMLView extends Component {
+export default class HTMLView extends PureComponent {
   constructor(props){
     super(props);
     this.state = {
       elements: null,
     };
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
   }
   componentDidMount(){
     const {html, onLinkPress, onLinkLongPress} = this.props;
