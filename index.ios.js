@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {
-  AppStateIOS,
+  AppState,
   AppRegistry,
   StyleSheet,
   Modal,
@@ -31,7 +31,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      currentAppState: AppStateIOS.currentState,
+      currentAppState: AppState.currentState,
       isAboutVisible: false,
     };
     this._reloadCount = 0;
@@ -40,11 +40,11 @@ class App extends Component {
     this._handleOpenURL = this._handleOpenURL.bind(this);
   }
   componentDidMount(){
-    AppStateIOS.addEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener('change', this._handleAppStateChange);
     Linking.addEventListener('url', this._handleOpenURL);
   }
   componentWillUnmount(){
-    AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener('change', this._handleAppStateChange);
     Linking.removeEventListener('url', this._handleOpenURL);
   }
   _handleAppStateChange(currentAppState){
