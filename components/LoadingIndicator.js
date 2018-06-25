@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   ProgressBarAndroid,
   Platform,
 } from 'react-native';
@@ -54,7 +54,7 @@ export default class LoadingIndicator extends Component {
     if (isIOS){
       return (
         <View style={[styles.container, {opacity}]}>
-          <ActivityIndicatorIOS animating={true} style={styles.spinner}/>
+          <ActivityIndicator animating={true} style={styles.spinner}/>
           <Text style={styles.text}>Loading&hellip;</Text>
         </View>
       );
