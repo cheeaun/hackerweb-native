@@ -305,6 +305,7 @@ export default class CommentsView extends Component {
         renderHeader={this._renderHeader.bind(this)}
         dataSource={dataSource}
         pageSize={5}
+        enableEmptySections={true}
         renderRow={(comment) => <CommentRow key={comment.id} comment={comment} op={op} hasManyComments={hasManyComments}/>}
         renderSeparator={(sectionID, rowID) => <View key={rowID} style={styles.separator}/>}
         renderFooter={() => <View style={styles.footer}/>}

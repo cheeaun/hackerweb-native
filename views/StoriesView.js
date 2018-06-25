@@ -177,6 +177,7 @@ export default class StoriesView extends Component {
           style={isIOS && styles.navbarSpacing}
           pageSize={10}
           dataSource={dataSource}
+          enableEmptySections={true}
           renderRow={this._renderRow.bind(this)}
           renderSeparator={this._renderSeparator.bind(this)}
           renderFooter={this._renderFooter.bind(this)}
