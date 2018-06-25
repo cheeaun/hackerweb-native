@@ -177,22 +177,6 @@ export default class CommentsView extends Component {
       const url = externalLink ? story.url : `https://news.ycombinator.com/item?id=${story.id}`;
       ChromeCustomTabsClient.mayLaunchUrl(url);
     }
-
-    /* Note:
-      Title update doesn't work yet due to https://github.com/facebook/react-native/issues/476
-      Hopefully this works https://github.com/bjornco/react-native/commit/5fcb2a8673a2c17f4fdb03327008397a10a9c53a
-    */
-    if (state.story && state.story.title){
-      var route = this.props.navigator.navigationContext.currentRoute;
-      if (!route) return;
-      if (route.title != state.story.title){
-        const {story} = state;
-        route.title = story.title;
-        if (!route.rightButtonIcon) route.rightButtonIcon = require('../images/share-icon.png');
-        route.onRightButtonPress = showActivity.bind(null, `https://news.ycombinator.com/item?id=${story.id}`, story.title);
-        this.props.navigator.replace(route);
-      }
-    }
   }
   _togglePollDisplay(){
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
