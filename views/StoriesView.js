@@ -13,6 +13,8 @@ import {
   Platform,
 } from 'react-native';
 
+import { isIphoneX } from 'react-native-iphone-x-helper'
+
 const isIOS = Platform.OS === 'ios';
 const CrossTouchable = isIOS ? TouchableOpacity : TouchableNativeFeedback;
 
@@ -33,8 +35,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  navbarSpacing: {
-    marginTop: 64,
+  view: {
+    marginTop: isIOS ? (isIphoneX() ? 88 : 64) : 0,
   },
   viewLoading: {
     flex: 1,
@@ -64,10 +66,14 @@ const styles = StyleSheet.create({
   },
   moreLink: {
     padding: 19,
+    paddingBottom: isIphoneX() ? 34 : 19,
     textAlign: 'center',
     color: colors.linkColor,
     fontSize: 17,
     textAlignVertical: 'center',
+  },
+  spacer: {
+    paddingBottom: 24,
   },
 });
 
@@ -152,6 +158,11 @@ export default class StoriesView extends Component {
         </CrossTouchable>
       );
     }
+
+    if (isIphoneX()) {
+        return <View style={styles.spacer} />;
+    }
+
     return null;
   }
   render(){
@@ -174,7 +185,7 @@ export default class StoriesView extends Component {
     return (
       <View style={styles.container}>
         <ListView
-          style={isIOS && styles.navbarSpacing}
+          style={styles.view}
           pageSize={10}
           dataSource={dataSource}
           enableEmptySections={true}
